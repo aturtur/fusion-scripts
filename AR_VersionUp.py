@@ -1,22 +1,28 @@
-# Fusion Script - Change version [v0.05] by @aturtur
-# Installation path: %appdata%\Blackmagic Design\Fusion\Scripts\Comp
+"""
+AR_VersionUp
+
+Author: Arttu Rautio (aturtur)
+Website: http://aturtur.com/
+Name-US: AR_VersionUp
+Description-US: Select nodes you want to colorise and press buttons
+Written for Fusion 16.0 beta 22 build 22
+"""
+#Installation path: %appdata%\Blackmagic Design\Fusion\Scripts\Comp
 # File path syntax example: ..\VERSIONS\ProjectName_v001\..\..\ProjectName_v001_0000.tif
-#
-# HOW TO USE:  - Select loaders you want to change and press buttons
-#------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------
 # Import libraries
-#------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------
 import os, re
 import platform as pf
 
-#------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------
 # Global variables
-#------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------
 delimiter = "_v" # String that indicates version delimiter
 
-#------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------
 # Functions
-#------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------
 # Get correct separator depending what operating system user is using
 def GetSep():
     if pf.system() == "Windows": # If os is windwos
@@ -152,9 +158,9 @@ def Refresh(t):
     t.SetAttrs({'TOOLB_PassThrough' : False}) # Set pass through off
     t.SetAttrs({'TOOLB_PassThrough' : d}) # Put back old setting
     return None
-#------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------
 # Run
-#------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------
 def LatestRun():
     tools = comp.GetToolList(True, "Loader") # Get selected loaders
     for t in tools: # For each selected loader
@@ -211,9 +217,21 @@ def CustomRun(customVersion):
         Refresh(tools[t]) # Refresh the loader
     pass
 
-#------------------------------------------------------------------------------------------------------------------------------------------------
+def NullRun():
+    tools = comp.GetToolList(True, "Loader") # Get selected loaders
+    for t in tools: # For each selected loader
+        filePath = tools[t].GetInput("Clip") # Loader's clip's file path
+        #--------------------------
+        currentVersion = GetVersion(filePath)[0]
+        nullPath = GetNewPath(filePath, currentVersion)
+        #--------------------------
+        tools[t].SetInput("Clip", nullPath) # Update loader's clip
+        Refresh(tools[t]) # Refresh the loader
+    pass
+
+#----------------------------------------------------------------------------------------------------------------
 # Creating user interface
-#------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------
 ui = fu.UIManager
 disp = bmd.UIDispatcher(ui)
 dlg = disp.AddWindow({ "WindowTitle": "Change Version", "ID": "MyWin", "Geometry": [ 100, 100, 225, 140 ], },
@@ -245,18 +263,22 @@ dlg.On.MyWin.Close = _func
 # GUI element based event functions
 def _func(ev):
         customVersion = itm['VersionNumber'].Text
+        NullRun()
         CustomRun(customVersion)
 dlg.On.Custom.Clicked = _func
 
 def _func(ev):
+        NullRun()
         LatestRun()
 dlg.On.Latest.Clicked = _func
 
 def _func(ev):
+        NullRun()
         VersionUpRun()
 dlg.On.Up.Clicked = _func
 
 def _func(ev):
+        NullRun()
         VersionDownRun()
 dlg.On.Down.Clicked = _func
 
