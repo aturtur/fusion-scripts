@@ -7,7 +7,7 @@ Name-US: AR_ColoriseNodes
 Description-US: Select nodes you want to colorise and press buttons
 Written for Fusion 16.0 beta 22 build 22
 """
-#Installation path: %appdata%\Blackmagic Design\Fusion\Scripts\Comp
+#Installation path: %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
 #----------------------------------------------------------------------------------------------------------------
 # Change color(s)
 #----------------------------------------------------------------------------------------------------------------

@@ -7,7 +7,7 @@ Name-US: AR_LoadersFromSavers
 Description-US: Select savers that you want to make to loaders and run the script
 Written for Fusion 16.0 beta 22 build 22
 """
-#Installation path: %appdata%\Blackmagic Design\Fusion\Scripts\Comp
+#Installation path: %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
 # Libraries
 import os, re
 import ntpath
