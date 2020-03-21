@@ -18,8 +18,9 @@ def OpenFolder():
     loaders = comp.GetToolList(True, "Loader") # Get selected loaders
     for s in savers: # For each selected saver
         path = savers[s].GetInput("Clip") # Get file path from saver
-        subprocess.Popen(["explorer", "/select,", path]) # Open the folder and higlight the file
+        folder = os.path.dirname(path) # Get folder path
+        os.startfile(folder) # Open the folder
     for l in loaders: # For each selected loader
         path = loaders[l].GetInput("Clip") # Get file path from loader
-        subprocess.Popen(["explorer", "/select,", path]) # Open the folder and higlight the file
+        subprocess.Popen(["explorer", "/select,", path]) # Open the folder and select the file
 OpenFolder() # Run the function
