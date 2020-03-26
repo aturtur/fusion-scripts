@@ -32,8 +32,11 @@ def LoadersFromSavers():
         folder = os.path.dirname(path) # Get folder path
         file = ntpath.basename(path) # Get file name with extension
         extension = os.path.splitext(path)[1] # Get extension
-        name = file.replace(extension, "") # Get file name without extension
-        loader.SetInput("Clip", find(name, folder)) # Get savers path to loader
+        if extension == ".mov": # If movie file
+            loader.SetInput("Clip", path) # Get savers path to loader
+        else: # If image sequence
+            name = file.replace(extension, "") # Get file name without extension
+            loader.SetInput("Clip", find(name, folder)) # Get savers path to loader
     comp.Unlock() # Unlock composition
     comp.EndUndo(True) # End undo group
 LoadersFromSavers() # Run the function
