@@ -6,6 +6,7 @@ Website: http://aturtur.com/
 Name-US: AR_VersionUp
 Description-US: Select nodes you want to colorise and press buttons
 Written for Fusion 16.0 beta 22 build 22
+Note: You need Python 2 (64-bit) installed to run this script (https://www.python.org/downloads/release/python-2717/)
 """
 #Installation path: %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
 # File path syntax example: ..\VERSIONS\ProjectName_v001\..\..\ProjectName_v001_0000.tif

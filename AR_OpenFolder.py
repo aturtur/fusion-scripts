@@ -6,6 +6,7 @@ Website: http://aturtur.com/
 Name-US: AR_OpenFolder
 Description-US: Open savers / loaders file path's folder
 Written for Fusion 16.2 build 22
+Note: You need Python 2 (64-bit) installed to run this script (https://www.python.org/downloads/release/python-2717/)
 """
 #Installation path: %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
 # Libraries

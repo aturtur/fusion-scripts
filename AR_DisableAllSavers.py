@@ -6,6 +6,7 @@ Website: http://aturtur.com/
 Name-US: AR_DisableAllSavers
 Description-US: This script will disable all savers in active composition.
 Written for Fusion 16.0 beta 22 build 22
+Note: You need Python 2 (64-bit) installed to run this script (https://www.python.org/downloads/release/python-2717/)
 """
 #Installation path: %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
 # Functinons
