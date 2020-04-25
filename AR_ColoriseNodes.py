@@ -49,7 +49,7 @@ dlg = disp.AddWindow({ "WindowTitle": "Colorise nodes", "ID": "MyWin", "Geometry
         # {'R' : 235/255, 'G' : 110/255, 'B' : 0/255}
         ui.VGroup({ "Spacing": 5, },
         [
-            ui.Button({ "Text": "Clear", "ID": "Clear" }),
+            ui.Button({ "Text": "Default", "ID": "Clear" }),
             ui.Button({ "Text": "Orange", "ID": "Orange" }),
             ui.Button({ "Text": "Apricot", "ID": "Apricot" }),
             ui.Button({ "Text": "Yellow", "ID": "Yellow" }),

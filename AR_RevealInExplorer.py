@@ -1,9 +1,9 @@
 """
-AR_OpenFolder
+AR_RevealInExplorer
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
-Name-US: AR_OpenFolder
+Name-US: AR_RevealInExplorer
 Description-US: Open savers / loaders file path's folder
 Written for Fusion 16.2 build 22
 Note: You need Python 2 (64-bit) installed to run this script (https://www.python.org/downloads/release/python-2717/)
