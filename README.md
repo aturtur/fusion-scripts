@@ -4,7 +4,7 @@ My collection of Blackmagic Fusion scripts.
 
 ## Installation
 
-To run script files you need Python 2 (64-bit) installed to run this script (https://www.python.org/downloads/release/python-2717/)
+To run script files you need Python 2 (64-bit) installed (https://www.python.org/downloads/release/python-2717/)
 
 Put script files to %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
 
