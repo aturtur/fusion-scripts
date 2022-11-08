@@ -4,14 +4,22 @@ AR_VersionUp
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: AR_VersionUp
-Description-US: Select nodes you want to colorise and press buttons
-Written for Fusion 16.0 beta 22 build 22
-Note: You need Python 2 (64-bit) installed to run this script (https://www.python.org/downloads/release/python-2717/)
+Version: 1.0.1
+Description-US: Change easily between different versions
+
+Written for Blackmagic Design Fusion Studio 18.0.4 build 5
+Python version 3 (64-bit)
+
+Change log:
+1.0.1 (08.11.2022) - Semantic versioning
+1.0.0 (04.10.2021) - Initial release
 """
-#Installation path: %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
+
+# Installation path: %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
 # File path syntax example: ..\VERSIONS\ProjectName_v001\..\..\ProjectName_v001_0000.tif
+
 #----------------------------------------------------------------------------------------------------------------
-# Import libraries
+# Libraries
 #----------------------------------------------------------------------------------------------------------------
 import os, re
 import platform as pf
@@ -283,7 +291,7 @@ def _func(ev):
         VersionDownRun()
 dlg.On.Down.Clicked = _func
 
-#
+# Open the dialog
 dlg.Show()
 disp.RunLoop()
 dlg.Hide()

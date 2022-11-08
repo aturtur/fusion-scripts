@@ -4,11 +4,19 @@ AR_LoadersFromSavers
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: AR_LoadersFromSavers
-Description-US: Select savers that you want to make to loaders and run the script
-Written for Fusion 16.0 beta 22 build 22
-Note: You need Python 2 (64-bit) installed to run this script (https://www.python.org/downloads/release/python-2717/)
+Version: 1.0.1
+Description-US: Creates loaders from selected savers
+
+Written for Blackmagic Design Fusion Studio 18.0.4 build 5
+Python version 3 (64-bit)
+
+Change log:
+1.0.1 (08.11.2022) - Semantic versioning
+1.0.0 (04.10.2021) - Initial release
 """
-#Installation path: %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
+
+# Installation path: %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
+
 # Libraries
 import os, re
 import ntpath
@@ -40,4 +48,6 @@ def LoadersFromSavers():
             loader.SetInput("Clip", find(name, folder)) # Get savers path to loader
     comp.Unlock() # Unlock composition
     comp.EndUndo(True) # End undo group
+
+# Run the script
 LoadersFromSavers() # Run the function

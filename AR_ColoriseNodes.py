@@ -4,15 +4,18 @@ AR_ColoriseNodes
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: AR_ColoriseNodes
+Version: 1.0.1
 Description-US: Select nodes you want to colorise and press buttons
-Written for Fusion 16.0 beta 22 build 22
-Note: You need Python 2 (64-bit) installed to run this script (https://www.python.org/downloads/release/python-2717/)
+
+Written for Blackmagic Design Fusion Studio 18.0.4 build 5
+Python version 3 (64-bit)
+
+Change log:
+1.0.1 (08.11.2022) - Semantic versioning
+1.0.0 (26.04.2022) - Initial release
 """
-#Installation path: %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
 
-#orangeIconPath = "C:\\Users\\Arttu\\AppData\\Roaming\\Blackmagic Design\\Fusion\\Scripts\\Comp\\orange.png"
-
-# Librareis
+# Libraries
 import os
 
 # Variables
@@ -126,7 +129,7 @@ dlg.On.Beige.Clicked = _func
 dlg.On.Brown.Clicked = _func
 dlg.On.Chocolate.Clicked = _func
 
-# Dialog things
+# Open the dialog
 dlg.Show()
 disp.RunLoop()
 dlg.Hide()
