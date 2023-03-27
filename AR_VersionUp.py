@@ -258,7 +258,8 @@ dlg = disp.AddWindow({ "WindowTitle": "Change Version", "ID": "MyWin", "Geometry
             ui.Button({ "Text": "Latest version", "ID": "Latest" }), # Button latest version
             ui.HGroup(
             [
-                ui.LineEdit({ "ID": "VersionNumber", "Text": "", "PlaceholderText": "New version no.", }), # Input text field custom version
+                #ui.LineEdit({ "ID": "VersionNumber", "Text": "", "PlaceholderText": "New version no.", }), # Input text field custom version
+                ui.SpinBox({ "ID": "VersionNumber", "Minimum":0, "Maximum":100000}), # Input text field custom version
                 ui.Button({ "Text": "Custom", "ID": "Custom" }), # Button apply custom version
             ]),
         ]),
