@@ -4,13 +4,15 @@ AR_VersionUp
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: AR_VersionUp
-Version: 1.0.1
+Version: 1.1.0
 Description-US: Change easily between different versions
 
 Written for Blackmagic Design Fusion Studio 18.0.4 build 5
 Python version 3 (64-bit)
 
 Change log:
+1.1.0 (21.04.2024) - Rework
+1.0.2 (07.03.2024) - Cleaning etc
 1.0.1 (08.11.2022) - Semantic versioning
 1.0.0 (04.10.2021) - Initial release
 """
@@ -21,223 +23,134 @@ Change log:
 #----------------------------------------------------------------------------------------------------------------
 # Libraries
 #----------------------------------------------------------------------------------------------------------------
-import os, re
-import platform as pf
+import os
+import re
 
 #----------------------------------------------------------------------------------------------------------------
 # Global variables
 #----------------------------------------------------------------------------------------------------------------
-delimiter = "_v" # String that indicates version delimiter
-
+pattern = "(?:[^a-zA-Z]|^)v\d{1,4}(?:[^a-zA-Z]|$)" # Searches v1, v01, v001, v0001 types of versioning
+tries   = 50 # Amount of tries
 #----------------------------------------------------------------------------------------------------------------
 # Functions
 #----------------------------------------------------------------------------------------------------------------
-# Get correct separator depending what operating system user is using
-def GetSep():
-    if pf.system() == "Windows": # If os is windwos
-        return "\\" # Return \
-    else: # Is os is something else (mac or linux)
-        return "/" # Return /
-
-# Get version number from a file path
-def GetVersion(filePath):
-    versionList = re.findall(delimiter+"\d+",filePath) # Search delimiter+digits (e.g. _v001) string in file path and store those in a [list]
-    rawVersion = re.compile(delimiter).split(versionList[len(versionList)-1])[1] # Version number with zero padding [string]
-    #zeroPaddingSize = len(rawVersion) # How many zeros version number has [integer]
-    version = int(rawVersion) # Version number without zero padding [integer]
-    return version, rawVersion # (e.g. 1, 001)
-
-# Get a file name from a file path
-def FileName(filePath):
-    splitted = filePath.rsplit(GetSep()) # Split file path
-    fullFileName = splitted[len(splitted)-1] # Full file name with extension [string]
-    firstPart = re.compile(delimiter+"\d+").split(fullFileName)[0] # File name first part before delimiter+digits [string]
-    fileName = firstPart+delimiter+GetVersion(filePath)[1] # Base file name without extras [string]
-    lastPart = re.compile(delimiter+"\d+").split(fullFileName)[1] # File name last part after delimiter+digits [string]
-    return fullFileName, firstPart, lastPart, fileName # [string]
-
-""" Some unnecessary functions I wanted to keep
-# Get the current folde path and name from a full file path
-def CurrentFolder(filePath):
-    splitted = filePath.split(GetSep()) # Split file path to folders
-    folderName = splitted[len(splitted)-2] # Folder name [string]
-    folderPath = os.path.abspath(os.path.join(filePath,"..")) # Current folder path
-    return folderPath, folderName # [string]
-
-# Get parent folder path and name from a full file path
-def ParentFolder(filePath):
-    parentFolderPath = os.path.abspath(os.path.join(filePath,"../.."))
-    parentFolderName = os.path.basename(parentFolderPath)
-    return parentFolderPath, parentFolderName
-"""
-
-# Get master folder (e.g. ../ projectname_v001)
-def MasterFolder(filePath):
-    search = FileName(filePath)[3] # Search with file name
-    splitted = filePath.split(GetSep()) # Split file path to folders
-    pos = 0 # Initialize starting position
-    firstPos = 0
-    for s in splitted:
-        find = "".join(re.findall(search, s))
-        if find == search:
-            if firstPos == 0:
-                firstPos = pos
-                break
-        pos = pos + 1 # Moving forward
-    folder = splitted[:firstPos+1]
-    masterFolderPath = GetSep().join(folder) # Join list with os specific path separator
-    masterParentFolderPath = os.path.abspath(os.path.join(masterFolderPath,".."))
-    return masterFolderPath, masterParentFolderPath # [string]
-
-# Searches given file path to check different versions
-def GetVersions(searchPath, search):
-    modSearch = search+delimiter # Add delimiter to search string
-    versions = [] # List of collected versions
-    items = os.listdir(searchPath) # Items to go through
-    for i in items: # Loop through every file in folder
-        find = "".join(re.findall(modSearch, i)) # Search
-        if find == modSearch: # If it matches
-            versions.append(GetVersion(i)[0]) # Put version to versions list
-        versions = list(set(versions)) # Remove duplicates
-        versions.sort() # Sort list
-    return versions # [list]
-
-""" Some unnecessary function I wanted to keep
-# Finds out folders between current file and master folder
-def FoldersBetween(filePath):
-    search = FileName(filePath)[3] # Search base file name
-    splitted = filePath.split(GetSep()) # Split file path to folders
-    pos = 0 # Initialize starting position
-    firstPos = 0 # First found position
-    lastPos = 0 # Last found position
-    for s in splitted:
-        find = "".join(re.findall(search, s))
-        if find == search:
-            if firstPos == 0:
-                firstPos = pos
-            else:
-                lastPos = pos
-        pos = pos + 1 # Moving forward
-    count = lastPos-firstPos-1 # How many folders there are between master folder and file
-    foldersBetween = splitted[firstPos+1:] # Trim list from start
-    foldersBetween = foldersBetween[:-1] # Trim list from end
-    foldersBetweenPath = GetSep().join(foldersBetween) # Join list with os specific path separator
-    if count <= 0: # If there is no folders between
-        return "" # Return empty string
+# Check does the file exist
+def CheckFile(filePath):
+    if os.path.exists(filePath):
+        return True
     else:
-        return GetSep()+foldersBetweenPath # Return between path
-"""
+        return False
 
-# Update file path with given version number
-def GetNewPath(filePath, version):
-    oldVersion = GetVersion(filePath)[1] # Old version
-    zeroPadding = len(oldVersion) # Zero padding
-    newVersion = delimiter+str(version).zfill(zeroPadding) # New version with zero padding
-    #foldersBetween = FoldersBetween(filePath) # Folders between file and master folder
-    newPath = re.sub(r""+delimiter+oldVersion, newVersion, filePath) # New full file path
-    return newPath # [string]
+def UpdateFilePath(filePath, position):
+    path = os.path.normpath(filePath) # Normalize path
+    splittedPath = path.split(os.sep) # Split path
+    updatedPath = [] # Initialize a list for updated path
+    for part in splittedPath: # Iterate through splitted parts
+        found = re.findall(pattern, part) # Get versioning part
+        if len(found) != 0: # If version found
+            rawVersion = found[0]
+            version = re.findall(r"\d+", rawVersion)[0] # Parse digits
+            zpad = len(version) # Get zero padding size
+            number = int(version) # Get version number without zero padding
+            updatedNumber = position # Get updated version number
+            updatedVersion = str(updatedNumber).zfill(zpad) # Get updated version with zero padding
+            updatedRawVersion = re.sub(r"\d+", updatedVersion, rawVersion) # Replace old version with updated version
+            part = part.replace(rawVersion, updatedRawVersion) # Replace part with updated version
+        updatedPath.append(part) # Add part to the list        
+    resultPath = os.path.sep.join(updatedPath) # Join path
+    return resultPath
 
-# Get latest version number
-def LatestVersion(versions):
-    latestVersion = max(versions)
-    return latestVersion # [integer]
-
-# Return newer version
-def VersionUp(versions, currentVersion):
-    upList = [v for v in versions if v > currentVersion] # Collect higher versions than current version
-    if not upList: # If list is empty
-        up = currentVersion # Current version is latest
-    else:
-        up = min(upList)
-    return up # [integer]
-
-# Return older version
-def VersionDown(versions, currentVersion):
-    downList = [v for v in versions if v < currentVersion] # Collect lower versions than current version
-    if not downList: # If list is empty
-        down = currentVersion # Current version is oldest
-    else:
-        down = max(downList)
-    return down # [integer]
+def GetCurrentVersion(filePath):
+    path = os.path.normpath(filePath) # Normalize path
+    splittedPath = path.split(os.sep) # Split path
+    for part in splittedPath: # Iterate through splitted parts
+        found = re.findall(pattern, part) # Get versioning part
+        if len(found) != 0: # If version found
+            rawVersion = found[0]
+            version = re.findall(r"\d+", rawVersion)[0] # Parse digits
+            number = int(version) # Get version number without zero padding
+            return number
 
 # Refresh tool toggling pass through parameter on and off
-def Refresh(t):
-    d = t.GetAttrs()['TOOLB_PassThrough'] # Store tool's current state
-    t.SetAttrs({'TOOLB_PassThrough' : True}) # Set pass through on
-    t.SetAttrs({'TOOLB_PassThrough' : False}) # Set pass through off
-    t.SetAttrs({'TOOLB_PassThrough' : d}) # Put back old setting
+def Refresh(tool):
+    currentState = tool.GetAttrs()['TOOLB_PassThrough'] # Store tool's current state
+    tool.SetAttrs({'TOOLB_PassThrough' : True}) # Set pass through on
+    tool.SetAttrs({'TOOLB_PassThrough' : False}) # Set pass through off
+    tool.SetAttrs({'TOOLB_PassThrough' : currentState}) # Put back old setting
     return None
+
 #----------------------------------------------------------------------------------------------------------------
-# Run
+# Button functions
 #----------------------------------------------------------------------------------------------------------------
 def LatestRun():
+    """ Tries to get the newest version """
     tools = comp.GetToolList(True, "Loader") # Get selected loaders
     for t in tools: # For each selected loader
         filePath = tools[t].GetInput("Clip") # Loader's clip's file path
-        #--------------------------
-        masterFolder = MasterFolder(filePath)[1]
-        versions = GetVersions(masterFolder, FileName(filePath)[1])
-        latestVersion = LatestVersion(versions)
-        latestPath = GetNewPath(filePath, latestVersion)
-        #--------------------------
-        tools[t].SetInput("Clip", latestPath) # Update loader's clip
+
+        for i in range(1, tries + 1): # Try
+            latest = GetCurrentVersion(filePath) + i
+            customPath = UpdateFilePath(filePath, latest)
+
+            if CheckFile(customPath) == True: # If file exist
+                tools[t].SetInput("Clip", customPath + "")
+                tools[t].SetInput("Clip", customPath) # Update loader's clip
+
         Refresh(tools[t]) # Refresh the loader
     pass
 
 def VersionUpRun():
+    """ Tries to get one newer version """
     tools = comp.GetToolList(True, "Loader") # Get selected loaders
     for t in tools: # For each selected loader
         filePath = tools[t].GetInput("Clip") # Loader's clip's file path
-        #--------------------------
-        currentVersion = GetVersion(filePath)[0]
-        masterFolder = MasterFolder(filePath)[1]
-        versions = GetVersions(masterFolder, FileName(filePath)[1])
-        newVersion = VersionUp(versions, currentVersion)
-        newPath = GetNewPath(filePath, newVersion)
-        #--------------------------
-        tools[t].SetInput("Clip", newPath) # Update loader's clip
-        Refresh(tools[t]) # Refresh the loader
+
+        for i in range(1, tries + 1): # Try
+            versionUp = GetCurrentVersion(filePath) + i
+            customPath = UpdateFilePath(filePath, versionUp)
+
+            if CheckFile(customPath) == True: # If file exist
+                tools[t].SetInput("Clip", customPath + "")
+                tools[t].SetInput("Clip", customPath) # Update loader's clip
+                Refresh(tools[t]) # Refresh the loader
+                return # Break the loop
+        else:
+            print("Newer version not found!")
     pass
 
 def VersionDownRun():
+    """ Tries to get one older version """
     tools = comp.GetToolList(True, "Loader") # Get selected loaders
     for t in tools: # For each selected loader
         filePath = tools[t].GetInput("Clip") # Loader's clip's file path
-        #--------------------------
-        currentVersion = GetVersion(filePath)[0]
-        masterFolder = MasterFolder(filePath)[1]
-        versions = GetVersions(masterFolder, FileName(filePath)[1])
-        oldVersion = VersionDown(versions, currentVersion)
-        oldPath = GetNewPath(filePath, oldVersion)
-        #--------------------------
-        tools[t].SetInput("Clip", oldPath) # Update loader's clip
-        Refresh(tools[t]) # Refresh the loader
+
+        for i in range(1, tries + 1): # Try
+            versionDown = GetCurrentVersion(filePath) - i
+            customPath = UpdateFilePath(filePath, versionDown)
+
+            if CheckFile(customPath) == True: # If file exist
+                tools[t].SetInput("Clip", customPath + "")
+                tools[t].SetInput("Clip", customPath) # Update loader's clip
+                Refresh(tools[t]) # Refresh the loader
+                return # Break the loop
+        else:
+            print("Older version not found!")
     pass
 
 def CustomRun(customVersion):
+    """ Tries to get specific version given by user """
     tools = comp.GetToolList(True, "Loader") # Get selected loaders
     for t in tools: # For each selected loader
         filePath = tools[t].GetInput("Clip") # Loader's clip's file path
-        #--------------------------
-        currentVersion = GetVersion(filePath)[0]
-        customPath = GetNewPath(filePath, customVersion)
-        #--------------------------
-        tools[t].SetInput("Clip", customPath) # Update loader's clip
-        Refresh(tools[t]) # Refresh the loader
-    pass
 
-def NullRun():
-    tools = comp.GetToolList(True, "Loader") # Get selected loaders
-    for t in tools: # For each selected loader
-        filePath = tools[t].GetInput("Clip") # Loader's clip's file path
-        #--------------------------
-        currentVersion = GetVersion(filePath)[0]
-        nullPath = GetNewPath(filePath, currentVersion)
-        #--------------------------
-        tools[t].SetInput("Clip", nullPath) # Update loader's clip
-        Refresh(tools[t]) # Refresh the loader
+        customPath = UpdateFilePath(filePath, customVersion)
+        if CheckFile(customPath) == True: # If file exist
+            tools[t].SetInput("Clip", customPath + "")
+            tools[t].SetInput("Clip", customPath) # Update loader's clip
+            Refresh(tools[t]) # Refresh the loader
+        else:
+            print("Given version not found!")
     pass
-
 #----------------------------------------------------------------------------------------------------------------
 # Creating user interface
 #----------------------------------------------------------------------------------------------------------------
@@ -259,12 +172,14 @@ dlg = disp.AddWindow({ "WindowTitle": "Change Version", "ID": "MyWin", "Geometry
             ui.HGroup(
             [
                 #ui.LineEdit({ "ID": "VersionNumber", "Text": "", "PlaceholderText": "New version no.", }), # Input text field custom version
-                ui.SpinBox({ "ID": "VersionNumber", "Minimum":0, "Maximum":100000}), # Input text field custom version
+                ui.SpinBox({ "ID": "VersionNumber", "Value":1, "Minimum":0, "Maximum":100000}), # Input text field custom version
                 ui.Button({ "Text": "Custom", "ID": "Custom" }), # Button apply custom version
             ]),
         ]),
     ])
+
 itm = dlg.GetItems() # Collect ui items
+
 # The window was closed
 def _func(ev):
     disp.ExitLoop()
@@ -272,24 +187,24 @@ dlg.On.MyWin.Close = _func
 
 # GUI element based event functions
 def _func(ev):
-        customVersion = itm['VersionNumber'].Text
-        NullRun()
-        CustomRun(customVersion)
+    customVersion = itm['VersionNumber'].Value
+    #print("Custom Version: " + str(customVersion))
+    CustomRun(customVersion)
 dlg.On.Custom.Clicked = _func
 
 def _func(ev):
-        NullRun()
-        LatestRun()
+    #print("Latest Version")
+    LatestRun()
 dlg.On.Latest.Clicked = _func
 
 def _func(ev):
-        NullRun()
-        VersionUpRun()
+    #print("Version Up")
+    VersionUpRun()
 dlg.On.Up.Clicked = _func
 
 def _func(ev):
-        NullRun()
-        VersionDownRun()
+    #print("Version Down")
+    VersionDownRun()
 dlg.On.Down.Clicked = _func
 
 # Open the dialog
