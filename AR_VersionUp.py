@@ -4,17 +4,19 @@ AR_VersionUp
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: AR_VersionUp
-Version: 1.1.0
+Version: 1.2.0
 Description-US: Change easily between different versions
 
 Written for Blackmagic Design Fusion Studio 18.0.4 build 5
 Python version 3 (64-bit)
 
 Change log:
-1.1.0 (21.04.2024) - Rework
-1.0.2 (07.03.2024) - Cleaning etc
-1.0.1 (08.11.2022) - Semantic versioning
-1.0.0 (04.10.2021) - Initial release
+1.2.0 (22.04.2024)  - Added checkbox to keep loader's settings (trims and hold frames...)
+                    - Added checkbox to print information to console
+1.1.0 (21.04.2024)  - Rework, better algorithm
+1.0.2 (07.03.2024)  - Cleaning etc
+1.0.1 (08.11.2022)  - Semantic versioning
+1.0.0 (04.10.2021)  -  Initial release
 """
 
 # Installation path: %appdata%\Roaming\Blackmagic Design\Fusion\Scripts\Comp
@@ -30,7 +32,7 @@ import re
 # Global variables
 #----------------------------------------------------------------------------------------------------------------
 pattern = "(?:[^a-zA-Z]|^)v\d{1,4}(?:[^a-zA-Z]|$)" # Searches v1, v01, v001, v0001 types of versioning
-tries   = 50 # Amount of tries
+tries   = 50 # Amount of tries for looking newer or older version number
 #----------------------------------------------------------------------------------------------------------------
 # Functions
 #----------------------------------------------------------------------------------------------------------------
@@ -41,6 +43,7 @@ def CheckFile(filePath):
     else:
         return False
 
+# Update file path
 def UpdateFilePath(filePath, position):
     path = os.path.normpath(filePath) # Normalize path
     splittedPath = path.split(os.sep) # Split path
@@ -60,6 +63,7 @@ def UpdateFilePath(filePath, position):
     resultPath = os.path.sep.join(updatedPath) # Join path
     return resultPath
 
+# Get current version from the file path
 def GetCurrentVersion(filePath):
     path = os.path.normpath(filePath) # Normalize path
     splittedPath = path.split(os.sep) # Split path
@@ -79,77 +83,194 @@ def Refresh(tool):
     tool.SetAttrs({'TOOLB_PassThrough' : currentState}) # Put back old setting
     return None
 
+# Get loader's settings
+def GetLoaderSettings(tool):
+    settings = {} # Initialize a dictionary for storing settings
+
+    settings['GlobalIn']      = tool.GlobalIn[1]
+    settings['GlobalOut']     = tool.GlobalOut[1]
+    settings['TrimIn']        = tool.ClipTimeStart[1]
+    settings['TrimOut']       = tool.ClipTimeEnd[1]
+    settings['HoldFirst']     = tool.HoldFirstFrame[1]
+    settings['HoldLast']      = tool.HoldLastFrame[1]
+    settings['Reverse']       = tool.Reverse[1]
+    settings['Loop']          = tool.Loop[1]
+    settings['MissingFrames'] = tool.MissingFrames[1]
+
+    return settings
+
+# Set loader's settings
+def SetLoaderSettings(tool, settings):
+    tool.GlobalIn[1]       = settings['GlobalIn']
+    tool.GlobalOut[1]      = settings['GlobalOut']
+    tool.ClipTimeStart[1]  = settings['TrimIn']
+    tool.ClipTimeEnd[1]    = settings['TrimOut']
+    tool.HoldFirstFrame[1] = settings['HoldFirst']
+    tool.HoldLastFrame[1]  = settings['HoldLast']
+    tool.Reverse[1]        = settings['Reverse']    
+    tool.Loop[1]           = settings['Loop']       
+    tool.MissingFrames[1]  = settings['MissingFrames']
+
+    return True
+
 #----------------------------------------------------------------------------------------------------------------
-# Button functions
+# Main functions
 #----------------------------------------------------------------------------------------------------------------
-def LatestRun():
+def LatestRun(keepSettings, printData):
     """ Tries to get the newest version """
     tools = comp.GetToolList(True, "Loader") # Get selected loaders
     for t in tools: # For each selected loader
+        loaderName = tools[t].Name # Get loader's name
         filePath = tools[t].GetInput("Clip") # Loader's clip's file path
+        currentVersion = GetCurrentVersion(filePath) # Get current version
+
+        newerFound = False
+        latestValidPath = ""
+        latestValidVersion = 0
 
         for i in range(1, tries + 1): # Try
-            latest = GetCurrentVersion(filePath) + i
-            customPath = UpdateFilePath(filePath, latest)
+            latestVersion = currentVersion + i
+            updatedPath = UpdateFilePath(filePath, latestVersion)
 
-            if CheckFile(customPath) == True: # If file exist
-                tools[t].SetInput("Clip", customPath + "")
-                tools[t].SetInput("Clip", customPath) # Update loader's clip
+            if CheckFile(updatedPath) == True: # If file exist
+                
+                latestValidPath = updatedPath
+                latestValidVersion = latestVersion
 
-        Refresh(tools[t]) # Refresh the loader
+                settings = GetLoaderSettings(tools[t]) # Get loader's settings
+
+                tools[t].SetInput("Clip", updatedPath + "")
+                tools[t].SetInput("Clip", updatedPath) # Update loader's clip
+
+                if keepSettings: # If keepSettings is checked
+                    SetLoaderSettings(tools[t], settings) # Set loader's settings
+                
+                newerFound = True
+        
+        if newerFound: # If newer version found
+            Refresh(tools[t]) # Refresh the loader
+
+            # Print some data to console
+            if printData:
+                print("%s - Updated from v%s to v%s" % (loaderName, currentVersion, latestValidVersion))
+                print("\tOld path:\t\t%s" % filePath)
+                print("\tUpdated path:\t%s" % latestValidPath)
+
+        else: # If newer version not found
+            # Print some errors to console
+            if printData:
+                print("%s - Newer version not found!" % loaderName)
+
+
+
+
+
     pass
 
-def VersionUpRun():
+def VersionUpRun(keepSettings, printData):
     """ Tries to get one newer version """
     tools = comp.GetToolList(True, "Loader") # Get selected loaders
     for t in tools: # For each selected loader
+        loaderName = tools[t].Name # Get loader's name
         filePath = tools[t].GetInput("Clip") # Loader's clip's file path
+        currentVersion = GetCurrentVersion(filePath) # Get current version
 
         for i in range(1, tries + 1): # Try
-            versionUp = GetCurrentVersion(filePath) + i
-            customPath = UpdateFilePath(filePath, versionUp)
+            versionUp = currentVersion + i
+            updatedPath = UpdateFilePath(filePath, versionUp)
 
-            if CheckFile(customPath) == True: # If file exist
-                tools[t].SetInput("Clip", customPath + "")
-                tools[t].SetInput("Clip", customPath) # Update loader's clip
+            if CheckFile(updatedPath) == True: # If file exist
+
+                settings = GetLoaderSettings(tools[t]) # Get loader's settings
+
+                tools[t].SetInput("Clip", updatedPath + "")
+                tools[t].SetInput("Clip", updatedPath) # Update loader's clip
+
+                if keepSettings: # If keepSettings is checked
+                    SetLoaderSettings(tools[t], settings) # Set loader's settings
+
                 Refresh(tools[t]) # Refresh the loader
-                return # Break the loop
+
+                # Print some data to console
+                if printData:
+                    print("%s - Updated from v%s to v%s" % (loaderName, currentVersion, versionUp))
+                    print("\tOld path:\t\t%s" % filePath)
+                    print("\tUpdated path:\t%s" % updatedPath)
+
+                break # Break the loop
         else:
-            print("Newer version not found!")
+            # Print some errors to console
+            if printData:
+                print("%s - Newer version not found!" % loaderName)
     pass
 
-def VersionDownRun():
+def VersionDownRun(keepSettings, printData):
     """ Tries to get one older version """
     tools = comp.GetToolList(True, "Loader") # Get selected loaders
     for t in tools: # For each selected loader
+        loaderName = tools[t].Name # Get loader's name
         filePath = tools[t].GetInput("Clip") # Loader's clip's file path
+        currentVersion = GetCurrentVersion(filePath) # Get current version
 
         for i in range(1, tries + 1): # Try
-            versionDown = GetCurrentVersion(filePath) - i
-            customPath = UpdateFilePath(filePath, versionDown)
+            versionDown = currentVersion - i
+            updatedPath = UpdateFilePath(filePath, versionDown)
 
-            if CheckFile(customPath) == True: # If file exist
-                tools[t].SetInput("Clip", customPath + "")
-                tools[t].SetInput("Clip", customPath) # Update loader's clip
+            if CheckFile(updatedPath) == True: # If file exist
+
+                settings = GetLoaderSettings(tools[t]) # Get loader's settings
+
+                tools[t].SetInput("Clip", updatedPath + "")
+                tools[t].SetInput("Clip", updatedPath) # Update loader's clip
+
+                if keepSettings: # If keepSettings is checked
+                    SetLoaderSettings(tools[t], settings) # Set loader's settings
+
                 Refresh(tools[t]) # Refresh the loader
-                return # Break the loop
+
+                # Print some data to console
+                if printData:
+                    print("%s - Updated from v%s to v%s" % (loaderName, currentVersion, versionDown))
+                    print("\tOld path:\t\t%s" % filePath)
+                    print("\tUpdated path:\t%s" % updatedPath)
+
+                break # Break the loop
         else:
-            print("Older version not found!")
+            # Print some errors to console
+            if printData:
+                print("%s - Older version not found!" % loaderName)
     pass
 
-def CustomRun(customVersion):
+def CustomRun(customVersion, keepSettings, printData):
     """ Tries to get specific version given by user """
     tools = comp.GetToolList(True, "Loader") # Get selected loaders
     for t in tools: # For each selected loader
+        loaderName = tools[t].Name # Get loader's name
         filePath = tools[t].GetInput("Clip") # Loader's clip's file path
+        currentVersion = GetCurrentVersion(filePath) # Get current version
+        updatedPath = UpdateFilePath(filePath, customVersion)
+        if CheckFile(updatedPath) == True: # If file exist
 
-        customPath = UpdateFilePath(filePath, customVersion)
-        if CheckFile(customPath) == True: # If file exist
-            tools[t].SetInput("Clip", customPath + "")
-            tools[t].SetInput("Clip", customPath) # Update loader's clip
+            settings = GetLoaderSettings(tools[t]) # Get loader's settings
+
+            tools[t].SetInput("Clip", updatedPath + "")
+            tools[t].SetInput("Clip", updatedPath) # Update loader's clip
+
+            if keepSettings: # If keepSettings is checked
+                SetLoaderSettings(tools[t], settings) # Set loader's settings
+
             Refresh(tools[t]) # Refresh the loader
+
+            # Print some data to console
+            if printData:
+                print("%s - Updated from v%s to v%s" % (loaderName, currentVersion, customVersion))
+                print("\tOld path:\t\t%s" % filePath)
+                print("\tUpdated path:\t%s" % updatedPath)
+
         else:
-            print("Given version not found!")
+            # Print some errors to console
+            if printData:
+                print("%s - Given version not found!" % loaderName)
     pass
 #----------------------------------------------------------------------------------------------------------------
 # Creating user interface
@@ -175,6 +296,11 @@ dlg = disp.AddWindow({ "WindowTitle": "Change Version", "ID": "MyWin", "Geometry
                 ui.SpinBox({ "ID": "VersionNumber", "Value":1, "Minimum":0, "Maximum":100000}), # Input text field custom version
                 ui.Button({ "Text": "Custom", "ID": "Custom" }), # Button apply custom version
             ]),
+            ui.HGroup(
+            [
+                ui.CheckBox({ "ID": "Cbox_Keep", "Text": "Keep settings"}),
+                ui.CheckBox({ "ID": "Cbox_Print", "Text": "Print info"}),
+            ]),
         ]),
     ])
 
@@ -187,24 +313,28 @@ dlg.On.MyWin.Close = _func
 
 # GUI element based event functions
 def _func(ev):
+    keepSettings = itm['Cbox_Keep'].Checked
+    printData = itm['Cbox_Print'].Checked
     customVersion = itm['VersionNumber'].Value
-    #print("Custom Version: " + str(customVersion))
-    CustomRun(customVersion)
+    CustomRun(customVersion, keepSettings, printData)
 dlg.On.Custom.Clicked = _func
 
 def _func(ev):
-    #print("Latest Version")
-    LatestRun()
+    keepSettings = itm['Cbox_Keep'].Checked
+    printData = itm['Cbox_Print'].Checked
+    LatestRun(keepSettings, printData)
 dlg.On.Latest.Clicked = _func
 
 def _func(ev):
-    #print("Version Up")
-    VersionUpRun()
+    keepSettings = itm['Cbox_Keep'].Checked
+    printData = itm['Cbox_Print'].Checked
+    VersionUpRun(keepSettings, printData)
 dlg.On.Up.Clicked = _func
 
 def _func(ev):
-    #print("Version Down")
-    VersionDownRun()
+    keepSettings = itm['Cbox_Keep'].Checked
+    printData = itm['Cbox_Print'].Checked
+    VersionDownRun(keepSettings, printData)
 dlg.On.Down.Clicked = _func
 
 # Open the dialog
