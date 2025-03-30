@@ -9,16 +9,18 @@ Latest version **1.0** *(Released 30.03.2025)*
 - _30.03.2025_ Changelog started.
 
 ## Installation
-[Python 3 (64-bit)](https://www.python.org/downloads/) is required to run these scripts. Some scripts might require third-party libraries.  
-
-Put script files to one of these paths:  
-`C:/Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp`  
-`C:/Program Files/Blackmagic Design/Fusion 19/Scripts/Comp`  
-`C:/ProgramData/Blackmagic Design/Fusion/Scripts/Comp`  
-Or setup custom scripts path with **Path Map**.  
+1. Install [Python 3 (64-bit)](https://www.python.org/downloads/) if you don't have it installed. *Some scripts might require third-party libraries.*
+2. Download the latest AR_Scripts_Fusion [release](https://github.com/aturtur/fusion-scripts/releases).
+3. Put script files to one of these paths:  
+    - `C:/Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp`
+    - `C:/Program Files/Blackmagic Design/Fusion 19/Scripts/Comp`
+    - `C:/ProgramData/Blackmagic Design/Fusion/Scripts/Comp`
+    - Or setup custom scripts path with **Path Map**.
 
 ## How to use
-In Blackmagic Design Fusion select Script tab in the main toolbar and select the script you want to run.  
+In Blackmagic Design Fusion software select Script tab in the main toolbar and select the script you want to run.  
+
+**Notice that some scripts requires a specific tool selection and or active tool selection!**  
 
 # Script descriptions
 ### AR_2DTrackerTo3DSpace.py
