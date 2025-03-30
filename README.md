@@ -10,11 +10,12 @@ Latest version **1.0** *(Released 30.03.2025)*
 
 ## Installation
 [Python 3 (64-bit)](https://www.python.org/downloads/) is required to run these scripts. Some scripts might require third-party libraries.  
-Put script files to one of these paths:
-`C:/Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp`
-`C:/Program Files/Blackmagic Design/Fusion 19/Scripts/Comp`
-`C:/ProgramData/Blackmagic Design/Fusion/Scripts/Comp`
-Or setup custom scripts path with **Path Map**.
+
+Put script files to one of these paths:  
+`C:/Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp`  
+`C:/Program Files/Blackmagic Design/Fusion 19/Scripts/Comp`  
+`C:/ProgramData/Blackmagic Design/Fusion/Scripts/Comp`  
+Or setup custom scripts path with **Path Map**.  
 
 ## How to use
 In Blackmagic Design Fusion select Script tab in the main toolbar and select the script you want to run.  
@@ -26,6 +27,7 @@ Currenty uses only the first tracker of the tracker tool.
 
 ### AR_AlignImage.py
 Aligns merge node's foreground image according to the background image.  
+
 How to use: Select merge node that has foreground and background inputs connected,
 then press the button where you want to align the foreground image.  
 
@@ -57,10 +59,12 @@ Creates a Locator3D node connected to selected 3D shape.
 
 ### AR_CreateSaver.py
 Creates a saver for selected tools with custom export settings.  
+
 Edit the script to match your saver settings.  
 
 ### AR_CropToRoI.py
 Crops the canvas to the active viewport's region of interest.  
+
 Remember to select the correct viewport first and then run the script!  
 
 ### AR_DisableAllSavers.py
@@ -71,6 +75,7 @@ Enables all savers in the active composition.
 
 ### AR_FreezeFrame.py
 Creates a time_speed node that freezes frame at current frame.  
+
 *Fusion now has this functionality built-in to the TimeSpeed tool.*  
 
 ### AR_ImportFolder.py
@@ -85,10 +90,12 @@ Jumps to given frame in the timeline.
 
 ### AR_LoadersFromSavers.py
 Creates loaders from selected savers.  
+
 Currently uses in and out values from saver's region values *(needs an update!)*  
 
 ### AR_MergeComp.py
 Merges the given composition with the active one.  
+
 Basically copy pastes the given composition into the open composition.  
 
 ### AR_MoveAnchorPoint.py
@@ -152,7 +159,8 @@ Puts the cropped image back in place.
 
 ### AR_ReverseSetup.py
 Reverses the node setup of the selected tools (basic workflow).  
-Supported nodes:
+
+Supported nodes:  
 - Aces Transform (All Input Transforms can't we swapped to Output)
 - Brightness
 - Cineon Log
@@ -167,20 +175,26 @@ Creates a sample image setup for the selected tool(s).
 
 ### AR_ScaleToFitComp.py
 Scales foreground image to fit background image's width and height.  
+
 *Requires that the merge tool is active!*  
 
 ### AR_ScaleToFitCompHeight.py
 Scales proportionally foreground image to fit background image's height.  
+
 *Requires that the merge tool is active!*  
 
 ### AR_ScaleToFitCompWidth.py
 Scales proportionally foreground image to fit background image's width.  
+
 *Requires that the merge tool is active!*  
 
 ### AR_ScriptLauncher.py
 Search and run sripts easily.  
+
 Scans script from folder where AR_ScriptLauncher is located, subfolders included.  
+
 *Pyautogui module is recommended but not required.*  
+
 Highly recommended to add this script to hotkey:
 - View -> Customize Hotkeys...
     - Views -> New...
@@ -213,6 +227,7 @@ Splits the active tool in to tiles by given rows and clomuns.
 
 ### AR_TrimLoaderWithTimecode(SMPTE).py
 Trims the loader with SMPTE timecode.  
+
 Loader's media has to have timecode in its metadata.  
 
 ### AR_VersionUp.py
