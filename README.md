@@ -1,5 +1,5 @@
 # Aturtur's Fusion Scripts
-My collection of Blackmagic Fusion scripts ([@aturtur.bsky.social](https://bsky.app/profile/aturtur.bsky.social)).  
+My collection of Blackmagic Design Fusion scripts ([@aturtur.bsky.social](https://bsky.app/profile/aturtur.bsky.social)).  
 
 Latest version **1.0** *(Released 30.03.2025)*  
 
