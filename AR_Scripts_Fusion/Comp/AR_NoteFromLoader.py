@@ -3,9 +3,9 @@ AR_NoteFromLoader
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
-Name-US: Creates a sticky note filled with info from the selected loader(s).
-Version: 1.0.0
-Description-US: Creates sticky note filled with data from loader.
+Name-US: Note From Loader
+Version: 1.0.1
+Description-US: Creates a sticky note filled with info from the selected loader(s).
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
 Python version 3.10.8 (64-bit).
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.1 (30.03.2025) - Name fix.
 1.0.0 (25.09.2024) - Initial release.
 """
 # Libraries

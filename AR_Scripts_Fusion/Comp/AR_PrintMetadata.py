@@ -3,8 +3,8 @@ AR_PrintMetadata
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
-Name-US: Print metadata of the active tool.
-Version: 1.0.0
+Name-US: Print Metadata
+Version: 1.0.3
 Description-US: Prints metadata from active tool.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.3 (30.03.2025) - Name fix.
 1.0.2 (06.11.2024) - Changed print to use f-string.
 1.0.1 (25.09.2024) - Modified code to follow more PEP 8 recommendations.
 1.0.0 (20.10.2023) - Initial release.
