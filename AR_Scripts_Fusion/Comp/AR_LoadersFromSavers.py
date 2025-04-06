@@ -1,11 +1,11 @@
 """
-AR_LoadersFromSavers
+AR_LoaderFromSaver
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
-Name-US: Loaders From Savers
-Version: 1.0.2
-Description-US: Creates loaders from selected savers.
+Name-US: Loader From Saver
+Version: 1.1.0
+Description-US: Creates loader(s) from selected saver(s).
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
 Python version 3.10.8 (64-bit).
@@ -14,6 +14,7 @@ Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
                    Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Tool
                    
 Changelog:
+1.1.0 (05.04.2025) - Changed the way how the frame range is calculated.
 1.0.2 (25.09.2024) - Modified code to follow more PEP 8 recommendations.
                    - Uses saver's region start attribute as loader's global in value.
 1.0.1 (08.11.2022) - Semantic versioning.
@@ -31,23 +32,21 @@ bmd = bmd  # import BlackmagicFusion as bmd
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
-video_files = [".mov", ".mp4"]
-
 
 # Functions
-def find(file_name, folder_path) -> str:
-    """Tries to find the file in given folder path"""
+def find(file_name: str, folder_path: str) -> str | None:
+    """Tries to find the file from the given folder path"""
 
-    print(file_name)
-
-    pattern = '^'+file_name+'\d'  # Accept digits after the file name.
+    pattern = r'^' + file_name + r'\d'  # Accept digits after the file name.
     for file in listdir(folder_path):
         search = re.match(pattern, file)
         if search:
             return os.path.join(folder_path, file)
+        else:
+            return None
         
-def loader_from_saver(saver) -> any:
-    """Creates loader from saver."""
+def loader_from_saver(saver: any) -> any:
+    """Creates a loader from the given saver."""
 
     flow = comp.CurrentFrame.FlowView
     x, y = flow.GetPosTable(saver).values()
@@ -58,32 +57,74 @@ def loader_from_saver(saver) -> any:
     extension = os.path.splitext(file_path)[1]
     region_start = saver.GetAttrs()['TOOLNT_Region_Start'][1]
 
-    # Check if video file.
-    if extension in video_files:
+    # Video file.
+    if extension == ".mov":
         loader.SetInput("Clip", file_path)
 
-    # Otherwise image sequence.
+        # Set loader's ranges to match saver's region data.
+        clip_length = loader.GetInput("ClipTimeEnd")
+        loader.SetInput("GlobalOut", region_start + clip_length)
+        loader.SetInput("GlobalIn", region_start)
+        loader.SetInput("ClipTimeStart", 0)
+        loader.SetInput("ClipTimeEnd", clip_length)
+        loader.SetInput("HoldFirstFrame", 0)
+        loader.SetInput("HoldLastFrame", 0)
+
+    # Image sequence.
     else:
         name = file.replace(extension, "")
-        loader.SetInput("Clip", find(name, folder))
+        image_sequence_path = find(name, folder)
+        loader.SetInput("Clip", image_sequence_path)
+        file_start_frame, file_end_frame = get_frame_range(image_sequence_path)
+        file_length = file_end_frame - file_start_frame
+        print(file_start_frame, file_end_frame)
 
-    # Set loader's "global in" to match saver's "region start".
-    clip_length = loader.GetInput("ClipTimeEnd")
-    loader.SetInput("GlobalOut", region_start + clip_length)
-    loader.SetInput("GlobalIn", region_start)
-    loader.SetInput("ClipTimeStart", 0)
-    loader.SetInput("ClipTimeEnd", clip_length)
-    loader.SetInput("HoldFirstFrame", 0)
-    loader.SetInput("HoldLastFrame", 0)
+        # Set loader's ranges from found range data.
+        clip_length = loader.GetInput("ClipTimeEnd")
+        loader.SetInput("GlobalOut", file_start_frame + file_length)
+        loader.SetInput("GlobalIn", file_start_frame)
+        loader.SetInput("ClipTimeStart", 0)
+        loader.SetInput("ClipTimeEnd", file_length)
+        loader.SetInput("HoldFirstFrame", 0)
+        loader.SetInput("HoldLastFrame", 0)
 
     return loader
+
+
+def get_frame_range(file_path: str) -> tuple[int, int]:
+    """Returns first and last frame numbers from given image sequence path."""
+
+    clean_path = re.sub(r'(.*?)(\d+)\.[a-zA-Z]+$', r'\1', file_path)
+    file_name = os.path.basename(clean_path)
+    dir_path = os.path.dirname(file_path)
+    extension = os.path.splitext(file_path)[1]
+
+    found = False
+    first_frame = 0
+    last_frame = 0
+
+    file_name_pattern = rf"{re.escape(file_name)}\d+{re.escape(extension)}"
+    digits_pattern = r'\d+(?!.*\d)'
+
+    for file in sorted(os.listdir(dir_path)):
+        match = re.search(file_name_pattern, file)
+
+        if match:
+            frame_number = int(re.search(digits_pattern, file).group())
+            if found == False:
+                first_frame = frame_number
+                found = True
+            else:
+                last_frame = frame_number
+
+    return first_frame, last_frame
 
 
 def main() -> None:
     """The main function."""
 
     comp.Lock()
-    comp.StartUndo("Loaders from savers")
+    comp.StartUndo("Loader from saver")
 
     savers = comp.GetToolList(True, "Saver").values()
     for saver in savers:

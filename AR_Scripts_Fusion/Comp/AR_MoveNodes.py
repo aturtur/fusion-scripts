@@ -16,7 +16,7 @@ Changelog:
 1.0.0 (05.02.2025) - Initial realease.
 """
 # Libraries
-import os
+...
 
 
 # Global variables

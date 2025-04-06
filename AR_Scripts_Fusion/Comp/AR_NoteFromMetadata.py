@@ -16,8 +16,6 @@ Changelog:
 1.0.0 (09.11.2024) - Initial release.
 """
 # Libraries
-import os
-import re
 from pathlib import Path
 
 

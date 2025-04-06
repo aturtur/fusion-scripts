@@ -12,7 +12,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Normal function: Global range.
-Shift-modigier: Render range.
+Shift-modifier: Render range.
 
 Changelog:
 1.2.0 (09.10.2024)  - Name changed from AR_SetRange to AR_RangeManager.

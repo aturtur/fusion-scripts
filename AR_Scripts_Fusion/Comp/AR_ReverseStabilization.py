@@ -28,7 +28,7 @@ Changelog:
 1.0.0 (26.04.2021) - Initial release.
 """
 # Libraries
-import os
+...
 
 
 # Global variables

@@ -80,7 +80,6 @@ def join_tiles() -> None:
         for grid_x in range(grid_width):
             tool = grid[grid_y][grid_x]
             if tool:
-                print(f"Connecting {tool.GetAttrs('TOOLS_Name')} to MultiMerge layer {layer_index}")
                 multimerge_node.ConnectInput(f"Layer{layer_index}.Foreground", tool.Output)
                 transform_x = (grid_x + 0.5) / grid_width
                 transform_y = (grid_height - grid_y - 0.5) / grid_height

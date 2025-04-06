@@ -4,7 +4,7 @@ AR_ScriptLauncher
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Script Launcher
-Version: 1.1.0
+Version: 1.2.0
 Description-US: Search and run sripts easily.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -21,6 +21,8 @@ Highly recommended to add this script to hotkey:
             Scripts -> AR_ScriptLauncher
 
 Changelog:
+1.2.0 (xx.04.2025) - Added support for icons.
+1.1.1 (01.04.2025) - Error check for parsing data.
 1.1.0 (24.03.2025) - Parses info from the script file and uses that to populate the treeview.
 1.0.4 (27.02.2025) - Added Ctrl+Q hotkey to close the dialog.
 1.0.3 (05.02.2025) - Update, sending more important variables.
@@ -32,7 +34,7 @@ Changelog:
 import re
 import sys
 import inspect
-from  pathlib import Path
+from pathlib import Path
 import importlib.util
 from collections import Counter
 
@@ -49,10 +51,33 @@ fu = fu
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
+script_dir  = Path(inspect.getfile(lambda: None)).resolve().parent
+icon_folder = script_dir / "Icons"
+
+use_icons = True
+
+ALT: str = "ALT"
+CTRL: str = "CTRL"
+SHIFT: str = "SHIFT"
+
 scripts = {}
 
 
 # Functions
+def get_key_modifiers(ev: dict) -> list:
+    """Get keyboard modifiers."""
+
+    key_modifiers = []
+    if ev['modifiers']['AltModifier'] == True:
+        key_modifiers.append(ALT)
+    if ev['modifiers']['ControlModifier'] == True:
+        key_modifiers.append(CTRL)
+    if ev['modifiers']['ShiftModifier'] == True:
+        key_modifiers.append(SHIFT)
+
+    return key_modifiers
+
+
 def get_script_info(script) -> tuple[str, str]:
     """Parses script info from the script file."""
 
@@ -61,11 +86,17 @@ def get_script_info(script) -> tuple[str, str]:
 
     with open(script.resolve(), "r", encoding="utf-8") as file:
         for line in file:
-            if line.startswith("Name-US: "):
-                label = line.split("Name-US: ", 1)[1].strip()
-            if line.startswith("Description-US:"):
-                description = line.split("Description-US: ", 1)[1].strip()
-
+            try:
+                if line.startswith("Name-US: "):
+                    label = line.split("Name-US: ", 1)[1].strip()
+            except:
+                pass
+            try:
+                if line.startswith("Description-US:"):
+                    description = line.split("Description-US: ", 1)[1].strip()
+            except:
+                pass
+            
         return label, description
                 
     return label, description
@@ -87,7 +118,8 @@ def get_scripts() -> None:
         script_label, script_description = get_script_info(script)
 
         scripts[script_label] = {
-            "File Name": script.name,
+            "FileName": Path(script).stem,
+            "Extension": Path(script).suffix,
             "Description": script_description,
             "Path": script.resolve()
         }
@@ -98,8 +130,13 @@ def populate_tree(tree, scripts: dict) -> None:
 
     for script_name, details in scripts.items():
         itRow = tree.NewItem()
-        itRow.Text[0] = script_name
+        itRow.Text[0] = "  " + script_name
+        #itRow.Font[0] = ui.Font({ 'PointSize': 12})
         itRow.ToolTip[0] = details['Description']
+        if use_icons:
+            icon_path = icon_folder / f"{details['FileName']}.png"
+            if icon_path.exists():
+                itRow.Icon[0] = ui.Icon({"ID": "Orange", "File": str(icon_path)})
         tree.AddTopLevelItem(itRow)
 
 
@@ -130,7 +167,7 @@ def search(string: str, keyword: str) -> None:
 def get_script_path(name: str) -> str | None:
     """Gets script path by given script name."""
 
-    return scripts.get(name, {}).get("Path")
+    return scripts.get(name.strip(), {}).get("Path")
 
 
 def run_script(file_path: str) -> None:
@@ -178,7 +215,7 @@ def gui_geometry(width: int, height: int, x: float, y: float) -> dict:
     return {"width": gui_width, "height": gui_height, "x": gui_x, "y": gui_y}
 
 
-gui_geo = gui_geometry(300, 300, 0.5, 0.5)
+gui_geo = gui_geometry(350, 400, 0.5, 0.5)
 
 
 # GUI
@@ -233,21 +270,24 @@ itm = dlg.GetItems()
 # Scan and collect scipts.
 get_scripts()
 
-# Build tree.
-hdr = itm["Tree"].NewItem()
-hdr.Text[0] = "Script"
-itm["Tree"].SetHeaderItem(hdr)
-itm["Tree"].ColumnCount = 1
-populate_tree(itm["Tree"], scripts)
-select_first_item(itm["Tree"])
+# Build the tree.
+script_tree = itm['Tree']
+header = script_tree.NewItem()
+header.Text[0] = "Script"
+script_tree.SetHeaderItem(header)
+script_tree.ColumnCount = 1
+script_tree.IconSize = [25, 25]
+populate_tree(script_tree, scripts)
+select_first_item(script_tree)
 
 # Keyboard events.
 def _func(ev):
-    if ev['Modifiers']['ControlModifier'] == True and ev['Key'] == 81:  # Ctrl + Q.
+    key_modifiers = get_key_modifiers(ev)
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
         disp.ExitLoop()
         dlg.Hide()
 
-    if itm["Search"].HasFocus():
+    if itm['Search'].HasFocus():
         if ev['Key'] == 16777235: # Up.
             try:
                 press('tab')
@@ -262,14 +302,14 @@ def _func(ev):
                 pass
 
     if ev['Key'] == 16777220: # Enter.
-        current_item = itm["Tree"].CurrentItem()
-        count = itm["Tree"].TopLevelItemCount()
+        current_item = script_tree.CurrentItem()
+        count = script_tree.TopLevelItemCount()
         script_name = None
 
         if current_item is not None:
             script_name = current_item.Text[0]
         elif count > 0:
-            script_name = itm["Tree"].ItemAt(count).Text[0]
+            script_name = script_tree.ItemAt(count).Text[0]
 
         disp.ExitLoop()
         dlg.Hide()
@@ -283,24 +323,24 @@ dlg.On.MyWin.KeyPress = _func
 def _func(ev):
     disp.ExitLoop()
     dlg.Hide()
-    run_script(get_script_path(str(ev["item"].Text[0])))
+    run_script(get_script_path(str(ev['item'].Text[0])))
 dlg.On.Tree.ItemDoubleClicked = _func
 
 
 # LineEdit changed.
 def _func(ev):
-    if itm["Search"].Text == "":
-        clear_tree(itm["Tree"])
-        populate_tree(itm["Tree"], scripts)
+    if itm['Search'].Text == "":
+        clear_tree(script_tree)
+        populate_tree(script_tree, scripts)
     else:
-        clear_tree(itm["Tree"])
+        clear_tree(script_tree)
         filtered_scripts = {}
-        keyword = itm["Search"].Text
+        keyword = itm['Search'].Text
         for script_name, script_data in scripts.items():
             if search(script_name, keyword):
                 filtered_scripts[script_name] = script_data
-        populate_tree(itm["Tree"], filtered_scripts)
-        select_first_item(itm["Tree"])
+        populate_tree(script_tree, filtered_scripts)
+        select_first_item(script_tree)
 dlg.On['Search'].TextChanged = _func
 
 

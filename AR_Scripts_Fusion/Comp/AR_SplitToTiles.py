@@ -69,10 +69,10 @@ def split_to_tiles(tool, rows: int, columns: int, join: bool) -> None:
                 transform_node = comp.AddTool("Transform", math.floor(x)+2+columns-j, math.floor(y)-i)
                 transform_node.SetInput("Input", crop_node)
                 transform_node.SetInput("Center", {1: transform_x,
-                                                2: transform_y})
+                                                   2: transform_y})
                 transform_nodes.append(transform_node)
     if join:
-        multimerge_node = comp.AddTool("MultiMerge")
+        multimerge_node = comp.AddTool("MultiMerge", math.floor(x)+4+columns-j, math.floor(y)+2-i)
         multimerge_node.Background = tool.Output
         for i, transform in enumerate(transform_nodes):
             multimerge_node.ConnectInput(f"Layer{i+1}.Foreground", transform.Output)

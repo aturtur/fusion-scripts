@@ -220,7 +220,7 @@ dlg  = disp.AddWindow({"WindowTitle": "Import Folder",
         [
             # GUI elements.
 
-            # Select folder path.
+            # Select the folder path.
             ui.HGroup(
             [
                 ui.Label({"Text": "Folder Path", "ID": "Label_FolderPath", "Weight": 0.1}),
@@ -232,7 +232,7 @@ dlg  = disp.AddWindow({"WindowTitle": "Import Folder",
             ui.HGroup(
             [
                 ui.ComboBox({"ID": "ComboBox", "Weight": 0.4}),
-                ui.Label({"Text": "Custom Frame:", "ID": "Label_Combobox", "Weight": 0.1}),
+                ui.Label({"Text": "Custom Start Frame:", "ID": "Label_CustomStartFrame", "Weight": 0.1}),
                 ui.SpinBox({"ID": "CustomFrame", "Minimum": 0, "Maximum": 1000000, "Weight": 0.5}),
             ]),
 
@@ -290,7 +290,7 @@ dlg.On.BTN_Browse.Clicked = _func
 # Create loaders.
 def _func(ev):
     comp.StartUndo("Create Loaders")
-    comp.Lock()  # Put composition to lock mode, so it won't open dialogs.
+    comp.Lock()  # Put the composition to lock mode, so it won't open dialogs.
 
     subfolders = itm['CHK_Subfolders'].Checked
     merge = itm['CHK_Merge'].Checked

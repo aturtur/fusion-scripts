@@ -7,19 +7,22 @@ Name-US: Jump To Frame
 Version: 1.2.0
 Description-US: Jumps to given frame in the timeline.
 
+Tip: Use Ctrl + 1-8 to jump to the frame.
+
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
 Python version 3.10.8 (64-bit).
 
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.3.0 (06.04.2025) - Added hotkeys to jump to frame (Ctrl + 1-8).
 1.2.0 (29.09.2024) - Added load and save buttons. Stores data to sticky note!
 1.1.1 (25.09.2024) - Changed code to follow more PEP 8 recommendations.
 1.1.0 (21.04.2024) - Added get buttons.
 1.0.0 (25.03.2023) - Initial release.
 """
 # Libraries
-import os
+...
 
 
 # Global variables
@@ -29,7 +32,6 @@ comp = comp  # comp = fusion.GetCurrentComp()
 
 note_name = "JumpToFrame"
 alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
-
 
 # Functions
 def load_values(itm) -> None:
@@ -122,6 +124,9 @@ disp = bmd.UIDispatcher(ui)
 
 dlg  = disp.AddWindow({"WindowTitle": "Jump To Frame",
                        "ID": "MyWin",
+                       "Events": {"Close": True,
+                                  "KeyPress": True,
+                                  "KeyRelease": True},
                        "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']], },
     [
         ui.VGroup({"Spacing": 5},
@@ -198,6 +203,27 @@ itm = dlg.GetItems()
 def _func(ev):
     disp.ExitLoop()
 dlg.On.MyWin.Close = _func
+
+
+# Keyboard events.
+def _func(ev):
+    if ev['Key'] == 49:  # Ctrl + 1 (!).
+        jump_to_frame(itm['FRM_A'].Value)
+    if ev['Key'] == 50:  # Ctrl + 2 (").
+        jump_to_frame(itm['FRM_B'].Value)
+    if ev['Key'] == 51:  # Ctrl + 3 (#).
+        jump_to_frame(itm['FRM_C'].Value)
+    if ev['Key'] == 52:  # Ctrl + 4 (¤).
+        jump_to_frame(itm['FRM_D'].Value)
+    if ev['Key'] == 53:  # Ctrl + 5 (%).
+        jump_to_frame(itm['FRM_E'].Value)
+    if ev['Key'] == 54:  # Ctrl + 6 (&).
+        jump_to_frame(itm['FRM_F'].Value)
+    if ev['Key'] == 55:  # Ctrl + 7 (/).
+        jump_to_frame(itm['FRM_G'].Value)
+    if ev['Key'] == 56:  # Ctrl + 8 (().
+        jump_to_frame(itm['FRM_H'].Value)
+dlg.On.MyWin.KeyPress = _func
 
 
 # Set frame.

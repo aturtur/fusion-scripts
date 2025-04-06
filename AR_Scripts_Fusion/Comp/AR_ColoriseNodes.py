@@ -33,22 +33,22 @@ script_dir  = Path(inspect.getfile(lambda: None)).resolve().parent
 icon_folder = script_dir / "Icons"
 
 # Color icon paths.
-orange_icon     = icon_folder / "orange.png"
-apricot_icon    = icon_folder / "apricot.png"
-yellow_icon     = icon_folder / "yellow.png"
-lime_icon       = icon_folder / "lime.png"
-olive_icon      = icon_folder / "olive.png"
-green_icon      = icon_folder / "green.png"
-teal_icon       = icon_folder / "teal.png"
-navy_icon       = icon_folder / "navy.png"
-blue_icon       = icon_folder / "blue.png"
-purple_icon     = icon_folder / "purple.png"
-violet_icon     = icon_folder / "violet.png"
-pink_icon       = icon_folder / "pink.png"
-tan_icon        = icon_folder / "tan.png"
-beige_icon      = icon_folder / "beige.png"
-brown_icon      = icon_folder / "brown.png"
-chocolate_icon  = icon_folder / "chocolate.png"
+orange_icon     = icon_folder / "color_orange.png"
+apricot_icon    = icon_folder / "color_apricot.png"
+yellow_icon     = icon_folder / "color_yellow.png"
+lime_icon       = icon_folder / "color_lime.png"
+olive_icon      = icon_folder / "color_olive.png"
+green_icon      = icon_folder / "color_green.png"
+teal_icon       = icon_folder / "color_teal.png"
+navy_icon       = icon_folder / "color_navy.png"
+blue_icon       = icon_folder / "color_blue.png"
+purple_icon     = icon_folder / "color_purple.png"
+violet_icon     = icon_folder / "color_violet.png"
+pink_icon       = icon_folder / "color_pink.png"
+tan_icon        = icon_folder / "color_tan.png"
+beige_icon      = icon_folder / "color_beige.png"
+brown_icon      = icon_folder / "color_brown.png"
+chocolate_icon  = icon_folder / "color_chocolate.png"
 
 # Color dictionary.
 colors = {
@@ -125,7 +125,7 @@ dlg  = disp.AddWindow({ "WindowTitle": "Colorise Nodes",
                         },
                         "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']], },
     [
-        ui.VGroup({ "Spacing": 5, },
+        ui.VGroup({"Spacing": 5},
         [
             ui.Button({"Text": " Default", "ID": "Clear", }),
             ui.Button({"Text": "     Orange", "ID": "Orange", "Icon": ui.Icon({"ID": "Orange", "File": str(orange_icon)})}),
