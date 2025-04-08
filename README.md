@@ -45,7 +45,7 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 **Default:** Creates a setup that converts active 2D tracker's point to 3D space.  
 
 ### AR_AlignImage *(GUI)*
-**Default:**Aligns merge node's foreground image according to the background image.  
+**Default:** Aligns merge node's foreground image according to the background image.  
 
 **How to use:** Select merge node that has foreground and background inputs connected,
 then press the button where you want to align the foreground image.  
@@ -57,7 +57,7 @@ then press the button where you want to align the foreground image.
 **Default:** Auto crops selected tools.  
 
 ### AR_CleanNodeNames
-**Default:**  Cleans node names (eg. ..._1_1_1_1_1).  
+**Default:** Cleans node names (eg. ..._1_1_1_1_1).  
 *Supports expressions.*  
 
 ### AR_ClearViews
@@ -69,7 +69,7 @@ then press the button where you want to align the foreground image.
 
 ### AR_CopyToolNameToClipboard
 **Default:** Copies selected tool(s) name(s) to the clipboard.  
-**Dependencies:**: Pyperclip.  
+**Dependencies:** Pyperclip.  
 
 ### AR_ColoriseSaversPink
 **Default:** Colorises all savers to pink.  
@@ -78,11 +78,11 @@ then press the button where you want to align the foreground image.
 **Default:** Creates a Locator3D node connected to selected 3D shape.  
 
 ### AR_CreateSaver
-**Default:**Creates a saver for selected tools with custom export settings.  
+**Default:** Creates a saver for selected tools with custom export settings.  
 *Edit the script to match your saver settings.*  
 
 ### AR_CropToRoI
-**Default:**Crops the canvas to the active viewport's region of interest.  
+**Default:** Crops the canvas to the active viewport's region of interest.  
 *Select first the correct viewport and then run the script!*  
 
 ### AR_DisableAllSavers
