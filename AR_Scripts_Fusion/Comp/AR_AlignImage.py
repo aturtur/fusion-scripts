@@ -66,31 +66,31 @@ def align_image(method: str) -> None:
     step_x = interpolate(0.5, 0, bg_width, 0, fg_width)
     step_y = interpolate(0.5, 0, bg_height, 0, fg_height)
 
-    if method == "BTN_BOT_LEFT":
+    if method == "Button_Bot_Left":
         pos_x = step_x * merge_scale
         pos_y = step_y * merge_scale
-    elif method == "BTN_BOT_CENTER":
+    elif method == "Button_Bot_Center":
         pos_x = 0.5
         pos_y = step_y * merge_scale
-    elif method == "BTN_BOT_RIGHT":
+    elif method == "Button_Bot_Right":
         pos_x = 1-step_x * merge_scale
         pos_y = step_y * merge_scale
-    elif method == "BTN_MID_LEFT":
+    elif method == "Button_Mid_Left":
         pos_x = step_x * merge_scale
         pos_y = 0.5
-    elif method == "BTN_MID_CENTER":
+    elif method == "Button_Mid_Center":
         pos_x = 0.5
         pos_y = 0.5
-    elif method == "BTN_MID_RIGHT":
+    elif method == "Button_Mid_Right":
         pos_x = 1-step_x * merge_scale
         pos_y = 0.5
-    elif method == "BTN_TOP_LEFT":
+    elif method == "Button_Top_Left":
         pos_x = step_x * merge_scale
         pos_y = 1-step_y * merge_scale
-    elif method == "BTN_TOP_CENTER":
+    elif method == "Button_Top_Center":
         pos_x = 0.5
         pos_y = 1-step_y * merge_scale
-    elif method == "BTN_TOP_RIGHT":
+    elif method == "Button_Top_Right":
         pos_x = 1-step_x * merge_scale
         pos_y = 1-step_y * merge_scale
 
@@ -161,27 +161,28 @@ dlg  = disp.AddWindow({"WindowTitle": "Align Image",
                           "WindowMaximizeButtonHint": False,
                           "WindowCloseButtonHint": True,
                         },
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']], },
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       },
     [
-        ui.VGroup({ "Spacing": 5, },
+        ui.VGroup({"Spacing": 5},
         [
             ui.HGroup([
-                ui.Button({"Text": "┌", "ID": "BTN_TOP_LEFT"}),
-                ui.Button({"Text": "┬", "ID": "BTN_TOP_CENTER"}),
-                ui.Button({"Text": "┐", "ID": "BTN_TOP_RIGHT"}),
+                ui.Button({"Text": "┌", "ID": "Button_Top_Left"}),
+                ui.Button({"Text": "┬", "ID": "Button_Top_Center"}),
+                ui.Button({"Text": "┐", "ID": "Button_Top_Right"}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "├", "ID": "BTN_MID_LEFT"}),
-                ui.Button({"Text": "┼", "ID": "BTN_MID_CENTER"}),
-                ui.Button({"Text": "┤", "ID": "BTN_MID_RIGHT"}),
+                ui.Button({"Text": "├", "ID": "Button_Mid_Left"}),
+                ui.Button({"Text": "┼", "ID": "Button_Mid_Center"}),
+                ui.Button({"Text": "┤", "ID": "Button_Mid_Right"}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "└", "ID": "BTN_BOT_LEFT"}),
-                ui.Button({"Text": "┴", "ID": "BTN_BOT_CENTER"}),
-                ui.Button({"Text": "┘", "ID": "BTN_BOT_RIGHT"}),
+                ui.Button({"Text": "└", "ID": "Button_Bot_Left"}),
+                ui.Button({"Text": "┴", "ID": "Button_Bot_Center"}),
+                ui.Button({"Text": "┘", "ID": "Button_Bot_Right"}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "Convert to Transform", "ID": "BTN_CONVERT"}),
+                ui.Button({"Text": "Convert to Transform", "ID": "Button_Convert"}),
             ]),
         ]),
     ])
@@ -207,21 +208,21 @@ def _func(ev):
     else:
         print("This script only supports the merge tool!")
     comp.EndUndo(True)
-dlg.On.BTN_TOP_LEFT.Clicked = _func
-dlg.On.BTN_TOP_CENTER.Clicked = _func
-dlg.On.BTN_TOP_RIGHT.Clicked = _func
-dlg.On.BTN_MID_LEFT.Clicked = _func
-dlg.On.BTN_MID_CENTER.Clicked = _func
-dlg.On.BTN_MID_RIGHT.Clicked = _func
-dlg.On.BTN_BOT_LEFT.Clicked = _func
-dlg.On.BTN_BOT_CENTER.Clicked = _func
-dlg.On.BTN_BOT_RIGHT.Clicked = _func
+dlg.On.Button_Top_Left.Clicked = _func
+dlg.On.Button_Top_Center.Clicked = _func
+dlg.On.Button_Top_Right.Clicked = _func
+dlg.On.Button_Mid_Left.Clicked = _func
+dlg.On.Button_Mid_Center.Clicked = _func
+dlg.On.Button_Mid_Right.Clicked = _func
+dlg.On.Button_Bot_Left.Clicked = _func
+dlg.On.Button_Bot_Center.Clicked = _func
+dlg.On.Button_Bot_Right.Clicked = _func
 
 def _func(ev):
     comp.StartUndo("Convert")
     convert_merge_to_transform()
     comp.EndUndo(True)
-dlg.On.BTN_CONVERT.Clicked = _func
+dlg.On.Button_Convert.Clicked = _func
 
 
 # Open the dialog.

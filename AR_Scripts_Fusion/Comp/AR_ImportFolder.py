@@ -213,10 +213,10 @@ ui   = fusion.UIManager
 disp = bmd.UIDispatcher(ui)
 dlg  = disp.AddWindow({"WindowTitle": "Import Folder",
                        "ID": "MyWin",
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
                        },
     [
-        ui.VGroup({"Spacing": 5,},
+        ui.VGroup({"Spacing": 5},
         [
             # GUI elements.
 
@@ -224,32 +224,32 @@ dlg  = disp.AddWindow({"WindowTitle": "Import Folder",
             ui.HGroup(
             [
                 ui.Label({"Text": "Folder Path", "ID": "Label_FolderPath", "Weight": 0.1}),
-                ui.LineEdit({"Text": "", "PlaceholderText": "Please Enter the Folder Path", "ID": "FolderPath", "Weight": 0.9}),
-                ui.Button({"Text": "...", "ID": "BTN_Browse", "Weight": 0.1}),
+                ui.LineEdit({"Text": "", "PlaceholderText": "Please Enter the Folder Path", "ID": "Lineedit_FolderPath", "Weight": 0.9}),
+                ui.Button({"Text": "...", "ID": "Button_Browse", "Weight": 0.1}),
             ]),
 
             # Combobox and custom frame input.
             ui.HGroup(
             [
-                ui.ComboBox({"ID": "ComboBox", "Weight": 0.4}),
+                ui.ComboBox({"ID": "Combobox_Method", "Weight": 0.4}),
                 ui.Label({"Text": "Custom Start Frame:", "ID": "Label_CustomStartFrame", "Weight": 0.1}),
-                ui.SpinBox({"ID": "CustomFrame", "Minimum": 0, "Maximum": 1000000, "Weight": 0.5}),
+                ui.SpinBox({"ID": "Spinbox_CustomFrame", "Minimum": 0, "Maximum": 1000000, "Weight": 0.5}),
             ]),
 
             # Checkboxes.
             ui.HGroup(
             [
-                ui.CheckBox({"Text": "Select tools", "ID": "CHK_Select"}),
-                ui.CheckBox({"Text": "Merge imported", "ID": "CHK_Merge"}),
-                ui.CheckBox({"Text": "Include subfolders", "ID": "CHK_Subfolders", "ToolTip": "Warning!\nScanning all subfolders might take a long time!"}),
+                ui.CheckBox({"Text": "Select tools", "ID": "Checkbox_Select"}),
+                ui.CheckBox({"Text": "Merge imported", "ID": "Checkbox_Merge"}),
+                ui.CheckBox({"Text": "Include subfolders", "ID": "Checkbox_Subfolders", "ToolTip": "Warning!\nScanning all subfolders might take a long time!"}),
             ]),
 
 
             # Import and Cancel buttons.
             ui.HGroup(
             [
-                ui.Button({"Text": "Import", "ID": "BTN_Import", "Weight": 0.5}),
-                ui.Button({"Text": "Cancel", "ID": "BTN_Cancel", "Weight": 0.5}),
+                ui.Button({"Text": "Import", "ID": "Button_Import", "Weight": 0.5}),
+                ui.Button({"Text": "Cancel", "ID": "Button_Cancel", "Weight": 0.5}),
             ]),
         ]),
     ])
@@ -259,32 +259,32 @@ dlg  = disp.AddWindow({"WindowTitle": "Import Folder",
 itm = dlg.GetItems()
 
 # Add combobox items.
-itm['ComboBox'].AddItem("Custom starting frame")
-itm['ComboBox'].AddItem("Starting frame from file")
+itm['Combobox_Method'].AddItem("Custom starting frame")
+itm['Combobox_Method'].AddItem("Starting frame from file")
 
 # Default settings.
-itm['CHK_Select'].Checked = True
+itm['Checkbox_Select'].Checked = True
 
 
 def combo_changed(ev):
-    selected_index = itm['ComboBox'].CurrentIndex
-    itm['CustomFrame'].Enabled = (selected_index == 0) 
-dlg.On.ComboBox.CurrentIndexChanged = combo_changed
+    selected_index = itm['Combobox_Method'].CurrentIndex
+    itm['Spinbox_CustomFrame'].Enabled = (selected_index == 0) 
+dlg.On.Combobox_Method.CurrentIndexChanged = combo_changed
 
 
 # The window was closed.
 def _func(ev):
     disp.ExitLoop()
 dlg.On.MyWin.Close = _func
-dlg.On.BTN_Cancel.Clicked = _func
+dlg.On.Button_Cancel.Clicked = _func
 
 
 # Browse the folder path.
 def _func(ev):
-    selectedFolderPath = fusion.RequestDir(itm['FolderPath'].Text)
+    selectedFolderPath = fusion.RequestDir(itm['Lineedit_FolderPath'].Text)
     if selectedFolderPath:
-        itm['FolderPath'].Text = str(selectedFolderPath)
-dlg.On.BTN_Browse.Clicked = _func
+        itm['Lineedit_FolderPath'].Text = str(selectedFolderPath)
+dlg.On.Button_Browse.Clicked = _func
 
 
 # Create loaders.
@@ -292,23 +292,23 @@ def _func(ev):
     comp.StartUndo("Create Loaders")
     comp.Lock()  # Put the composition to lock mode, so it won't open dialogs.
 
-    subfolders = itm['CHK_Subfolders'].Checked
-    merge = itm['CHK_Merge'].Checked
-    select = itm['CHK_Select'].Checked
+    subfolders = itm['Checkbox_Subfolders'].Checked
+    merge = itm['Checkbox_Merge'].Checked
+    select = itm['Checkbox_Select'].Checked
 
-    starting_frame_method = itm['ComboBox'].CurrentText
-    custom_frame = itm['CustomFrame'].Value
+    starting_frame_method = itm['Combobox_Method'].CurrentText
+    custom_frame = itm['Spinbox_CustomFrame'].Value
 
     flow = comp.CurrentFrame.FlowView
     if select:
         flow.Select()  # Deselect all tools.
 
-    items = collect_items(itm['FolderPath'].Text, subfolders)
+    items = collect_items(itm['Lineedit_FolderPath'].Text, subfolders)
     create_loaders(items, merge, select, starting_frame_method, custom_frame)
 
     comp.Unlock()
     comp.EndUndo(True)
-dlg.On.BTN_Import.Clicked = _func
+dlg.On.Button_Import.Clicked = _func
 
 
 # Open the dialog.

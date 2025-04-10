@@ -123,27 +123,28 @@ dlg  = disp.AddWindow({ "WindowTitle": "Colorise Nodes",
                             "WindowMaximizeButtonHint": False,
                             "WindowCloseButtonHint": True,
                         },
-                        "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']], },
+                        "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                        },
     [
         ui.VGroup({"Spacing": 5},
         [
-            ui.Button({"Text": " Default", "ID": "Clear", }),
-            ui.Button({"Text": "     Orange", "ID": "Orange", "Icon": ui.Icon({"ID": "Orange", "File": str(orange_icon)})}),
-            ui.Button({"Text": "      Apricot", "ID": "Apricot", "Icon": ui.Icon({"ID": "Apricot", "File": str(apricot_icon)})}),
-            ui.Button({"Text": "       Yellow", "ID": "Yellow", "Icon": ui.Icon({"ID": "Yellow", "File": str(yellow_icon)})}),
-            ui.Button({"Text": "          Lime", "ID": "Lime", "Icon": ui.Icon({"ID": "Lime", "File": str(lime_icon)})}),
-            ui.Button({"Text": "          Olive", "ID": "Olive", "Icon": ui.Icon({"ID": "Olive", "File": str(olive_icon)})}),
-            ui.Button({"Text": "        Green", "ID": "Green", "Icon": ui.Icon({"ID": "Green", "File": str(green_icon)})}),
-            ui.Button({"Text": "            Teal", "ID": "Teal", "Icon": ui.Icon({"ID": "Teal", "File": str(teal_icon)})}),
-            ui.Button({"Text": "           Navy", "ID": "Navy", "Icon": ui.Icon({"ID": "Navy", "File": str(navy_icon)})}),
-            ui.Button({"Text": "           Blue", "ID": "Blue", "Icon": ui.Icon({"ID": "Blue", "File": str(blue_icon)})}),
-            ui.Button({"Text": "       Purple", "ID": "Purple", "Icon": ui.Icon({"ID": "Purple", "File": str(purple_icon)})}),
-            ui.Button({"Text": "         Violet", "ID": "Violet", "Icon": ui.Icon({"ID": "Violet", "File": str(violet_icon)})}),
-            ui.Button({"Text": "           Pink", "ID": "Pink", "Icon": ui.Icon({"ID": "Pink", "File": str(pink_icon)})}),
-            ui.Button({"Text": "            Tan", "ID": "Tan", "Icon": ui.Icon({"ID": "Tan", "File": str(tan_icon)})}),
-            ui.Button({"Text": "         Beige", "ID": "Beige", "Icon": ui.Icon({"ID": "Beige", "File": str(beige_icon)})}),
-            ui.Button({"Text": "        Brown", "ID": "Brown", "Icon": ui.Icon({"ID": "Brown", "File": str(brown_icon)})}),
-            ui.Button({"Text": "  Chocolate", "ID": "Chocolate", "Icon": ui.Icon({"ID": "Chocolate", "File": str(chocolate_icon)})})
+            ui.Button({"Text": " Default", "ID": "Button_Clear", }),
+            ui.Button({"Text": "     Orange", "ID": "Button_Orange", "Icon": ui.Icon({"ID": "Orange", "File": str(orange_icon)})}),
+            ui.Button({"Text": "      Apricot", "ID": "Button_Apricot", "Icon": ui.Icon({"ID": "Apricot", "File": str(apricot_icon)})}),
+            ui.Button({"Text": "       Yellow", "ID": "Button_Yellow", "Icon": ui.Icon({"ID": "Yellow", "File": str(yellow_icon)})}),
+            ui.Button({"Text": "          Lime", "ID": "Button_Lime", "Icon": ui.Icon({"ID": "Lime", "File": str(lime_icon)})}),
+            ui.Button({"Text": "          Olive", "ID": "Button_Olive", "Icon": ui.Icon({"ID": "Olive", "File": str(olive_icon)})}),
+            ui.Button({"Text": "        Green", "ID": "Button_Green", "Icon": ui.Icon({"ID": "Green", "File": str(green_icon)})}),
+            ui.Button({"Text": "            Teal", "ID": "Button_Teal", "Icon": ui.Icon({"ID": "Teal", "File": str(teal_icon)})}),
+            ui.Button({"Text": "           Navy", "ID": "Button_Navy", "Icon": ui.Icon({"ID": "Navy", "File": str(navy_icon)})}),
+            ui.Button({"Text": "           Blue", "ID": "Button_Blue", "Icon": ui.Icon({"ID": "Blue", "File": str(blue_icon)})}),
+            ui.Button({"Text": "       Purple", "ID": "Button_Purple", "Icon": ui.Icon({"ID": "Purple", "File": str(purple_icon)})}),
+            ui.Button({"Text": "         Violet", "ID": "Button_Violet", "Icon": ui.Icon({"ID": "Violet", "File": str(violet_icon)})}),
+            ui.Button({"Text": "           Pink", "ID": "Button_Pink", "Icon": ui.Icon({"ID": "Pink", "File": str(pink_icon)})}),
+            ui.Button({"Text": "            Tan", "ID": "Button_Tan", "Icon": ui.Icon({"ID": "Tan", "File": str(tan_icon)})}),
+            ui.Button({"Text": "         Beige", "ID": "Button_Beige", "Icon": ui.Icon({"ID": "Beige", "File": str(beige_icon)})}),
+            ui.Button({"Text": "        Brown", "ID": "Button_Brown", "Icon": ui.Icon({"ID": "Brown", "File": str(brown_icon)})}),
+            ui.Button({"Text": "  Chocolate", "ID": "Button_Chocolate", "Icon": ui.Icon({"ID": "Chocolate", "File": str(chocolate_icon)})})
         ]),
     ])
 
@@ -160,24 +161,25 @@ dlg.On.MyWin.Close = _func
 
 # GUI element based event functions.
 def _func(ev):
-    change_color(ev['who'])
-dlg.On.Clear.Clicked = _func
-dlg.On.Orange.Clicked = _func
-dlg.On.Apricot.Clicked = _func
-dlg.On.Yellow.Clicked = _func
-dlg.On.Lime.Clicked = _func
-dlg.On.Olive.Clicked = _func
-dlg.On.Green.Clicked = _func
-dlg.On.Teal.Clicked = _func
-dlg.On.Navy.Clicked = _func
-dlg.On.Blue.Clicked = _func
-dlg.On.Purple.Clicked = _func
-dlg.On.Violet.Clicked = _func
-dlg.On.Pink.Clicked = _func
-dlg.On.Tan.Clicked = _func
-dlg.On.Beige.Clicked = _func
-dlg.On.Brown.Clicked = _func
-dlg.On.Chocolate.Clicked = _func
+    color = ev['who'].replace("Button_", "")
+    change_color(color)
+dlg.On.Button_Clear.Clicked = _func
+dlg.On.Button_Orange.Clicked = _func
+dlg.On.Button_Apricot.Clicked = _func
+dlg.On.Button_Yellow.Clicked = _func
+dlg.On.Button_Lime.Clicked = _func
+dlg.On.Button_Olive.Clicked = _func
+dlg.On.Button_Green.Clicked = _func
+dlg.On.Button_Teal.Clicked = _func
+dlg.On.Button_Navy.Clicked = _func
+dlg.On.Button_Blue.Clicked = _func
+dlg.On.Button_Purple.Clicked = _func
+dlg.On.Button_Violet.Clicked = _func
+dlg.On.Button_Pink.Clicked = _func
+dlg.On.Button_Tan.Clicked = _func
+dlg.On.Button_Beige.Clicked = _func
+dlg.On.Button_Brown.Clicked = _func
+dlg.On.Button_Chocolate.Clicked = _func
 
 
 # Open the dialog.

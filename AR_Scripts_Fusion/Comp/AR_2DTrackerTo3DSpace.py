@@ -122,10 +122,10 @@ ui   = fusion.UIManager
 disp = bmd.UIDispatcher(ui)
 dlg  = disp.AddWindow({"WindowTitle": "Tracker Thing",
                        "ID": "MyWin",
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
                        },
     [
-        ui.VGroup({"Spacing": 5,},
+        ui.VGroup({"Spacing": 5},
         [
             # GUI elements.
 
@@ -155,8 +155,8 @@ dlg  = disp.AddWindow({"WindowTitle": "Tracker Thing",
             # Import and Cancel buttons.
             ui.HGroup(
             [
-                ui.Button({"Text": "Ok", "ID": "BTN_Ok", "Weight": 0.5}),
-                ui.Button({"Text": "Cancel", "ID": "BTN_Cancel", "Weight": 0.5}),
+                ui.Button({"Text": "Ok", "ID": "Button_Ok", "Weight": 0.5}),
+                ui.Button({"Text": "Cancel", "ID": "Button_Cancel", "Weight": 0.5}),
             ]),
         ]),
     ])
@@ -192,7 +192,7 @@ if tracker is not None:
     def _func(ev):
         disp.ExitLoop()
     dlg.On.MyWin.Close = _func
-    dlg.On.BTN_Cancel.Clicked = _func
+    dlg.On.Button_Cancel.Clicked = _func
 
     # Ok.
     def _func(ev):
@@ -203,7 +203,7 @@ if tracker is not None:
         tracker_to_3d_space(tracker, selected_tracker_number, aov_type)
         comp.EndUndo(True)
         disp.ExitLoop()
-    dlg.On.BTN_Ok.Clicked = _func
+    dlg.On.Button_Ok.Clicked = _func
 
     # Open the dialog.
     dlg.Show()

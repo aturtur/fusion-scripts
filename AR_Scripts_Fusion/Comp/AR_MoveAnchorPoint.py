@@ -79,31 +79,31 @@ def move_anchor_point(method: str) -> None:
     dod_x2 = crop_data[1][0]
     dod_y2 = crop_data[1][1]
 
-    if method == "BTN_BOT_LEFT":
+    if method == "Button_BOT_LEFT":
         pos_x = interpolate(dod_x1, 0, width, 0, 1)
         pos_y = interpolate(dod_y1, 0, height, 0, 1)
-    elif method == "BTN_BOT_CENTER":
+    elif method == "Button_BOT_CENTER":
         pos_x = interpolate((dod_x1+dod_x2)/2, 0, width, 0, 1)
         pos_y = interpolate(dod_y1, 0, height, 0, 1)
-    elif method == "BTN_BOT_RIGHT":
+    elif method == "Button_BOT_RIGHT":
         pos_x = interpolate(dod_x2, 0, width, 0, 1)
         pos_y = interpolate(dod_y1, 0, height, 0, 1)
-    elif method == "BTN_MID_LEFT":
+    elif method == "Button_MID_LEFT":
         pos_x = interpolate(dod_x1, 0, width, 0, 1)
         pos_y = interpolate((dod_y1+dod_y2)/2, 0, height, 0, 1)
-    elif method == "BTN_MID_CENTER":
+    elif method == "Button_MID_CENTER":
         pos_x = interpolate((dod_x1+dod_x2)/2, 0, width, 0, 1)
         pos_y = interpolate((dod_y1+dod_y2)/2, 0, height, 0, 1)
-    elif method == "BTN_MID_RIGHT":
+    elif method == "Button_MID_RIGHT":
         pos_x = interpolate(dod_x2, 0, width, 0, 1)
         pos_y = interpolate((dod_y1+dod_y2)/2, 0, height, 0, 1)
-    elif method == "BTN_TOP_LEFT":
+    elif method == "Button_TOP_LEFT":
         pos_x = interpolate(dod_x1, 0, width, 0, 1)
         pos_y = interpolate(dod_y2, 0, height, 0, 1)
-    elif method == "BTN_TOP_CENTER":
+    elif method == "Button_TOP_CENTER":
         pos_x = interpolate((dod_x1+dod_x2)/2, 0, width, 0, 1)
         pos_y = interpolate(dod_y2, 0, height, 0, 1)
-    elif method == "BTN_TOP_RIGHT":
+    elif method == "Button_TOP_RIGHT":
         pos_x = interpolate(dod_x2, 0, width, 0, 1)
         pos_y = interpolate(dod_y2, 0, height, 0, 1)
 
@@ -154,24 +154,25 @@ dlg  = disp.AddWindow({"WindowTitle": "Move Anchor Point",
                           "WindowMaximizeButtonHint": False,
                           "WindowCloseButtonHint": True,
                         },
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']], },
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       },
     [
-        ui.VGroup({ "Spacing": 5, },
+        ui.VGroup({"Spacing": 5},
         [
             ui.HGroup([
-                ui.Button({"Text": "┌", "ID": "BTN_TOP_LEFT"}),
-                ui.Button({"Text": "┬", "ID": "BTN_TOP_CENTER"}),
-                ui.Button({"Text": "┐", "ID": "BTN_TOP_RIGHT"}),
+                ui.Button({"Text": "┌", "ID": "Button_TOP_LEFT"}),
+                ui.Button({"Text": "┬", "ID": "Button_TOP_CENTER"}),
+                ui.Button({"Text": "┐", "ID": "Button_TOP_RIGHT"}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "├", "ID": "BTN_MID_LEFT"}),
-                ui.Button({"Text": "┼", "ID": "BTN_MID_CENTER"}),
-                ui.Button({"Text": "┤", "ID": "BTN_MID_RIGHT"}),
+                ui.Button({"Text": "├", "ID": "Button_MID_LEFT"}),
+                ui.Button({"Text": "┼", "ID": "Button_MID_CENTER"}),
+                ui.Button({"Text": "┤", "ID": "Button_MID_RIGHT"}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "└", "ID": "BTN_BOT_LEFT"}),
-                ui.Button({"Text": "┴", "ID": "BTN_BOT_CENTER"}),
-                ui.Button({"Text": "┘", "ID": "BTN_BOT_RIGHT"}),
+                ui.Button({"Text": "└", "ID": "Button_BOT_LEFT"}),
+                ui.Button({"Text": "┴", "ID": "Button_BOT_CENTER"}),
+                ui.Button({"Text": "┘", "ID": "Button_BOT_RIGHT"}),
             ]),
         ]),
     ])
@@ -194,15 +195,15 @@ def _func(ev):
     
     move_anchor_point(ev['who'])
     comp.EndUndo(True)
-dlg.On.BTN_TOP_LEFT.Clicked = _func
-dlg.On.BTN_TOP_CENTER.Clicked = _func
-dlg.On.BTN_TOP_RIGHT.Clicked = _func
-dlg.On.BTN_MID_LEFT.Clicked = _func
-dlg.On.BTN_MID_CENTER.Clicked = _func
-dlg.On.BTN_MID_RIGHT.Clicked = _func
-dlg.On.BTN_BOT_LEFT.Clicked = _func
-dlg.On.BTN_BOT_CENTER.Clicked = _func
-dlg.On.BTN_BOT_RIGHT.Clicked = _func
+dlg.On.Button_TOP_LEFT.Clicked = _func
+dlg.On.Button_TOP_CENTER.Clicked = _func
+dlg.On.Button_TOP_RIGHT.Clicked = _func
+dlg.On.Button_MID_LEFT.Clicked = _func
+dlg.On.Button_MID_CENTER.Clicked = _func
+dlg.On.Button_MID_RIGHT.Clicked = _func
+dlg.On.Button_BOT_LEFT.Clicked = _func
+dlg.On.Button_BOT_CENTER.Clicked = _func
+dlg.On.Button_BOT_RIGHT.Clicked = _func
 
 
 # Open the dialog.

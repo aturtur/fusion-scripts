@@ -45,19 +45,19 @@ def align_nodes(direction: str, gap: int) -> None:
         origin_x, origin_y = flow.GetPosTable(active_tool).values()
     else:
         # Determine the pivot point based on the direction.
-        if direction == "BTN_RIGHT":
+        if direction == "Button_Right":
             # Select the node with the smallest x (leftmost).
             origin_x = min(flow.GetPosTable(tool)[1] for tool in tools)
             origin_y = [flow.GetPosTable(tool)[2] for tool in tools if flow.GetPosTable(tool)[1] == origin_x][0]
-        elif direction == "BTN_LEFT":
+        elif direction == "Button_Left":
             # Select the node with the largest x (rightmost).
             origin_x = max(flow.GetPosTable(tool)[1] for tool in tools)
             origin_y = [flow.GetPosTable(tool)[2] for tool in tools if flow.GetPosTable(tool)[1] == origin_x][0]
-        elif direction == "BTN_UP":
+        elif direction == "Button_Up":
             # Select the node with the largest y (topmost).
             origin_y = max(flow.GetPosTable(tool)[2] for tool in tools)
             origin_x = [flow.GetPosTable(tool)[1] for tool in tools if flow.GetPosTable(tool)[2] == origin_y][0]
-        elif direction == "BTN_DOWN":
+        elif direction == "Button_Down":
             # Select the node with the smallest y (bottommost).
             origin_y = min(flow.GetPosTable(tool)[2] for tool in tools)
             origin_x = [flow.GetPosTable(tool)[1] for tool in tools if flow.GetPosTable(tool)[2] == origin_y][0]
@@ -70,7 +70,7 @@ def align_nodes(direction: str, gap: int) -> None:
     sortedByX = []
     sortedByY = []
 
-    if direction == "BTN_RIGHT":
+    if direction == "Button_Right":
         sortedByX = sorted(collected_nodes, key=lambda x: x[1], reverse=False)
         val = origin_x
         for i, item in enumerate(sortedByX):
@@ -79,7 +79,7 @@ def align_nodes(direction: str, gap: int) -> None:
             flow.SetPos(item[0], x, y)
             val = val + gap
 
-    if direction == "BTN_LEFT":
+    if direction == "Button_Left":
         sortedByX = sorted(collected_nodes, key=lambda x: x[1], reverse=True)
         val = origin_x
         for i, item in enumerate(sortedByX):
@@ -88,7 +88,7 @@ def align_nodes(direction: str, gap: int) -> None:
             flow.SetPos(item[0], x, y)
             val = val - gap
 
-    if direction == "BTN_UP":
+    if direction == "Button_Up":
         sortedByY = sorted(collected_nodes, key=lambda x: x[2], reverse=True)
         val = origin_y
         for i, item in enumerate(sortedByY):
@@ -97,7 +97,7 @@ def align_nodes(direction: str, gap: int) -> None:
             flow.SetPos(item[0], x, y)
             val = val - gap
 
-    if direction == "BTN_DOWN":
+    if direction == "Button_Down":
         sortedByY = sorted(collected_nodes, key=lambda x: x[2], reverse=False)
         val = origin_y
         for i, item in enumerate(sortedByY):
@@ -133,12 +133,12 @@ def flip_nodes(direction: str) -> None:
     # Flip all selected nodes around the pivot point.
     for tool in tools:
         pos = flow.GetPosTable(tool)
-        if direction == "BTN_FLIP_H":
+        if direction == "Button_Flip_H":
             # Flip horizontally using pivot_x.
             new_x = pivot_x - (pos[1] - pivot_x)
             flow.SetPos(tool, new_x, pos[2])
 
-        elif direction == "BTN_FLIP_V":
+        elif direction == "Button_Flip_V":
             # Flip vertically using pivot_y.
             new_y = pivot_y - (pos[2] - pivot_y)
             flow.SetPos(tool, pos[1], new_y)
@@ -229,29 +229,30 @@ dlg  = disp.AddWindow({"WindowTitle": "Align Nodes",
                           "WindowMaximizeButtonHint": False,
                           "WindowCloseButtonHint": True,
                         },
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']], },
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       },
     [
-        ui.VGroup({ "Spacing": 5, },
+        ui.VGroup({"Spacing": 5},
         [
             ui.HGroup([
-                ui.Button({"Text": "<", "ID": "BTN_LEFT"}),
-                ui.Button({"Text": ">", "ID": "BTN_RIGHT"}),
+                ui.Button({"Text": "<", "ID": "Button_Left"}),
+                ui.Button({"Text": ">", "ID": "Button_Right"}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "^", "ID": "BTN_UP"}),
-                ui.Button({"Text": "v", "ID": "BTN_DOWN"}),
+                ui.Button({"Text": "^", "ID": "Button_Up"}),
+                ui.Button({"Text": "v", "ID": "Button_Down"}),
             ]),
             ui.HGroup([
-                ui.Label({"ID": "Label", "Text": "Gap:"}),
-                ui.SpinBox({"ID": "Gap", "Minimum": 1, "Maximum": 1000000, "Value": 1}),
+                ui.Label({"ID": "Label_Gap", "Text": "Gap:"}),
+                ui.SpinBox({"ID": "Spinbox_Gap", "Minimum": 1, "Maximum": 1000000, "Value": 1}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "Flip H", "ID": "BTN_FLIP_H"}),
-                ui.Button({"Text": "Flip V", "ID": "BTN_FLIP_V"}),
+                ui.Button({"Text": "Flip H", "ID": "Button_Flip_H"}),
+                ui.Button({"Text": "Flip V", "ID": "Button_Flip_V"}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "Rotate CCW", "ID": "BTN_ROTATE_CCW"}),
-                ui.Button({"Text": "Rotate CW", "ID": "BTN_ROTATE_CW"}),
+                ui.Button({"Text": "Rotate CCW", "ID": "Button_Rotate_CCW"}),
+                ui.Button({"Text": "Rotate CW", "ID": "Button_Rotate_CW"}),
             ]),
         ]),
     ])
@@ -270,31 +271,31 @@ dlg.On.MyWin.Close = _func
 # GUI element based event functions.
 def _func(ev):
     comp.StartUndo("Align nodes")
-    align_nodes(ev['who'], itm['Gap'].Value)
+    align_nodes(ev['who'], itm['Spinbox_Gap'].Value)
     comp.EndUndo(True)
-dlg.On.BTN_LEFT.Clicked = _func
-dlg.On.BTN_RIGHT.Clicked = _func
-dlg.On.BTN_UP.Clicked = _func
-dlg.On.BTN_DOWN.Clicked = _func
+dlg.On.Button_Left.Clicked = _func
+dlg.On.Button_Right.Clicked = _func
+dlg.On.Button_Up.Clicked = _func
+dlg.On.Button_Down.Clicked = _func
 
 
 def _func(ev):
     comp.StartUndo("Flip nodes")
     flip_nodes(ev['who'])
     comp.EndUndo(True)
-dlg.On.BTN_FLIP_H.Clicked = _func
-dlg.On.BTN_FLIP_V.Clicked = _func
+dlg.On.Button_Flip_H.Clicked = _func
+dlg.On.Button_Flip_V.Clicked = _func
 
 
 def _func(ev):
     comp.StartUndo("Rotate nodes")
-    if ev['who'] == "BTN_ROTATE_CW":
+    if ev['who'] == "Button_Rotate_CW":
         rotate_nodes(90)
-    elif ev['who'] == "BTN_ROTATE_CCW":
+    elif ev['who'] == "Button_Rotate_CCW":
         rotate_nodes(-90)
     comp.EndUndo(True)
-dlg.On.BTN_ROTATE_CW.Clicked = _func
-dlg.On.BTN_ROTATE_CCW.Clicked = _func
+dlg.On.Button_Rotate_CW.Clicked = _func
+dlg.On.Button_Rotate_CCW.Clicked = _func
 
 
 # Open the dialog.

@@ -110,7 +110,7 @@ ui   = fusion.UIManager
 disp = bmd.UIDispatcher(ui)
 dlg  = disp.AddWindow({"WindowTitle": "Split To Tiles",
                        "ID": "MyWin",
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
                        },
     [
         ui.VGroup({"Spacing": 5},
@@ -118,16 +118,16 @@ dlg  = disp.AddWindow({"WindowTitle": "Split To Tiles",
             # GUI elements.
             ui.HGroup([
                 ui.Label({"ID": "Label", "Text": "Rows:"}),
-                ui.SpinBox({"ID": "SPN_Rows", "Minimum": 1, "Maximum": 1000000, "Value": 2, "Weight": 1.0}),
+                ui.SpinBox({"ID": "Spinbox_Rows", "Minimum": 1, "Maximum": 1000000, "Value": 2, "Weight": 1.0}),
             ]),
 
             ui.HGroup([
                 ui.Label({"ID": "Label", "Text": "Columns:"}),
-                ui.SpinBox({"ID": "SPN_Columns", "Minimum": 1, "Maximum": 1000000, "Value": 2, "Weight": 1.0}),
+                ui.SpinBox({"ID": "Spinbox_Columns", "Minimum": 1, "Maximum": 1000000, "Value": 2, "Weight": 1.0}),
             ]),
 
             ui.HGroup([
-                ui.CheckBox({"Text": "Create Join Tiles Setup", "ID": "CHK_Join", "Weight": 1.0}),
+                ui.CheckBox({"Text": "Create Join Tiles Setup", "ID": "Checkbox_Join", "Weight": 1.0}),
             ]),
 
             ui.VGap(10),
@@ -135,8 +135,8 @@ dlg  = disp.AddWindow({"WindowTitle": "Split To Tiles",
             # Add and Cancel buttons.
             ui.HGroup(
             [
-                ui.Button({"Text": "Split", "ID": "BTN_Split"}),
-                ui.Button({"Text": "Cancel", "ID": "BTN_Cancel"}),
+                ui.Button({"Text": "Split", "ID": "Button_Split"}),
+                ui.Button({"Text": "Cancel", "ID": "Button_Cancel"}),
             ]),
 
         ]),
@@ -150,7 +150,7 @@ itm = dlg.GetItems()
 def _func(ev):
     disp.ExitLoop()
 dlg.On.MyWin.Close = _func
-dlg.On.BTN_Cancel.Clicked = _func
+dlg.On.Button_Cancel.Clicked = _func
 
 
 # Add metadata.
@@ -158,14 +158,14 @@ def _func(ev):
     comp.StartUndo("Split to tiles")
 
     tool = comp.ActiveTool()
-    rows = itm['SPN_Rows'].Value
-    columns = itm['SPN_Columns'].Value
-    join = itm['CHK_Join'].Checked
+    rows = itm['Spinbox_Rows'].Value
+    columns = itm['Spinbox_Columns'].Value
+    join = itm['Checkbox_Join'].Checked
     split_to_tiles(tool, rows, columns, join)
 
     comp.EndUndo(True)
     disp.ExitLoop()
-dlg.On.BTN_Split.Clicked = _func
+dlg.On.Button_Split.Clicked = _func
 
 
 # Open the dialog.

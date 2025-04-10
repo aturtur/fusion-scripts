@@ -49,9 +49,9 @@ def get_key_modifiers(ev: dict) -> list:
 def get_anchors() -> list:
     """Get anchors."""
     
-    anchors = ["BTN_TOP_LEFT", "BTN_TOP_CENTER", "BTN_TOP_RIGHT",
-               "BTN_MID_LEFT", "BTN_MID_CENTER", "BTN_MID_RIGHT",
-               "BTN_BOT_LEFT", "BTN_BOT_CENTER", "BTN_BOT_RIGHT"]
+    anchors = ["Button_Top_Left", "Button_Top_Center", "Button_Top_Right",
+               "Button_Mid_Left", "Button_Mid_Center", "Button_Mid_Right",
+               "Button_Bot_Left", "Button_Bot_Center", "Button_Bot_Right"]
     
     return anchors
 
@@ -106,31 +106,31 @@ def resize_canvas(method: str, new_width: int, new_height: int) -> None:
     crop_node.SetAttrs({'TOOLS_Name': "ResizeCanvas"})
     crop_node.Input = active_tool.Output
 
-    if method == "BTN_BOT_LEFT":
+    if method == "Button_Bot_Left":
         crop_node.SetInput("XOffset", 0)
         crop_node.SetInput("YOffset", 0)
-    elif method == "BTN_BOT_CENTER":
+    elif method == "Button_Bot_Center":
         crop_node.SetInput("XOffset", (old_width - new_width) / 2)
         crop_node.SetInput("YOffset", 0)
-    elif method == "BTN_BOT_RIGHT":
+    elif method == "Button_Bot_Right":
         crop_node.SetInput("XOffset", (old_width - new_width))
         crop_node.SetInput("YOffset", 0)
-    elif method == "BTN_MID_LEFT":
+    elif method == "Button_Mid_Left":
         crop_node.SetInput("XOffset", 0)
         crop_node.SetInput("YOffset", (old_height - new_height) / 2)
-    elif method == "BTN_MID_CENTER":
+    elif method == "Button_Mid_Center":
         crop_node.SetInput("XOffset", (old_width - new_width) / 2)
         crop_node.SetInput("YOffset", (old_height - new_height) / 2)
-    elif method == "BTN_MID_RIGHT":
+    elif method == "Button_Mid_Right":
         crop_node.SetInput("XOffset", (old_width - new_width))
         crop_node.SetInput("YOffset", (old_height - new_height) / 2)
-    elif method == "BTN_TOP_LEFT":
+    elif method == "Button_Top_Left":
         crop_node.SetInput("XOffset", 0)
         crop_node.SetInput("YOffset", (old_height - new_height))
-    elif method == "BTN_TOP_CENTER":
+    elif method == "Button_Top_Center":
         crop_node.SetInput("XOffset", (old_width - new_width) / 2)
         crop_node.SetInput("YOffset", (old_height - new_height))
-    elif method == "BTN_TOP_RIGHT":
+    elif method == "Button_Top_Right":
         crop_node.SetInput("XOffset", (old_width - new_width))
         crop_node.SetInput("YOffset", (old_height - new_height))
 
@@ -217,7 +217,8 @@ dlg  = disp.AddWindow({"WindowTitle": "Resize Canvas",
                         "Events": {"Close": True,
                                  "KeyPress": True,
                                  "KeyRelease": True},
-                        "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']], },
+                        "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                        },
     [
 
         ui.VGroup({"Spacing": 5},
@@ -225,38 +226,38 @@ dlg  = disp.AddWindow({"WindowTitle": "Resize Canvas",
             ui.VGroup({"Spacing": 5},
             [
                 ui.HGroup([
-                    ui.Button({"Text": "┌", "ID": "BTN_TOP_LEFT", "Checkable": True}),
-                    ui.Button({"Text": "┬", "ID": "BTN_TOP_CENTER", "Checkable": True}),
-                    ui.Button({"Text": "┐", "ID": "BTN_TOP_RIGHT", "Checkable": True}),
+                    ui.Button({"Text": "┌", "ID": "Button_Top_Left", "Checkable": True}),
+                    ui.Button({"Text": "┬", "ID": "Button_Top_Center", "Checkable": True}),
+                    ui.Button({"Text": "┐", "ID": "Button_Top_Right", "Checkable": True}),
                 ]),
                 ui.HGroup([
-                    ui.Button({"Text": "├", "ID": "BTN_MID_LEFT", "Checkable": True}),
-                    ui.Button({"Text": "┼", "ID": "BTN_MID_CENTER", "Checkable": True}),
-                    ui.Button({"Text": "┤", "ID": "BTN_MID_RIGHT", "Checkable": True}),
+                    ui.Button({"Text": "├", "ID": "Button_Mid_Left", "Checkable": True}),
+                    ui.Button({"Text": "┼", "ID": "Button_Mid_Center", "Checkable": True}),
+                    ui.Button({"Text": "┤", "ID": "Button_Mid_Right", "Checkable": True}),
                 ]),
                 ui.HGroup([
-                    ui.Button({"Text": "└", "ID": "BTN_BOT_LEFT", "Checkable": True}),
-                    ui.Button({"Text": "┴", "ID": "BTN_BOT_CENTER", "Checkable": True}),
-                    ui.Button({"Text": "┘", "ID": "BTN_BOT_RIGHT", "Checkable": True}),
+                    ui.Button({"Text": "└", "ID": "Button_Bot_Left", "Checkable": True}),
+                    ui.Button({"Text": "┴", "ID": "Button_Bot_Center", "Checkable": True}),
+                    ui.Button({"Text": "┘", "ID": "Button_Bot_Right", "Checkable": True}),
                 ]),
             ]),
             ui.VGroup({"Spacing": 5},
             [
                 ui.HGroup([
-                    ui.Button({"Text": "Get Width", "ID": "BTN_GET_WIDTH", "Weight": 1}),
-                    ui.Button({"Text": "Get Height", "ID": "BTN_GET_HEIGHT", "Weight": 1}),
+                    ui.Button({"Text": "Get Width", "ID": "Button_Get_Width", "Weight": 1}),
+                    ui.Button({"Text": "Get Height", "ID": "Button_Get_Height", "Weight": 1}),
                 ]),
                 ui.HGroup([
-                    ui.Label({"Text": "Width", "ID": "Label", "Weight": 0.1}),
-                    ui.LineEdit({"ID": "Width", "Text": str(width), "Weight": 1}),
+                    ui.Label({"Text": "Width", "ID": "Label_Width", "Weight": 0.1}),
+                    ui.LineEdit({"ID": "Lineedit_Width", "Text": str(width), "Weight": 1}),
                 ]),
                 ui.HGroup([
-                    ui.Label({"Text": "Height", "ID": "Label", "Weight": 0.1}),
-                    ui.LineEdit({"ID": "Height", "Text": str(height), "Weight": 1}),
+                    ui.Label({"Text": "Height", "ID": "Label_Height", "Weight": 0.1}),
+                    ui.LineEdit({"ID": "Lineedit_Height", "Text": str(height), "Weight": 1}),
                 ]),
 
                 ui.HGroup([
-                    ui.Button({"Text": "Resize", "ID": "BTN_RESIZECANVAS", "Weight": 1}),
+                    ui.Button({"Text": "Resize", "ID": "Button_ResizeCanvas", "Weight": 1}),
                 ]),
             ]),
         ]),
@@ -265,7 +266,7 @@ dlg  = disp.AddWindow({"WindowTitle": "Resize Canvas",
 
 # Collect ui items
 itm = dlg.GetItems()
-itm["BTN_MID_CENTER"].Checked = True
+itm["Button_Mid_Center"].Checked = True
 
 # The window was closed
 def _func(ev):
@@ -285,29 +286,29 @@ def _func(ev):
 
     if ev['Key'] == 16777235:  # Up.
         
-        if itm["Width"].HasFocus():
-            itm["Width"].Text = str(int(float(itm["Width"].Text))+step)
+        if itm["Lineedit_Width"].HasFocus():
+            itm["Lineedit_Width"].Text = str(int(float(itm["Lineedit_Width"].Text))+step)
 
-        if itm["Height"].HasFocus():
-            itm["Height"].Text = str(int(float(itm["Height"].Text))+step)
+        if itm["Lineedit_Height"].HasFocus():
+            itm["Lineedit_Height"].Text = str(int(float(itm["Lineedit_Height"].Text))+step)
 
     if ev['Key'] == 16777237:  # Down.
         
-        if itm["Width"].HasFocus():
-            itm["Width"].Text = str(int(float(itm["Width"].Text))-step)
+        if itm["Lineedit_Width"].HasFocus():
+            itm["Lineedit_Width"].Text = str(int(float(itm["Lineedit_Width"].Text))-step)
 
-        if itm["Height"].HasFocus():
-            itm["Height"].Text = str(int(float(itm["Height"].Text))-step)
+        if itm["Lineedit_Height"].HasFocus():
+            itm["Lineedit_Height"].Text = str(int(float(itm["Lineedit_Height"].Text))-step)
 
     if ev['Key'] in [16777220, 16777221]:  # Enter.
 
-        if itm["Width"].HasFocus():
-            result = eval(itm["Width"].Text)
-            itm["Width"].Text = str(result)
+        if itm["Lineedit_Width"].HasFocus():
+            result = eval(itm["Lineedit_Width"].Text)
+            itm["Lineedit_Width"].Text = str(result)
 
-        if itm["Height"].HasFocus():
-            result = eval(itm["Height"].Text)
-            itm["Height"].Text = str(result)
+        if itm["Lineedit_Height"].HasFocus():
+            result = eval(itm["Lineedit_Height"].Text)
+            itm["Lineedit_Height"].Text = str(result)
 dlg.On.MyWin.KeyPress = _func
 
 # GUI element based event functions
@@ -320,38 +321,38 @@ def _func(ev):
         itm[anchor].Checked = False
     if all(not itm[anchor].Checked for anchor in all_anchors):
         itm[last_selection].Checked = True
-dlg.On.BTN_TOP_LEFT.Clicked = _func
-dlg.On.BTN_TOP_CENTER.Clicked = _func
-dlg.On.BTN_TOP_RIGHT.Clicked = _func
-dlg.On.BTN_MID_LEFT.Clicked = _func
-dlg.On.BTN_MID_CENTER.Clicked = _func
-dlg.On.BTN_MID_RIGHT.Clicked = _func
-dlg.On.BTN_BOT_LEFT.Clicked = _func
-dlg.On.BTN_BOT_CENTER.Clicked = _func
-dlg.On.BTN_BOT_RIGHT.Clicked = _func
+dlg.On.Button_Top_Left.Clicked = _func
+dlg.On.Button_Top_Center.Clicked = _func
+dlg.On.Button_Top_Right.Clicked = _func
+dlg.On.Button_Mid_Left.Clicked = _func
+dlg.On.Button_Mid_Center.Clicked = _func
+dlg.On.Button_Mid_Right.Clicked = _func
+dlg.On.Button_Bot_Left.Clicked = _func
+dlg.On.Button_Bot_Center.Clicked = _func
+dlg.On.Button_Bot_Right.Clicked = _func
 
 def _func(ev):
     comp.StartUndo("Resize Canvas")
     anchors = get_anchors()
     for anchor in anchors:
         if itm[anchor].Checked == True:
-            result_width = eval(itm["Width"].Text)
-            itm["Width"].Text = str(result_width)
-            result_height = eval(itm["Height"].Text)
-            itm["Height"].Text = str(result_height)
+            result_width = eval(itm["Lineedit_Width"].Text)
+            itm["Lineedit_Width"].Text = str(result_width)
+            result_height = eval(itm["Lineedit_Height"].Text)
+            itm["Lineedit_Height"].Text = str(result_height)
             resize_canvas(itm[anchor].ID, int(result_width), int(result_height))
     comp.EndUndo(True)
-dlg.On.BTN_RESIZECANVAS.Clicked = _func
+dlg.On.Button_ResizeCanvas.Clicked = _func
 
 def _func(ev):
     _, width, _ = get_image_data()
-    itm["Width"].Text = str(width)
-dlg.On.BTN_GET_WIDTH.Clicked = _func
+    itm["Lineedit_Width"].Text = str(width)
+dlg.On.Button_Get_Width.Clicked = _func
 
 def _func(ev):
     _, _, height = get_image_data()
-    itm["Height"].Text = str(height)
-dlg.On.BTN_GET_HEIGHT.Clicked = _func
+    itm["Lineedit_Height"].Text = str(height)
+dlg.On.Button_Get_Height.Clicked = _func
 
 # Open the dialog.
 dlg.Show()

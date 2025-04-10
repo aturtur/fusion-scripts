@@ -36,7 +36,7 @@ def clear_previews() -> None:
     for window in windowlist.values():
 
         # Left preview window.
-        left = previews["LeftView"].View
+        left = previews['LeftView'].View
         left.SetBuffer(0)  # A buffer.
         window.ViewOn(node, 1)
         left.SetBuffer(1)  # B buffer.
@@ -44,7 +44,7 @@ def clear_previews() -> None:
         left.SetBuffer(0)
 
         # Right preview window.
-        right = previews["RightView"].View
+        right = previews['RightView'].View
         right.SetBuffer(0)
         window.ViewOn(node, 2)
         right.SetBuffer(1)

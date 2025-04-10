@@ -79,17 +79,18 @@ dlg  = disp.AddWindow({"WindowTitle": "Offset Keyframes",
                           "WindowMaximizeButtonHint": False,
                           "WindowCloseButtonHint": True,
                         },
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']], },
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       },
     [
         ui.VGroup({"Spacing": 5},
         [
             ui.HGroup([
-                ui.Button({"Text": "<", "ID": "BTN_LEFT"}),
-                ui.Button({"Text": ">", "ID": "BTN_RIGHT"}),
+                ui.Button({"Text": "<", "ID": "Button_Left"}),
+                ui.Button({"Text": ">", "ID": "Button_Right"}),
             ]),
             ui.HGroup([
-                ui.Label({"ID": "Label", "Text": "Value:"}),
-                ui.SpinBox({"ID": "Gap", "Minimum": 1, "Maximum": 1000000, "Value": 1}),
+                ui.Label({"ID": "Label_Value", "Text": "Value:"}),
+                ui.SpinBox({"ID": "Spinbox_Gap", "Minimum": 1, "Maximum": 1000000, "Value": 1}),
             ]),
         ]),
     ])
@@ -109,25 +110,25 @@ dlg.On.MyWin.Close = _func
 def _func(ev):
     comp.StartUndo("Offset keyframes")
     tools = comp.GetToolList(True).values()
-    value = itm['Gap'].Value
+    value = itm['Spinbox_Gap'].Value
 
     for tool in tools:
         offset_keyframes(tool, -value)
         
     comp.EndUndo(True)
-dlg.On.BTN_LEFT.Clicked = _func
+dlg.On.Button_Left.Clicked = _func
 
 
 def _func(ev):
     comp.StartUndo("Offset keyframes")
     tools = comp.GetToolList(True).values()
-    value = itm['Gap'].Value
+    value = itm['Spinbox_Gap'].Value
 
     for tool in tools:
         offset_keyframes(tool, value)
         
     comp.EndUndo(True)
-dlg.On.BTN_RIGHT.Clicked = _func
+dlg.On.Button_Right.Clicked = _func
 
 
 # Open the dialog.

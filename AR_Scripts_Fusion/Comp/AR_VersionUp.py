@@ -233,7 +233,7 @@ def update_loader_settings(tool, settings: dict, path: str, lock_global_in: bool
 
 
 def set_loader_settings(tool, settings: dict) -> bool:
-    """Sets loader's settings"""
+    """Sets loader's settings."""
 
     tool.GlobalOut[1]      = settings['GlobalOut']
     tool.GlobalIn[1]       = settings['GlobalIn']
@@ -525,26 +525,26 @@ dlg  = disp.AddWindow({"WindowTitle": "VersionUp",
                           "WindowMaximizeButtonHint": False,
                           "WindowCloseButtonHint": True,
                         },
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],},
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       },
     [
         ui.VGroup({"Spacing": 5},
         [
-            # GUI elements  
-            #ui.VGap(),
+            # GUI elements
             ui.HGroup(
             [
-                ui.Button({"Text": "^", "ID": "Up"}), # Button one version up
-                ui.Button({"Text": "v", "ID": "Down"}), # Button one version down
+                ui.Button({"Text": "^", "ID": "Button_Up"}),  # Button one version up.
+                ui.Button({"Text": "v", "ID": "Button_Down"}),  # Button one version down.
             ]),
             #ui.VGap(),
-            ui.Button({"Text": "Latest version", "ID": "Latest"}), # Button latest version
+            ui.Button({"Text": "Latest version", "ID": "Button_Latest"}),  # Button latest version.
             ui.HGroup(
             [
-                ui.SpinBox({"ID": "VersionNumber", "Value":1, "Minimum":0, "Maximum":100000}), # Input text field custom version
-                ui.Button({"Text": "Custom", "ID": "Custom"}), # Button apply custom version
+                ui.SpinBox({"ID": "Spinbox_VersionNumber", "Value":1, "Minimum":0, "Maximum":100000}),  # Input text field custom version.
+                ui.Button({"Text": "Custom", "ID": "Button_Custom"}),  # Button apply custom version.
             ]),
             ui.HGroup([
-                ui.CheckBox({"ID": "Cbox_LockGlobalIn", "Text": "Lock Global In"}),
+                ui.CheckBox({"ID": "Checkbox_LockGlobalIn", "Text": "Lock Global In"}),
             ]),
         ]),
     ])
@@ -564,42 +564,42 @@ dlg.On.MyWin.Close = _func
 def _func(ev):
     comp.Lock()
     comp.StartUndo("Custom version")
-    lock_global_in = itm['Cbox_LockGlobalIn'].Checked
-    custom_version = itm['VersionNumber'].Value
+    lock_global_in = itm['Checkbox_LockGlobalIn'].Checked
+    custom_version = itm['Spinbox_VersionNumber'].Value
     custom_run(custom_version, lock_global_in)
     comp.EndUndo(True)
     comp.Unlock()
-dlg.On.Custom.Clicked = _func
+dlg.On.Button_Custom.Clicked = _func
 
 
 def _func(ev):
     comp.Lock()
     comp.StartUndo("Latest version")
-    lock_global_in = itm['Cbox_LockGlobalIn'].Checked
+    lock_global_in = itm['Checkbox_LockGlobalIn'].Checked
     latest_run(lock_global_in)
     comp.EndUndo(True)
     comp.Unlock()
-dlg.On.Latest.Clicked = _func
+dlg.On.Button_Latest.Clicked = _func
 
 
 def _func(ev):
     comp.Lock()
     comp.StartUndo("Version up")
-    lock_global_in = itm['Cbox_LockGlobalIn'].Checked
+    lock_global_in = itm['Checkbox_LockGlobalIn'].Checked
     version_up_run(lock_global_in)
     comp.EndUndo(True)
     comp.Unlock()
-dlg.On.Up.Clicked = _func
+dlg.On.Button_Up.Clicked = _func
 
 
 def _func(ev):
     comp.Lock()
     comp.StartUndo("Version down")
-    lock_global_in = itm['Cbox_LockGlobalIn'].Checked
+    lock_global_in = itm['Checkbox_LockGlobalIn'].Checked
     version_down_run(lock_global_in)
     comp.EndUndo(True)
     comp.Unlock()
-dlg.On.Down.Clicked = _func
+dlg.On.Button_Down.Clicked = _func
 
 
 # Open the dialog.

@@ -87,23 +87,24 @@ dlg  = disp.AddWindow({"WindowTitle": "Move Nodes",
                           "WindowMaximizeButtonHint": False,
                           "WindowCloseButtonHint": True,
                         },
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']], },
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       },
     [
-        ui.VGroup({ "Spacing": 5, },
+        ui.VGroup({"Spacing": 5},
         [
             ui.HGroup([
-                ui.Button({"Text": "^", "ID": "BTN_UP"}),
+                ui.Button({"Text": "^", "ID": "Button_Up"}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "<", "ID": "BTN_LEFT"}),
-                ui.Button({"Text": ">", "ID": "BTN_RIGHT"}),
+                ui.Button({"Text": "<", "ID": "Button_Left"}),
+                ui.Button({"Text": ">", "ID": "Button_Right"}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "v", "ID": "BTN_DOWN"}),
+                ui.Button({"Text": "v", "ID": "Button_Down"}),
             ]),
             ui.HGroup([
-                ui.Label({"ID": "Label", "Text": "Amount:"}),
-                ui.SpinBox({"ID": "Amount", "Minimum": 1.0, "Maximum": 1000000.0, "Value": 1.0}),
+                ui.Label({"ID": "Label_Amount", "Text": "Amount:"}),
+                ui.SpinBox({"ID": "Spinbox_Amount", "Minimum": 1.0, "Maximum": 1000000.0, "Value": 1.0}),
             ]),
         ]),
     ])
@@ -122,30 +123,30 @@ dlg.On.MyWin.Close = _func
 # GUI element based event functions.
 def _func(ev):
     comp.StartUndo("Align nodes")
-    move_nodes("LEFT", itm['Amount'].Value)
+    move_nodes("LEFT", itm['Spinbox_Amount'].Value)
     comp.EndUndo(True)
-dlg.On.BTN_LEFT.Clicked = _func
+dlg.On.Button_Left.Clicked = _func
 
 
 def _func(ev):
     comp.StartUndo("Align nodes")
-    move_nodes("RIGHT", itm['Amount'].Value)
+    move_nodes("RIGHT", itm['Spinbox_Amount'].Value)
     comp.EndUndo(True)
-dlg.On.BTN_RIGHT.Clicked = _func
+dlg.On.Button_Right.Clicked = _func
 
 
 def _func(ev):
     comp.StartUndo("Align nodes")
-    move_nodes("UP", itm['Amount'].Value)
+    move_nodes("UP", itm['Spinbox_Amount'].Value)
     comp.EndUndo(True)
-dlg.On.BTN_UP.Clicked = _func
+dlg.On.Button_Up.Clicked = _func
 
 
 def _func(ev):
     comp.StartUndo("Align nodes")
-    move_nodes("DOWN", itm['Amount'].Value)
+    move_nodes("DOWN", itm['Spinbox_Amount'].Value)
     comp.EndUndo(True)
-dlg.On.BTN_DOWN.Clicked = _func
+dlg.On.Button_Down.Clicked = _func
 
 
 # Open the dialog.

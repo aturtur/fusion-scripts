@@ -70,10 +70,10 @@ ui   = fusion.UIManager
 disp = bmd.UIDispatcher(ui)
 dlg  = disp.AddWindow({"WindowTitle": "Merge Composition",
                        "ID": "MyWin",
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
                        },
     [
-        ui.VGroup({"Spacing": 5,},
+        ui.VGroup({"Spacing": 5},
         [
             # GUI elements.
 
@@ -82,14 +82,14 @@ dlg  = disp.AddWindow({"WindowTitle": "Merge Composition",
             [
                 ui.Label({"Text": "File Path", "ID": "Label_FolderPath", "Weight": 0.1}),
                 ui.LineEdit({"Text": "", "PlaceholderText": "Please Enter the Composition File Path", "ID": "CompPath", "Weight": 0.9}),
-                ui.Button({"Text": "...", "ID": "BTN_Browse", "Weight": 0.1}),
+                ui.Button({"Text": "...", "ID": "Button_Browse", "Weight": 0.1}),
             ]),
 
             # Import and Cancel buttons.
             ui.HGroup(
             [
-                ui.Button({"Text": "Import", "ID": "BTN_Merge", "Weight": 0.5}),
-                ui.Button({"Text": "Cancel", "ID": "BTN_Cancel", "Weight": 0.5}),
+                ui.Button({"Text": "Import", "ID": "Button_Merge", "Weight": 0.5}),
+                ui.Button({"Text": "Cancel", "ID": "Button_Cancel", "Weight": 0.5}),
             ]),
         ]),
     ])
@@ -103,7 +103,7 @@ itm = dlg.GetItems()
 def _func(ev):
     disp.ExitLoop()
 dlg.On.MyWin.Close = _func
-dlg.On.BTN_Cancel.Clicked = _func
+dlg.On.Button_Cancel.Clicked = _func
 
 
 # Browse the composition path.
@@ -111,7 +111,7 @@ def _func(ev):
     selectedCompPath = fusion.RequestFile(itm['CompPath'].Text)
     if selectedCompPath:
         itm['CompPath'].Text = str(selectedCompPath)
-dlg.On.BTN_Browse.Clicked = _func
+dlg.On.Button_Browse.Clicked = _func
 
 
 # Merge comp.
@@ -123,7 +123,7 @@ def _func(ev):
 
     comp.EndUndo(True)
     comp.Unlock()
-dlg.On.BTN_Merge.Clicked = _func
+dlg.On.Button_Merge.Clicked = _func
 
 
 # Open the dialog.

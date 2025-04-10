@@ -127,7 +127,8 @@ dlg  = disp.AddWindow({"WindowTitle": "Jump To Frame",
                        "Events": {"Close": True,
                                   "KeyPress": True,
                                   "KeyRelease": True},
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']], },
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       },
     [
         ui.VGroup({"Spacing": 5},
         [
@@ -188,8 +189,8 @@ dlg  = disp.AddWindow({"WindowTitle": "Jump To Frame",
             ]),
 
             ui.HGroup([
-                ui.Button({"Text": "Load Data", "ID": "BTN_Load_Data", "Weight": 0.5}),
-                ui.Button({"Text": "Store Data", "ID": "BTN_Save_Data", "Weight": 0.5}),
+                ui.Button({"Text": "Load Data", "ID": "Button_Load_Data", "Weight": 0.5}),
+                ui.Button({"Text": "Store Data", "ID": "Button_Save_Data", "Weight": 0.5}),
             ]),
         ]),
     ])
@@ -263,7 +264,7 @@ def _func(ev):
     comp.StartUndo("Load data")
     load_values(itm)
     comp.EndUndo(True)
-dlg.On.BTN_Load_Data.Clicked = _func
+dlg.On.Button_Load_Data.Clicked = _func
 
 
 # Save data.
@@ -271,7 +272,7 @@ def _func(ev):
     comp.StartUndo("Save data")
     save_values(itm)
     comp.EndUndo(True)
-dlg.On.BTN_Save_Data.Clicked = _func
+dlg.On.Button_Save_Data.Clicked = _func
 
 
 # Open the dialog.

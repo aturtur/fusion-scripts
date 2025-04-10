@@ -237,31 +237,29 @@ dlg  = disp.AddWindow({"WindowTitle": "Script Launcher",
                       "Events": {"Close": True,
                                  "KeyPress": True,
                                  "KeyRelease": True},
-                      },
-                      [
+                    }, [
 
-        ui.VGroup({"ID": "TreeView",},[
+                            ui.VGroup({"ID": "TreeView"}, [
+                                ui.HGroup({"ID": "Group", "Weight": 0.075}, [
+                                    ui.LineEdit({"ID": "Search",
+                                                "Text": "",
+                                                "PlaceholderText": "Search",
+                                                }),
+                                ]),
 
-            ui.HGroup({"ID": "Group", "Weight": 0.075},[
-                ui.LineEdit({"ID": "Search",
-                            "Text": "",
-                            "PlaceholderText": "Search",
+                            ui.Tree({
+                            "ID": "Tree",
+                            "HeaderHidden": True,
+                            "Events": {
+                                "CurrentItemChanged": True,
+                                "ItemActivated": True,
+                                "ItemClicked": True,
+                                "ItemDoubleClicked": True,
+                                },
+                            "Weight": 0.925,
                             }),
-        ]),
-
-        ui.Tree({
-        "ID": "Tree",
-        "HeaderHidden": True,
-        "Events": {
-            "CurrentItemChanged": True,
-            "ItemActivated": True,
-            "ItemClicked": True,
-            "ItemDoubleClicked": True,
-            },
-        "Weight": 0.925,
-        }),
-    ]),
-])
+                        ]),
+                    ])
 
 
 # Get UI items.
