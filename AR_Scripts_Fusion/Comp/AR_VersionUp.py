@@ -4,7 +4,7 @@ AR_VersionUp
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Version Up
-Version: 1.3.2
+Version: 1.3.3
 Description-US: Easily change between different versions.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -15,6 +15,7 @@ Uses v character paired with digits to point out the version number (e.g. v1, v0
 File path syntax example: ../VERSIONS/ProjectName_v001/../../ProjectName_v001_0000.tif
 
 Changelog:
+1.3.3 (11.04.2025) - Added error checking and tooltip.
 1.3.2 (09.10.2024) - Added handling for hold frames.
 1.3.1 (26.09.2024) - Fine tuning.
 1.3.0 (24.09.2024) - Modified to code follow more PEP 8 recommendations.
@@ -44,6 +45,15 @@ tries = 50  # Amount of tries for looking newer or older version number.
 
 
 # Functions
+def check_path_compatibility(file_path: str) -> bool:
+    """Check if the file path is compatible with VersionUp."""
+
+    check = re.search(pattern, file_path) is not None
+    if not check:
+        print(f"Warning! File path is not compatible with VersionUp:\n\t{file_path}")
+    return check
+
+
 def check_file(file_path: str) -> bool:
     """Checks does the file exist."""
 
@@ -185,9 +195,9 @@ def print_data(pd) -> None:
     out_change = new_out - old_out
     len_change = new_len - old_len
 
-    print(f"\tGlobal In:\t\t{old_in} -> {new_in} ({in_change} F)")
-    print(f"\tGlobal Out:\t\t{old_out} -> {new_out} ({out_change} F)")
-    print(f"\tLength:\t\t\t{old_len} -> {new_len} ({len_change} F)")
+    print(f"\tGlobal In:\t\t{(old_in):<5} → {(new_in):<5} ({in_change} F)")
+    print(f"\tGlobal Out:\t\t{(old_out):<5} → {(new_out):<5} ({out_change} F)")
+    print(f"\tLength:\t\t\t{(old_len):<5} → {(new_len):<5} ({len_change} F)")
 
 
 def update_loader_settings(tool, settings: dict, path: str, lock_global_in: bool) -> dict:
@@ -265,6 +275,10 @@ def version_up_run(lock_global_in: bool) -> bool:
     for tool in tools:
         loader_name = tool.Name
         file_path = tool.GetInput("Clip")
+
+        if not check_path_compatibility(file_path):
+            break
+
         current_version = get_current_version(file_path)
 
         for i in range(1, tries + 1):
@@ -317,6 +331,10 @@ def version_down_run(lock_global_in: bool) -> bool:
     for tool in tools:
         loader_name = tool.Name
         file_path = tool.GetInput("Clip")
+
+        if not check_path_compatibility(file_path):
+            break
+
         current_version = get_current_version(file_path)
 
         for i in range(1, tries + 1):
@@ -369,6 +387,10 @@ def latest_run(lock_global_in: bool) -> None:
     for tool in tools:
         loader_name = tool.Name
         file_path = tool.GetInput("Clip")
+
+        if not check_path_compatibility(file_path):
+            break
+
         current_version = get_current_version(file_path)
 
         found = False
@@ -441,6 +463,10 @@ def custom_run(custom_version: int, lock_global_in: bool) -> bool:
         pd = {}
         loader_name = tool.Name
         file_path = tool.GetInput("Clip")
+
+        if not check_path_compatibility(file_path):
+            break
+
         current_version = get_current_version(file_path)
         updated_path_version = update_file_path(file_path, custom_version)
         file_first_frame, _ = get_frame_range(updated_path_version)
@@ -544,7 +570,7 @@ dlg  = disp.AddWindow({"WindowTitle": "VersionUp",
                 ui.Button({"Text": "Custom", "ID": "Button_Custom"}),  # Button apply custom version.
             ]),
             ui.HGroup([
-                ui.CheckBox({"ID": "Checkbox_LockGlobalIn", "Text": "Lock Global In"}),
+                ui.CheckBox({"ID": "Checkbox_LockGlobalIn", "Text": "Lock Global In", "ToolTip": "Locks 'Global In' value in place."}),
             ]),
         ]),
     ])

@@ -6,6 +6,10 @@ Latest version **1.1.0** *(Released 06.04.2025)*
 All of the scripts are developed and tested with Windows 11 machine. All of the scripts might not work in Linux or Mac.  
 
 ## Changelog
+**Changes coming to 1.2.0**
+- _11.04.2025_ **New:** AR_AddMetadata.
+- _11.04.2025_ **Update:** AR_PrintUsedLoaders, AR_PrintUsedSavers, AR_ReloadLoader, AR_VersionUp.
+
 **Changes in 1.1.0**
 - _06.04.2025_ **Update:** AR_JumpFrame, AR_ReverseSetup, AR_ScriptLauncher.
 - _05.04.2025_ **Update:** AR_LoaderFromSaver.
@@ -24,14 +28,14 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 2. Download the latest AR_Scripts_Fusion [release](https://github.com/aturtur/fusion-scripts/releases).
 3. Put script files to one of these paths:  
     - `C:/Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp`
-    - `C:/Program Files/Blackmagic Design/Fusion 19/Scripts/Comp`
+    - `C:/Program Files/Blackmagic Design/Fusion 20/Scripts/Comp`
     - `C:/ProgramData/Blackmagic Design/Fusion/Scripts/Comp`
     - Or setup custom scripts path with **Path Map**.
 
 Some of the scripts requires third-party libraries.  
 *Dependencies*:
-    - pyautogui
-    - pyperclip
+- pyautogui
+- pyperclip
 
 If you want the latest scripts (including an experimental ones too), download this [repository](https://github.com/aturtur/fusion-scripts/archive/refs/heads/master.zip) and use scripts from it.  
 

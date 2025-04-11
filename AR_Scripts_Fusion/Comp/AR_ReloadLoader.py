@@ -4,7 +4,7 @@ AR_ReloadLoader
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Reload Loader
-Version: 1.0.0
+Version: 1.1.0
 Description-US: Reloads selected loaders and extends ranges if needed.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.1.0 (11.04.2025) - Added support for selection.
 1.0.0 (20.09.2024) - Initial release.
 """
 # Libraries
@@ -110,10 +111,9 @@ def main() -> None:
     comp.Lock()
     comp.StartUndo("Reload loaders")
 
-    # Get selected loaders.
-    loaders = comp.GetToolList(True, "Loader").values()
+    selected_loaders = comp.GetToolList(True, "Loader").values()
+    loaders = selected_loaders or comp.GetToolList(False, "Loader").values()
 
-    # Iterate through loaders and reload them.
     for loader in loaders:
         reload_loader(loader)
 
