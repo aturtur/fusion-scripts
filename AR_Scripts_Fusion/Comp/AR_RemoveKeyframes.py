@@ -1,10 +1,10 @@
 """
-AR_RemoveKeys
+AR_RemoveKeyframes
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
-Name-US: Remove Keys
-Version: 1.0.0
+Name-US: Remove Keyframes
+Version: 1.0.1
 Description-US: Removes all keyframes from selected tools.
 
 Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.1 (16.04.2025) - Renamed.
 1.0.0 (12.03.2025) - Initial realease.
 """
 # Libraries

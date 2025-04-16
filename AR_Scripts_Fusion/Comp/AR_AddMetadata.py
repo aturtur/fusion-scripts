@@ -4,7 +4,7 @@ AR_AddMetadata
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Add Metadata
-Version: 1.1.0
+Version: 1.2.0
 Description-US: Adds metadata nodes to the composition.
 
 Note: Grouping requires pyautogui module.
@@ -15,6 +15,9 @@ Python version 3.10.8 (64-bit)
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.2.0 (14.04.2025) - Fixed bug if tool is not active.
+                   - Group is now named.
+                   - Added Fusion version preset.
 1.1.0 (11.04.2025) - Added pyautogui grouping function.
 1.0.0 (09.11.2024) - Initial release.
 """
@@ -40,7 +43,13 @@ suffix = ""
 def connect_metadata(metadata_nodes: list) -> None:
     """Connects given metadata nodes."""
 
-    tool = comp.ActiveTool()
+    tool = None
+
+    try:
+        tool = comp.ActiveTool()
+    except:
+        pass
+    
     flow = comp.CurrentFrame.FlowView
 
     pos_x = 0
@@ -141,6 +150,15 @@ def add_metadata(itm: list) -> any:
         md_computername.SetAttrs({'TOOLS_Name': 'Metadata_' + key})
         metadata_nodes.append(md_computername)
 
+    if itm['Checkbox_Fusionversion'].Checked:
+        key = "FUSION_VERSION"
+
+        md_fusionversion = comp.AddTool("Fuse.SetMetaData")
+        md_fusionversion.SetInput("FieldName", key)
+        md_fusionversion.FieldValue.SetExpression("Text(bmd._VERSION)")
+        md_fusionversion.SetAttrs({'TOOLS_Name': 'Metadata_' + key})
+        metadata_nodes.append(md_fusionversion)
+
     return metadata_nodes
 
 
@@ -168,7 +186,7 @@ def gui_geometry(width: int, height: int, x: float, y: float) -> dict:
     return {"width": gui_width, "height": gui_height, "x": gui_x, "y": gui_y}
 
 
-gui_geo = gui_geometry(400, 315, 0.5, 0.5)
+gui_geo = gui_geometry(400, 345, 0.5, 0.5)
 
 
 # GUI
@@ -179,7 +197,7 @@ dlg  = disp.AddWindow({"WindowTitle": "Add Metadata",
                        "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
                        },
     [
-        ui.VGroup({"Spacing": 5,},
+        ui.VGroup({"Spacing": 5},
         [
             # GUI elements.
             ui.VGroup(
@@ -226,13 +244,20 @@ dlg  = disp.AddWindow({"WindowTitle": "Add Metadata",
                     ui.CheckBox({"Text": "Composition File Path", "ID": "Checkbox_Comppath"}),
                     ui.CheckBox({"Text": "Computer Name", "ID": "Checkbox_Computername"}),
                 ]),
+
+                ui.HGroup(
+                [
+                    ui.CheckBox({"Text": "Fusion Version", "ID": "Checkbox_Fusionversion"}),
+                    #ui.CheckBox({"Text": "Computer Name", "ID": "Checkbox_Computername"}),
+                ]),
+
             ]),
 
             ui.VGap(10),
 
             ui.VGroup(
             [
-                ui.Label({"Text": "Settings", "ID": "Label"}),
+                ui.Label({"Text": "Options", "ID": "Label"}),
                 ui.CheckBox({"Text": "Group", "ID": "Checkbox_Group"}),
             ]),
             
@@ -286,5 +311,16 @@ dlg.Hide()
 if group == True:
     try:
         pyautogui.hotkey('ctrl', 'g')
+        group_node = comp.ActiveTool()
+        group_node.SetAttrs({'TOOLS_Name': 'Metadata'})
+
+        try:
+            source_node = group_node.Input1.GetConnectedOutput().GetTool()
+            flow = comp.CurrentFrame.FlowView
+            pos_x, pos_y = flow.GetPosTable(source_node).values()
+            flow.SetPos(group_node, pos_x + 2, pos_y)
+        except:
+            pass
+
     except:
         pass

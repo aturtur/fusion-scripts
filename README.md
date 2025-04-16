@@ -7,6 +7,8 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming to 1.2.0**
+- _16.04.2025_ **Other:** *Added bunch of icons.*
+- _16.04.2025_ **Renamed:** AR_DeleteKeys -> AR_DeleteKeyframes.
 - _11.04.2025_ **New:** AR_AddMetadata.
 - _11.04.2025_ **Update:** AR_PrintUsedLoaders, AR_PrintUsedSavers, AR_ReloadLoader, AR_VersionUp.
 
@@ -33,7 +35,8 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
     - Or setup custom scripts path with **Path Map**.
 
 Some of the scripts requires third-party libraries.  
-*Dependencies*:
+
+#### Dependencies:  
 - pyautogui
 - pyperclip
 

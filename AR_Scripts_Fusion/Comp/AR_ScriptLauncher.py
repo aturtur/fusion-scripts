@@ -21,7 +21,7 @@ Highly recommended to add this script to hotkey:
             Scripts -> AR_ScriptLauncher
 
 Changelog:
-1.2.0 (xx.04.2025) - Added support for icons.
+1.2.0 (10.04.2025) - Added support for icons. Put the icon (png-file) in Icons folder named same as the script file.
 1.1.1 (01.04.2025) - Error check for parsing data.
 1.1.0 (24.03.2025) - Parses info from the script file and uses that to populate the treeview.
 1.0.4 (27.02.2025) - Added Ctrl+Q hotkey to close the dialog.
@@ -54,7 +54,7 @@ comp = comp  # comp = fusion.GetCurrentComp()
 script_dir  = Path(inspect.getfile(lambda: None)).resolve().parent
 icon_folder = script_dir / "Icons"
 
-use_icons = True
+use_icons = True  # Set this to False, if you want to disable icons.
 
 ALT: str = "ALT"
 CTRL: str = "CTRL"
@@ -135,8 +135,11 @@ def populate_tree(tree, scripts: dict) -> None:
         itRow.ToolTip[0] = details['Description']
         if use_icons:
             icon_path = icon_folder / f"{details['FileName']}.png"
-            if icon_path.exists():
-                itRow.Icon[0] = ui.Icon({"ID": "Orange", "File": str(icon_path)})
+            default_icon_path = icon_folder / "DefaultScript.png"
+            if icon_path.exists():  # Use script's custom icon.
+                itRow.Icon[0] = ui.Icon({"ID": script_name, "File": str(icon_path)})
+            else:  # If custom icon not found, use default script icon.
+                itRow.Icon[0] = ui.Icon({"ID": script_name, "File": str(default_icon_path)})
         tree.AddTopLevelItem(itRow)
 
 
@@ -238,15 +241,13 @@ dlg  = disp.AddWindow({"WindowTitle": "Script Launcher",
                                  "KeyPress": True,
                                  "KeyRelease": True},
                     }, [
-
                             ui.VGroup({"ID": "TreeView"}, [
-                                ui.HGroup({"ID": "Group", "Weight": 0.075}, [
+                                ui.HGroup({"ID": "Group", "Weight": 0.01}, [
                                     ui.LineEdit({"ID": "Search",
                                                 "Text": "",
-                                                "PlaceholderText": "Search",
+                                                "PlaceholderText": "Search"
                                                 }),
                                 ]),
-
                             ui.Tree({
                             "ID": "Tree",
                             "HeaderHidden": True,
@@ -265,6 +266,26 @@ dlg  = disp.AddWindow({"WindowTitle": "Script Launcher",
 # Get UI items.
 itm = dlg.GetItems()
 
+# Set custom stylesheet.
+search_style = """
+QLineEdit {
+    background-color: #1f1f1f;
+    color: #eee;
+    border: 1px solid #070707;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 12px;
+    height: 20px !important;
+}
+
+QLineEdit:focus {
+    border: 1px solid #e64b3d;
+    background-color: #1f1f1f;
+    height: 20px !important;
+}
+"""
+itm['Search'].SetStyleSheet(search_style)
+
 # Scan and collect scipts.
 get_scripts()
 
@@ -274,13 +295,14 @@ header = script_tree.NewItem()
 header.Text[0] = "Script"
 script_tree.SetHeaderItem(header)
 script_tree.ColumnCount = 1
-script_tree.IconSize = [25, 25]
+script_tree.IconSize = [26, 26]
 populate_tree(script_tree, scripts)
 select_first_item(script_tree)
 
-# Keyboard events.
+
 def _func(ev):
     key_modifiers = get_key_modifiers(ev)
+
     if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
         disp.ExitLoop()
         dlg.Hide()
