@@ -1,12 +1,12 @@
 # Aturtur's Fusion Scripts
 My collection of Blackmagic Design Fusion scripts ([@aturtur.bsky.social](https://bsky.app/profile/aturtur.bsky.social)).  
 
-Latest version **1.1.0** *(Released 06.04.2025)*  
+Latest version **1.2.0** *(Released 08.05.2025)*  
 
 All of the scripts are developed and tested with Windows 11 machine. All of the scripts might not work in Linux or Mac.  
 
 ## Changelog
-**Changes coming to 1.2.0**
+**Changes in 1.2.0**
 - _08.05.2025_ **New:** AR_CopyPathToClipboard.
 - _07.05.2025_ **New:** AR_MergeSelected, AR_MultiMergeSelected.
 - _16.04.2025_ **Other:** *Added bunch of icons.*
