@@ -263,7 +263,7 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### AR_SplitToTiles *(GUI)*
 > **Default:** Splits the active tool in to tiles by given rows and clomuns.  
 
-### AR_TrimLoaderWithTimecode(SMPTE)
+### AR_TrimLoaderWithTimecode(SMPTE) *(GUI)*
 > **Default:** Trims the loader with SMPTE timecode.  
 > *Loader's media has to have timecode in its metadata!*  
 
