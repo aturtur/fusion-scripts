@@ -4,7 +4,7 @@ AR_AlignNodes
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Align Nodes
-Version: 1.1.0
+Version: 1.2.1
 Description-US: Align selected nodes.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.2.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.2.0 (28.02.2025) - Added rotate buttons. Also added pivot point handling when activetool is selected.
 1.1.0 (13.02.2025) - Added flip buttons.
 1.0.1 (25.09.2024) - Modified code to follow more PEP 8 recommendations.
@@ -27,8 +28,26 @@ bmd = bmd  # import BlackmagicFusion as bmd
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
+ALT: str = "ALT"
+CTRL: str = "CTRL"
+SHIFT: str = "SHIFT"
 
-# Functions     
+
+# Functions
+def get_key_modifiers(ev: dict) -> list:
+    """Get keyboard modifiers."""
+
+    key_modifiers = []
+    if ev['modifiers']['AltModifier'] == True:
+        key_modifiers.append(ALT)
+    if ev['modifiers']['ControlModifier'] == True:
+        key_modifiers.append(CTRL)
+    if ev['modifiers']['ShiftModifier'] == True:
+        key_modifiers.append(SHIFT)
+
+    return key_modifiers
+
+
 def align_nodes(direction: str, gap: int) -> None:
     """Aligns selected nodes to the desired direction with a given gap.
     If an active tool is selected, it is used as the origin point for alignment.
@@ -229,7 +248,10 @@ dlg  = disp.AddWindow({"WindowTitle": "Align Nodes",
                           "WindowMaximizeButtonHint": False,
                           "WindowCloseButtonHint": True,
                         },
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Events": {"Close": True,
+                                  "KeyPress": True,
+                                  "KeyRelease": True},
                        },
     [
         ui.VGroup({"Spacing": 5},
@@ -268,7 +290,16 @@ def _func(ev):
 dlg.On.MyWin.Close = _func
 
 
-# GUI element based event functions.
+# Keys are pressed.
+def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+        disp.ExitLoop()
+        dlg.Hide()
+dlg.On.MyWin.KeyPress = _func
+
+
+# Buttons are pressed.
 def _func(ev):
     comp.StartUndo("Align nodes")
     align_nodes(ev['who'], itm['Spinbox_Gap'].Value)

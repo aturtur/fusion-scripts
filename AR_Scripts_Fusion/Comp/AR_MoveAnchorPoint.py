@@ -4,11 +4,11 @@ AR_MoveAnchorPoint
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Move Anchor Point
-Version: 1.0.0
+Version: 1.0.1
 Description-US: Moves the anchor point (pivot) using the DoD values.
 
-Written for Blackmagic Design Fusion Studio 19.1.3 build 5
-Python version 3.10.8 (64-bit)
+Written for Blackmagic Design Fusion Studio 19.1.3 build 5.
+Python version 3.10.8 (64-bit).
 
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
@@ -16,6 +16,7 @@ To do:
 - Support for elements that are outside the canvas?
   
 Changelog:
+1.0.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.0.0 (05.03.2025) - Initial release.
 """
 # Libraries
@@ -28,8 +29,26 @@ bmd = bmd  # import BlackmagicFusion as bmd
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
+ALT: str = "ALT"
+CTRL: str = "CTRL"
+SHIFT: str = "SHIFT"
+
 
 # Functions
+def get_key_modifiers(ev: dict) -> list:
+    """Get keyboard modifiers."""
+
+    key_modifiers = []
+    if ev['modifiers']['AltModifier'] == True:
+        key_modifiers.append(ALT)
+    if ev['modifiers']['ControlModifier'] == True:
+        key_modifiers.append(CTRL)
+    if ev['modifiers']['ShiftModifier'] == True:
+        key_modifiers.append(SHIFT)
+
+    return key_modifiers
+
+
 def interpolate(value: float, x1: float, x2: float, y1: float, y2: float) -> float:
     """Perform linear interpolation for value between (x1,y1) and (x2,y2) """
 
@@ -154,7 +173,10 @@ dlg  = disp.AddWindow({"WindowTitle": "Move Anchor Point",
                           "WindowMaximizeButtonHint": False,
                           "WindowCloseButtonHint": True,
                         },
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Events": {"Close": True,
+                                  "KeyPress": True,
+                                  "KeyRelease": True},
                        },
     [
         ui.VGroup({"Spacing": 5},
@@ -189,7 +211,16 @@ def _func(ev):
 dlg.On.MyWin.Close = _func
 
 
-# GUI element based event functions.
+# Keys are pressed.
+def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+        disp.ExitLoop()
+        dlg.Hide()
+dlg.On.MyWin.KeyPress = _func
+
+
+# Buttons are pressed.
 def _func(ev):
     comp.StartUndo("Move Anchor Point")
     

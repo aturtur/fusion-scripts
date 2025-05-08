@@ -135,7 +135,7 @@ def populate_tree(tree, scripts: dict) -> None:
         itRow.ToolTip[0] = details['Description']
         if use_icons:
             icon_path = icon_folder / f"{details['FileName']}.png"
-            default_icon_path = icon_folder / "DefaultScript.png"
+            default_icon_path = icon_folder / "default_script.png"
             if icon_path.exists():  # Use script's custom icon.
                 itRow.Icon[0] = ui.Icon({"ID": script_name, "File": str(icon_path)})
             else:  # If custom icon not found, use default script icon.
@@ -295,7 +295,7 @@ header = script_tree.NewItem()
 header.Text[0] = "Script"
 script_tree.SetHeaderItem(header)
 script_tree.ColumnCount = 1
-script_tree.IconSize = [26, 26]
+script_tree.IconSize = [32, 32]
 populate_tree(script_tree, scripts)
 select_first_item(script_tree)
 

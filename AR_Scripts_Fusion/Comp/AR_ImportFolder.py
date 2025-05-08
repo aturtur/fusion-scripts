@@ -4,7 +4,7 @@ AR_ImportFolder(WIP)
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Import Folder
-Version: 1.3.0
+Version: 1.3.1
 Description-US: Import all image sequences from selected folder.
 
 Written for Blackmagic Design Fusion Studio 19.1.3 build 5.
@@ -16,6 +16,7 @@ To do:
 - Detect and handle also still/single images and video files.
 
 Changelog:
+1.3.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.3.0 (14.02.2025) - Added option to set custom starting frame number and option so set starting frame from image sequence's first frame number.
 1.2.0 (06.11.2024) - Added option to merge imported loaders.
 1.1.0 (05.11.2024) - Added option to scan also subfolders.
@@ -32,8 +33,26 @@ bmd = bmd  # import BlackmagicFusion as bmd
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
+ALT: str = "ALT"
+CTRL: str = "CTRL"
+SHIFT: str = "SHIFT"
+
 
 # Functions
+def get_key_modifiers(ev: dict) -> list:
+    """Get keyboard modifiers."""
+
+    key_modifiers = []
+    if ev['modifiers']['AltModifier'] == True:
+        key_modifiers.append(ALT)
+    if ev['modifiers']['ControlModifier'] == True:
+        key_modifiers.append(CTRL)
+    if ev['modifiers']['ShiftModifier'] == True:
+        key_modifiers.append(SHIFT)
+
+    return key_modifiers
+
+
 def collect_items(dir_path: str, subfolders: bool) -> list[str]:
     """Collect image sequences from given folder path."""
 
@@ -213,7 +232,10 @@ ui   = fusion.UIManager
 disp = bmd.UIDispatcher(ui)
 dlg  = disp.AddWindow({"WindowTitle": "Import Folder",
                        "ID": "MyWin",
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Events": {"Close": True,
+                                  "KeyPress": True,
+                                  "KeyRelease": True}
                        },
     [
         ui.VGroup({"Spacing": 5},
@@ -270,6 +292,15 @@ def combo_changed(ev):
     selected_index = itm['Combobox_Method'].CurrentIndex
     itm['Spinbox_CustomFrame'].Enabled = (selected_index == 0) 
 dlg.On.Combobox_Method.CurrentIndexChanged = combo_changed
+
+
+# Keys are pressed.
+def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+        disp.ExitLoop()
+        dlg.Hide()
+dlg.On.MyWin.KeyPress = _func
 
 
 # The window was closed.

@@ -7,8 +7,8 @@ Name-US: Reverse Setup
 Version: 1.2.0
 Description-US: Reverses the node setup of the selected tools (basic workflow).
 
-Written for Blackmagic Design Fusion Studio 19.1.3 build 5
-Python version 3.10.8 (64-bit)
+Written for Blackmagic Design Fusion Studio 19.1.3 build 5.
+Python version 3.10.8 (64-bit).
 
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 

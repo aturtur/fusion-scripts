@@ -30,7 +30,7 @@ comp = comp  # comp = fusion.GetCurrentComp()
 
 # Functions
 def copy_tools_names(tools) -> None:
-    """Disables given saver."""
+    """Copies given tool(s) name(s) to the clipboard."""
 
     names = []
     for tool in tools:

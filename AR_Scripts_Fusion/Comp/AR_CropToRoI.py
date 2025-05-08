@@ -138,6 +138,7 @@ def crop_to_roi() -> None:
     """Crops the canvas to the region of interest.
     Creates also transform node that keeps cropped area in place.
     """
+
     try:
         tool = comp.ActiveTool()
     
@@ -145,8 +146,6 @@ def crop_to_roi() -> None:
         print("No active node found!")
         return None
         
-
-
     active_view = comp.CurrentFrame.CurrentView
     region_values = get_region_data(active_view, tool)
     crop_node = crop_to(tool, region_values)

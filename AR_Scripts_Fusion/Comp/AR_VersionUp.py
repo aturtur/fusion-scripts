@@ -4,7 +4,7 @@ AR_VersionUp
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Version Up
-Version: 1.3.3
+Version: 1.3.4
 Description-US: Easily change between different versions.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -15,6 +15,7 @@ Uses v character paired with digits to point out the version number (e.g. v1, v0
 File path syntax example: ../VERSIONS/ProjectName_v001/../../ProjectName_v001_0000.tif
 
 Changelog:
+1.3.4 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.3.3 (11.04.2025) - Added error checking and tooltip.
 1.3.2 (09.10.2024) - Added handling for hold frames.
 1.3.1 (26.09.2024) - Fine tuning.
@@ -43,8 +44,26 @@ comp = comp  # comp = fusion.GetCurrentComp()
 pattern = r'(?:[^a-zA-Z]|^)v\d{1,4}(?:[^a-zA-Z]|$)'  # Searches v1, v01, v001, v0001 types of versioning.
 tries = 50  # Amount of tries for looking newer or older version number.
 
+ALT: str = "ALT"
+CTRL: str = "CTRL"
+SHIFT: str = "SHIFT"
+
 
 # Functions
+def get_key_modifiers(ev: dict) -> list:
+    """Get keyboard modifiers."""
+
+    key_modifiers = []
+    if ev['modifiers']['AltModifier'] == True:
+        key_modifiers.append(ALT)
+    if ev['modifiers']['ControlModifier'] == True:
+        key_modifiers.append(CTRL)
+    if ev['modifiers']['ShiftModifier'] == True:
+        key_modifiers.append(SHIFT)
+
+    return key_modifiers
+
+
 def check_path_compatibility(file_path: str) -> bool:
     """Check if the file path is compatible with VersionUp."""
 
@@ -551,7 +570,10 @@ dlg  = disp.AddWindow({"WindowTitle": "VersionUp",
                           "WindowMaximizeButtonHint": False,
                           "WindowCloseButtonHint": True,
                         },
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Events": {"Close": True,
+                                  "KeyPress": True,
+                                  "KeyRelease": True},
                        },
     [
         ui.VGroup({"Spacing": 5},
@@ -586,7 +608,16 @@ def _func(ev):
 dlg.On.MyWin.Close = _func
 
 
-# GUI element based event functions.
+# Keys are pressed.
+def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+        disp.ExitLoop()
+        dlg.Hide()
+dlg.On.MyWin.KeyPress = _func
+
+
+# Buttons are pressed.
 def _func(ev):
     comp.Lock()
     comp.StartUndo("Custom version")

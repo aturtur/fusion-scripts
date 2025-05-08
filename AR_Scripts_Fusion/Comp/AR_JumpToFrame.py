@@ -4,7 +4,7 @@ AR_JumpToFrame
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Jump To Frame
-Version: 1.2.0
+Version: 1.3.1
 Description-US: Jumps to given frame in the timeline.
 
 Tip: Use Ctrl + 1-8 to jump to the frame.
@@ -15,6 +15,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.3.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.3.0 (06.04.2025) - Added hotkeys to jump to frame (Ctrl + 1-8).
 1.2.0 (29.09.2024) - Added load and save buttons. Stores data to sticky note!
 1.1.1 (25.09.2024) - Changed code to follow more PEP 8 recommendations.
@@ -33,7 +34,26 @@ comp = comp  # comp = fusion.GetCurrentComp()
 note_name = "JumpToFrame"
 alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 
+ALT: str = "ALT"
+CTRL: str = "CTRL"
+SHIFT: str = "SHIFT"
+
+
 # Functions
+def get_key_modifiers(ev: dict) -> list:
+    """Get keyboard modifiers."""
+
+    key_modifiers = []
+    if ev['modifiers']['AltModifier'] == True:
+        key_modifiers.append(ALT)
+    if ev['modifiers']['ControlModifier'] == True:
+        key_modifiers.append(CTRL)
+    if ev['modifiers']['ShiftModifier'] == True:
+        key_modifiers.append(SHIFT)
+
+    return key_modifiers
+
+
 def load_values(itm) -> None:
     """Gets values from note"""
 
@@ -127,7 +147,10 @@ dlg  = disp.AddWindow({"WindowTitle": "Jump To Frame",
                        "Events": {"Close": True,
                                   "KeyPress": True,
                                   "KeyRelease": True},
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Events": {"Close": True,
+                                  "KeyPress": True,
+                                  "KeyRelease": True},
                        },
     [
         ui.VGroup({"Spacing": 5},
@@ -208,6 +231,11 @@ dlg.On.MyWin.Close = _func
 
 # Keyboard events.
 def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+        disp.ExitLoop()
+        dlg.Hide()
+
     if ev['Key'] == 49:  # Ctrl + 1 (!).
         jump_to_frame(itm['FRM_A'].Value)
     if ev['Key'] == 50:  # Ctrl + 2 (").

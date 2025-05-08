@@ -4,7 +4,7 @@ AR_ColoriseNodes
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Colorise Nodes
-Version: 1.0.2
+Version: 1.0.3
 Description-US: Colorises selected nodes.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.3 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.0.2 (20.09.2024) - Modified code to follow more PEP 8 recommendations.
                    - Gets now automatically correct icon file paths.
 1.0.1 (08.11.2022) - Semantic versioning.
@@ -70,8 +71,27 @@ colors = {
     'Chocolate': {'R': 140.0/255.0, 'G': 90.0/255.0, 'B': 63.0/255.0}
 }
 
+# Key modifiers.
+ALT: str = "ALT"
+CTRL: str = "CTRL"
+SHIFT: str = "SHIFT"
+
 
 # Functions
+def get_key_modifiers(ev: dict) -> list:
+    """Get keyboard modifiers."""
+
+    key_modifiers = []
+    if ev['modifiers']['AltModifier'] == True:
+        key_modifiers.append(ALT)
+    if ev['modifiers']['ControlModifier'] == True:
+        key_modifiers.append(CTRL)
+    if ev['modifiers']['ShiftModifier'] == True:
+        key_modifiers.append(SHIFT)
+
+    return key_modifiers
+
+
 def change_color(color) -> None:
     """Changes selected nodes with given color."""
 
@@ -114,17 +134,20 @@ gui_geo = gui_geometry(100, 500, 0.5, 0.5)
 # GUI
 ui   = fusion.UIManager
 disp = bmd.UIDispatcher(ui)
-dlg  = disp.AddWindow({ "WindowTitle": "Colorise Nodes",
-                        "ID": "MyWin",
-                        "WindowFlags": {
-                            "Window": True,
-                            "CustomizeWindowHint": True,
-                            "WindowMinimizeButtonHint": False,
-                            "WindowMaximizeButtonHint": False,
-                            "WindowCloseButtonHint": True,
-                        },
-                        "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
-                        },
+dlg  = disp.AddWindow({"WindowTitle": "Colorise Nodes",
+                       "ID": "MyWin",
+                       "WindowFlags": {
+                           "Window": True,
+                           "CustomizeWindowHint": True,
+                           "WindowMinimizeButtonHint": False,
+                           "WindowMaximizeButtonHint": False,
+                           "WindowCloseButtonHint": True,
+                       },
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Events": {"Close": True,
+                                  "KeyPress": True,
+                                  "KeyRelease": True},
+                       },
     [
         ui.VGroup({"Spacing": 5},
         [
@@ -159,7 +182,16 @@ def _func(ev):
 dlg.On.MyWin.Close = _func
 
 
-# GUI element based event functions.
+# Keys are pressed.
+def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+        disp.ExitLoop()
+        dlg.Hide()
+dlg.On.MyWin.KeyPress = _func
+
+
+# Buttons are pressed.
 def _func(ev):
     color = ev['who'].replace("Button_", "")
     change_color(color)

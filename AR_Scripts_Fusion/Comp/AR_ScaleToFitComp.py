@@ -7,8 +7,8 @@ Name-US: Scale To Fit Comp
 Version: 1.0.0
 Description-US: Scales foreground image to fit background image's width and height.
 
-Written for Blackmagic Design Fusion Studio 19.1.3 build 5
-Python version 3.10.8 (64-bit)
+Written for Blackmagic Design Fusion Studio 19.1.3 build 5.
+Python version 3.10.8 (64-bit).
 
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
   

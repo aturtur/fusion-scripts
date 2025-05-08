@@ -7,8 +7,8 @@ Name-US: Join Tiles
 Version: 1.0.0
 Description-US: Merges selected tools into one big image, based on node positions in Flow.
 
-Written for Blackmagic Design Fusion Studio 19.0.3 build 3
-Python version 3.10.8 (64-bit)
+Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
+Python version 3.10.8 (64-bit).
 
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 

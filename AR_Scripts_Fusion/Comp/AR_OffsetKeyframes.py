@@ -4,7 +4,7 @@ AR_OffsetKeyframes
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Offset Keyframes
-Version: 1.0.0
+Version: 1.0.1
 Description-US: Offsets all keyframes of selected tool(s) by given value.
 Note: Does not support all kind of keyframes (e.g. Tracker).
 
@@ -14,6 +14,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.0.0 (28.11.2024) - Initial release.
 """
 # Libraries
@@ -24,6 +25,25 @@ Changelog:
 bmd = bmd  # import BlackmagicFusion as bmd
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
+
+ALT: str = "ALT"
+CTRL: str = "CTRL"
+SHIFT: str = "SHIFT"
+
+
+# Functions
+def get_key_modifiers(ev: dict) -> list:
+    """Get keyboard modifiers."""
+
+    key_modifiers = []
+    if ev['modifiers']['AltModifier'] == True:
+        key_modifiers.append(ALT)
+    if ev['modifiers']['ControlModifier'] == True:
+        key_modifiers.append(CTRL)
+    if ev['modifiers']['ShiftModifier'] == True:
+        key_modifiers.append(SHIFT)
+
+    return key_modifiers
 
 
 def offset_keyframes(tool, offset) -> None:
@@ -79,7 +99,10 @@ dlg  = disp.AddWindow({"WindowTitle": "Offset Keyframes",
                           "WindowMaximizeButtonHint": False,
                           "WindowCloseButtonHint": True,
                         },
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Events": {"Close": True,
+                                  "KeyPress": True,
+                                  "KeyRelease": True},
                        },
     [
         ui.VGroup({"Spacing": 5},
@@ -106,7 +129,16 @@ def _func(ev):
 dlg.On.MyWin.Close = _func
 
 
-# GUI element based event functions.
+# Keys are pressed.
+def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+        disp.ExitLoop()
+        dlg.Hide()
+dlg.On.MyWin.KeyPress = _func
+
+
+# Buttons are pressed.
 def _func(ev):
     comp.StartUndo("Offset keyframes")
     tools = comp.GetToolList(True).values()

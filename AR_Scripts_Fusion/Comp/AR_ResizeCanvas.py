@@ -268,12 +268,14 @@ dlg  = disp.AddWindow({"WindowTitle": "Resize Canvas",
 itm = dlg.GetItems()
 itm["Button_Mid_Center"].Checked = True
 
+
 # The window was closed
 def _func(ev):
     disp.ExitLoop()
 dlg.On.MyWin.Close = _func
 
-# Keyboard events
+
+# Keys are pressed.
 def _func(ev):
 
     # Set step value.
@@ -283,6 +285,10 @@ def _func(ev):
         step = 10
     if SHIFT in key_modifiers:
         step = 100
+
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+        disp.ExitLoop()
+        dlg.Hide()
 
     if ev['Key'] == 16777235:  # Up.
         
@@ -311,7 +317,8 @@ def _func(ev):
             itm["Lineedit_Height"].Text = str(result)
 dlg.On.MyWin.KeyPress = _func
 
-# GUI element based event functions
+
+# Buttons are pressed.
 def _func(ev):
     all_anchors = get_anchors()
     anchors = get_anchors()
@@ -331,6 +338,7 @@ dlg.On.Button_Bot_Left.Clicked = _func
 dlg.On.Button_Bot_Center.Clicked = _func
 dlg.On.Button_Bot_Right.Clicked = _func
 
+
 def _func(ev):
     comp.StartUndo("Resize Canvas")
     anchors = get_anchors()
@@ -344,15 +352,18 @@ def _func(ev):
     comp.EndUndo(True)
 dlg.On.Button_ResizeCanvas.Clicked = _func
 
+
 def _func(ev):
     _, width, _ = get_image_data()
     itm["Lineedit_Width"].Text = str(width)
 dlg.On.Button_Get_Width.Clicked = _func
 
+
 def _func(ev):
     _, _, height = get_image_data()
     itm["Lineedit_Height"].Text = str(height)
 dlg.On.Button_Get_Height.Clicked = _func
+
 
 # Open the dialog.
 dlg.Show()

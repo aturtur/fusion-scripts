@@ -25,8 +25,26 @@ bmd = bmd  # import BlackmagicFusion as bmd
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
+ALT: str = "ALT"
+CTRL: str = "CTRL"
+SHIFT: str = "SHIFT"
+
 
 # Functions
+def get_key_modifiers(ev: dict) -> list:
+    """Get keyboard modifiers."""
+
+    key_modifiers = []
+    if ev['modifiers']['AltModifier'] == True:
+        key_modifiers.append(ALT)
+    if ev['modifiers']['ControlModifier'] == True:
+        key_modifiers.append(CTRL)
+    if ev['modifiers']['ShiftModifier'] == True:
+        key_modifiers.append(SHIFT)
+
+    return key_modifiers
+
+
 def tracker_to_3d_space(tracker, tracker_id, aov_type) -> None:
     """Creates a setup that converts 2D tracker data to 3D space."""
 
@@ -122,7 +140,17 @@ ui   = fusion.UIManager
 disp = bmd.UIDispatcher(ui)
 dlg  = disp.AddWindow({"WindowTitle": "Tracker Thing",
                        "ID": "MyWin",
-                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']]
+                       "WindowFlags": {
+                          "Window": True,
+                          "CustomizeWindowHint": True,
+                          "WindowMinimizeButtonHint": False,
+                          "WindowMaximizeButtonHint": False,
+                          "WindowCloseButtonHint": True,
+                        },
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Events": {"Close": True,
+                                  "KeyPress": True,
+                                  "KeyRelease": True},
                        },
     [
         ui.VGroup({"Spacing": 5},
@@ -170,12 +198,15 @@ tools = comp.GetToolList(True).values()
 
 tracker = None
 
-tool = comp.ActiveTool()
-if tool.ID == "Tracker":
-    tracker = tool
-
-if tracker is None:
-    print("Tracker not found.")
+try:
+    tool = comp.ActiveTool()
+    if tool.ID == "Tracker":
+        tracker = tool
+except:
+    if tracker is None:
+        print("Tracker not found.")
+    else:
+        print("Something went wrong.")
 
 combo_aovtype = itm['ComboBox_AovType']
 combo_aovtype.AddItem("Vertical")
@@ -187,6 +218,14 @@ if tracker is not None:
     combo_tracker = itm['ComboBox_Tracker']
     for tracker_point in tracker_points:
         combo_tracker.AddItem(tracker_point)
+
+    # Keys are pressed.
+    def _func(ev):
+        key_modifiers = get_key_modifiers(ev)
+        if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+            disp.ExitLoop()
+            dlg.Hide()
+    dlg.On.MyWin.KeyPress = _func
 
     # The window was closed.
     def _func(ev):
@@ -209,6 +248,3 @@ if tracker is not None:
     dlg.Show()
     disp.RunLoop()
     dlg.Hide()
-
-else:
-    pass

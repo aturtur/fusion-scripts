@@ -4,7 +4,7 @@ AR_TrimLoaderWithTimecode(SMPTE)
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Trim Loader With Timecode (SMPTE)
-Version: 1.0.0
+Version: 1.0.3
 Description-US: Trims the loader with SMPTE timecode.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.3 (08.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.0.2 (06.11.2024) - Changed print to use f-string.
 1.0.1 (25.09.2024) - Modified code to follow more PEP 8 recommendations.
 1.0.0 (20.10.2023) - Initial release.
@@ -26,8 +27,26 @@ bmd = bmd  # import BlackmagicFusion as bmd
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
+ALT: str = "ALT"
+CTRL: str = "CTRL"
+SHIFT: str = "SHIFT"
+
 
 # Functions
+def get_key_modifiers(ev: dict) -> list:
+    """Get keyboard modifiers."""
+
+    key_modifiers = []
+    if ev['modifiers']['AltModifier'] == True:
+        key_modifiers.append(ALT)
+    if ev['modifiers']['ControlModifier'] == True:
+        key_modifiers.append(CTRL)
+    if ev['modifiers']['ShiftModifier'] == True:
+        key_modifiers.append(SHIFT)
+
+    return key_modifiers
+
+
 def check_metadata(tool) -> None:
     """Check if tool has timecode metadata."""
 
@@ -194,9 +213,13 @@ gui_geo = gui_geometry(500, 180, 0.5, 0.5)
 ui   = fusion.UIManager
 disp = bmd.UIDispatcher(ui)
 
-dlg  = disp.AddWindow({ "WindowTitle": "Trim loader with TimeCode (SMPTE)",
-                        "ID": "MyWin",
-                        "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']], },
+dlg  = disp.AddWindow({"WindowTitle": "Trim loader with TimeCode (SMPTE)",
+                       "ID": "MyWin",
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Events": {"Close": True,
+                                  "KeyPress": True,
+                                  "KeyRelease": True},
+                      },
     [
         ui.VGroup({"Spacing": 5},
         [
@@ -249,6 +272,15 @@ if tool:
     itm["LE_Start_TC"].Text = start_time_code
     itm["LE_End_TC"].Text = end_time_code
     itm["SB_FrameRate"].Value = get_frame_rate(tool)
+
+
+# Keys are pressed.
+def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+        disp.ExitLoop()
+        dlg.Hide()
+dlg.On.MyWin.KeyPress = _func
 
 
 # Trim.

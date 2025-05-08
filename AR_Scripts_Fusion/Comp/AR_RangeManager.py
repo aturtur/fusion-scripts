@@ -3,7 +3,7 @@ AR_RangeManager
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Range Manager
-Version: 1.2.0
+Version: 1.2.1
 Description-US: Set global and render range easily.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -15,6 +15,7 @@ Normal function: Global range.
 Shift-modifier: Render range.
 
 Changelog:
+1.2.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.2.0 (09.10.2024)  - Name changed from AR_SetRange to AR_RangeManager.
                     - Added load and save buttons. Stores data to sticky note!
                     - Removed method combobox and added buttons instead.
@@ -222,8 +223,16 @@ def _func(ev):
 dlg.On.MyWin.Close = _func
 
 
-# GUI element based event functions.
+# Keys are pressed.
+def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+        disp.ExitLoop()
+        dlg.Hide()
+dlg.On.MyWin.KeyPress = _func
 
+
+# Buttons are pressed.
 ## Get Range.
 def _func(ev):
     idx = ev['who'][8:]
