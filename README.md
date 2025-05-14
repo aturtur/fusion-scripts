@@ -173,7 +173,7 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 > **Default:** Opens the script folder in explorer.  
 > *Default path: Appdata.*  
 
-### ![AR_LoaderFromSaver](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_LoaderFromSaver.png) AR_PrintMetadata
+### ![AR_PrintMetadata](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_Print.png) AR_PrintMetadata
 > **Default:** Prints metadata from active tool.  
 
 ### ![AR_PrintUsedLoaders](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_Print.png) AR_PrintUsedLoaders
