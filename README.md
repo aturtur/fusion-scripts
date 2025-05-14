@@ -1,11 +1,16 @@
 # Aturtur's Fusion Scripts
 My collection of Blackmagic Design Fusion scripts ([@aturtur.bsky.social](https://bsky.app/profile/aturtur.bsky.social)).  
 
-Latest version **1.2.0** *(Released 08.05.2025)*  
+Latest version **1.3.0** *(Released 15.05.2025)*  
 
 All of the scripts are developed and tested with Windows 11 machine. All of the scripts might not work in Linux or Mac.  
 
 ## Changelog
+**Changes in 1.3.0**
+- _14.05.2025_ **Updated:** AR_RangeManager, AR_JumpToFrame.
+- _14.05.2025_ **New:** AR_SelectAllThisTypeSameColor
+- _09.04.2025_ **Other:** *Tweaking icon sizes.*
+
 **Changes in 1.2.0**
 - _08.05.2025_ **New:** AR_CopyPathToClipboard.
 - _07.05.2025_ **New:** AR_MergeSelected, AR_MultiMergeSelected.
@@ -52,153 +57,154 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 **Notice that some scripts requires a specific tool selection and or active tool selection!**  
 
 # Script descriptions
-### AR_2DTrackerTo3DSpace *(GUI)*
+### ![AR_2DTrackerTo3DSpace](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_2DTrackerTo3DSpace.png) AR_2DTrackerTo3DSpace *(GUI)*
 > **Default:** Creates a setup that converts active 2D tracker's point to 3D space.  
 
-### AR_AddMetadata *(GUI)*
+### ![AR_AddMetadata](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_AddMetadata.png) AR_AddMetadata *(GUI)*
 > **Default:** Adds metadata nodes.  
 > **Dependencies:** Pyautogui.  
 
-### AR_AlignImage *(GUI)*
+### ![AR_AlignImage](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_AlignImage.png) AR_AlignImage *(GUI)*
 > **Default:** Aligns merge node's foreground image according to the background image.  
 > **How to use:** Select merge node that has foreground and background inputs connected, then press the button where you want to align the foreground image.  
 
-### AR_AlignNodes *(GUI)*
+### ![AR_AlignNodes](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_AlignNodes.png) AR_AlignNodes *(GUI)*
 > **Default:** Align selected nodes.  
 
-### AR_AutoCrop
+### ![AR_AutoCrop](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_AutoCrop.png) AR_AutoCrop
 > **Default:** Auto crops selected tools.  
 
-### AR_CleanNodeNames
+### ![AR_CleanNodeNames](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_CleanNodeNames.png) AR_CleanNodeNames
 > **Default:** Cleans node names (eg. ..._1_1_1_1_1).  
 > *Supports expressions.*  
 
-### AR_ClearViews
+### ![AR_ClearViews](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ClearViews.png) AR_ClearViews
 > **Default:** Clears all views (preview windows).  
 
-### AR_ColoriseNodes *(GUI)*
+### ![AR_Colorise](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_Colorise.png) AR_ColoriseNodes *(GUI)*
 > **Default:** Colorises selected nodes.  
 > *Uses icons from Icons folder!*
 
-### AR_CopyPathToClipboard
+### ![AR_Colorise](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_Colorise.png) AR_ColoriseSaversPink
+> **Default:** Colorises all savers to pink.  
+
+### ![AR_CopyToClipboard](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_CopyToClipboard.png) AR_CopyPathToClipboard
 > **Default:** Copies selected tool(s) path(s) to the clipboard.  
 > **Dependencies:** Pyperclip.  
 
-### AR_CopyToolNameToClipboard
+### ![AR_CopyToClipboard](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_CopyToClipboard.png) AR_CopyToolNameToClipboard
 > **Default:** Copies selected tool(s) name(s) to the clipboard.  
 > **Dependencies:** Pyperclip.  
 
-### AR_ColoriseSaversPink
-> **Default:** Colorises all savers to pink.  
-
-### AR_CreateLocator3D
+### ![AR_CreateLocator3D](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_CreateLocator3D.png) AR_CreateLocator3D
 > **Default:** Creates a Locator3D node connected to selected 3D shape.  
 
-### AR_CreateSaver
+### ![AR_ClearViews](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ClearViews.png) AR_CreateSaver
 > **Default:** Creates a saver for selected tools with custom export settings.  
 > *Edit the script to match your saver settings.*  
 
-### AR_CropToRoI
+### ![AR_CropToRoI](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_CropToRoI.png) AR_CropToRoI
 > **Default:** Crops the canvas to the active viewport's region of interest.  
 > *Select first the correct viewport and then run the script!*  
 
-### AR_DisableAllSavers
+### ![AR_DisableAllSavers](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_DisableAllSavers.png) AR_DisableAllSavers
 > **Default:** Disables all savers in the active composition.  
 
-### AR_EnableAllSavers
+### ![AR_EnableAllSavers](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_EnableAllSavers.png) AR_EnableAllSavers
 > **Default:** Enables all savers in the active composition.  
 
-### AR_FreezeFrame
+### ![AR_FreezeFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_FreezeFrame.png) AR_FreezeFrame
 > **Default:** Creates a time_speed node that freezes frame at current frame.  
 > *Fusion now has this functionality built-in to the TimeSpeed tool.*  
 
-### AR_ImportFolder *(GUI)*
+### ![AR_ImportFolder](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ImportFolder.png) AR_ImportFolder *(GUI)*
 > **Default:** Import all image sequences from selected folder.  
 > *Currently supports only image sequences.*  
 
-### AR_JoinTiles
+### ![AR_JoinTiles](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_JoinTiles.png) AR_JoinTiles
 > **Default:** Merges selected tools into one big image, based on node positions in Flow.  
-> *Tiles has to line up perfectly! Use `Arrange Tools -> to Grid`*  
+> *Tiles has to line up perfectly! Use `Arrange Tools -> to Grid`*.  
 
-### AR_JumpToFrame *(GUI)*
+### ![AR_JumpToFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_JumpToFrame.png) AR_JumpToFrame *(GUI)*
 > **Default:** Jumps to given frame in the timeline.  
-> **Ctrl+1-8:** Jumps to the frame (1-8 slots).
+> **Ctrl+1-8:** Jumps to the frame (1-8 slots).  
 
-### AR_LoaderFromSaver
+### ![AR_LoaderFromSaver](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_LoaderFromSaver.png) AR_LoaderFromSaver
 > **Default:** Creates loader(s) from selected saver(s).  
 
-### AR_MergeComp *(GUI)*
+### ![AR_MergeComp](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_MergeComp.png) AR_MergeComp *(GUI)*
 > **Default:** Merges the given composition with the active one.  
 > *Basically copy pastes the given composition into the open composition.*  
 > **Dependencies:**: Pyperclip.  
 
-### AR_MergeSelected
+### ![AR_MergeSelected](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_MergeSelected.png) AR_MergeSelected
 > **Default:** Merges selected tools with merge nodes.  
 
-### AR_MoveAnchorPoint *(GUI)*
+### ![AR_MoveAnchorPoint](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_MoveAnchorPoint.png) AR_MoveAnchorPoint *(GUI)*
 > **Default:** Moves the anchor point (pivot) using the DoD values.  
 
-### AR_MoveNodes *(GUI)*
+### ![AR_MoveNodes](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_MergeSelected.png) AR_MoveNodes *(GUI)*
 > **Default:** Moves selected node(s).  
 
-### AR_MultiMergeSelected
+### ![AR_MultiMergeSelected](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_MergeSelected.png) AR_MultiMergeSelected
 > **Default:** Merge selected tools using a multi merge tool.  
 
-### AR_NoteFromLoader
+### ![AR_NoteFromLoader](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_Note.png) AR_NoteFromLoader
 > **Default:** Creates a sticky note filled with info from the selected loader(s).  
 
-### AR_NoteFromMetadata
+### ![AR_NoteFromMetadata](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_Note.png) AR_NoteFromMetadata
 > **Default:** Creates a sticky note filled with metadata from selected tool(s).  
 
-### AR_OffsetKeyframes
+### ![AR_OffsetKeyframes](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_OffsetKeyframes.png) AR_OffsetKeyframes
 > **Default:** Offsets all keyframes of selected tool(s) by given value.  
 
-### AR_OpenFusesFolder
+### ![AR_OpenFusesFolder](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_OpenFolder.png) AR_OpenFusesFolder
 > **Default:** Opens the folder where Fuses are located.  
 > *Default path: Appdata.*  
 
-### AR_OpenMacroFolder
+### ![AR_OpenMacroFolder](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_OpenFolder.png) AR_OpenMacroFolder
 > **Default:** Opens the folder where Macros are located.  
 > *Default path: Appdata.*  
 
-### AR_OpenProjectFolder
+### ![AR_OpenProjectFolder](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_OpenFolder.png) AR_OpenProjectFolder
 > **Default:** Opens the folder where the project file is located.  
 
-### AR_OpenScriptFolder
+### ![AR_OpenScriptFolder](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_OpenFolder.png) AR_OpenScriptFolder
 > **Default:** Opens the script folder in explorer.  
 > *Default path: Appdata.*  
 
-### AR_PrintMetadata
+### ![AR_LoaderFromSaver](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_LoaderFromSaver.png) AR_PrintMetadata
 > **Default:** Prints metadata from active tool.  
 
-### AR_PrintUsedLoaders
+### ![AR_PrintUsedLoaders](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_Print.png) AR_PrintUsedLoaders
 > **Default:** Prints file paths that loaders of the current composition uses.  
 
-### AR_PrintUsedSavers
+### ![AR_PrintUsedSavers](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_Print.png) AR_PrintUsedSavers
 > **Default:** Prints file paths that savers of the current composition uses.  
 
-### AR_RangeManager *(GUI)*
+### ![AR_RangeManager](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_RangeManager.png) AR_RangeManager *(GUI)*
 > Set global and render range easily.  
-> **Default:** Global range.  
-> **Shift:** Render range.  
+> Option to save ranges with comments in a sticky note and load settings from it.
+> **Default:** Render range.  
+> **Shift:** Global range.  
 
-### AR_ReloadLoader
+### ![AR_ReloadLoader](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ReloadLoader.png) AR_ReloadLoader
 > **Default:** Reloads selected loaders and extends ranges if needed.  
 
-### AR_RemoveKeys
+### ![AR_RemoveKeys](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_RemoveKeys.png) AR_RemoveKeys
 > **Default:** Removes all keyframes from selected tools.  
 
-### AR_ResizeCanvas *(GUI)*
+### ![AR_ResizeCanvas](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ResizeCanvas.png) AR_ResizeCanvas *(GUI)*
 > **Default:** Resize canvas of the selected tool.  
 > *Width and height inputs supports basic calculations.*  
 
-### AR_RevealInExplorer
+### ![AR_RevealInExplorer](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_RevealInExplorer.png) AR_RevealInExplorer
 > **Default:** Opens saver's or loader's media input in the explorer.  
 
-### AR_ReverseCrop
+### ![AR_ReverseCrop](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ReverseCrop.png) AR_ReverseCrop
 > **Default:** Puts the cropped image back in place.  
 
-### AR_ReverseSetup
+### ![AR_ReverseSetup](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ReverseSetup.png) AR_ReverseSetup
 > **Default:** Reverses the node setup of the selected tools (basic workflow).  
   
 > #### Supported nodes:
@@ -208,25 +214,25 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 > - Color Space Transform
 > - Gamut  
 
-### AR_ReverseStabilizationSetup
+### ![AR_ReverseStabilizationSetup](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ReverseStabilizationSetup.png) AR_ReverseStabilizationSetup
 > **Default:** Creates reverse stabilization setup for clean up painting from a active Tracker Node.   
 
-### AR_SampleImage
+### ![AR_SampleImage](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SampleImage.png) AR_SampleImage
 > **Default:** Creates a sample image setup for the selected tool(s).  
 
-### AR_ScaleToFitComp
+### ![AR_ScaleToFitComp](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ScaleToFitComp.png) AR_ScaleToFitComp
 > **Default:** Scales foreground image to fit background image's width and height.  
 > *Requires that the merge tool is active!*  
 
-### AR_ScaleToFitCompHeight
+### ![AR_ScaleToFitCompHeight](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ScaleToFitCompHeight.png) AR_ScaleToFitCompHeight
 > **Default:** Scales proportionally foreground image to fit background image's height.  
 > *Requires that the merge tool is active!*  
 
-### AR_ScaleToFitCompWidth
+### ![AR_ScaleToFitCompWidth](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ScaleToFitCompWidth.png) AR_ScaleToFitCompWidth
 > **Default:** Scales proportionally foreground image to fit background image's width.  
 > *Requires that the merge tool is active!*  
 
-### AR_ScriptLauncher *(GUI)*
+### ![AR_ScriptLauncher](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ScriptLauncher.png) AR_ScriptLauncher *(GUI)*
 > **Default:** Search and run sripts easily.  
 > **Dependencies:** Pyautogui *(recommended but not required.)*  
 > Scans script from folder where AR_ScriptLauncher is located, subfolders included.  
@@ -239,35 +245,38 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 >        - <Enter Key Sequence> E.g. Shift+Tab
 >            - Scripts -> AR_ScriptLauncher  
 
-### AR_SelectAllLoaders
+### ![AR_SelectAllLoaders](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SelectAll.png) AR_SelectAllLoaders
 > **Default:** Selects all loader tools of the active composition.  
 
-### AR_SelectAllThisType
+### ![AR_SelectAllThisType](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SelectAll.png) AR_SelectAllThisType
 > **Default:** Selects all tools that are same type as the current active tool.  
 
-### AR_SetCompResolution
+### ![AR_SelectAllThisTypeSameColor](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SelectAll.png) AR_SelectAllThisTypeSameColor
+> **Default:** Selects all tools that are same type and same color as the current active tool.  
+
+### ![AR_SetCompResolution](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SetCompResolution.png) AR_SetCompResolution
 > **Default:** Sets composition's frame format resolution from the active tool.  
 
-### AR_SetRangeFromTool(s)
+### ![AR_SetRangeFromTool(s)](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SetRange.png) AR_SetRangeFromTool(s)
 > **Default:** Sets global and render range from selected tool(s).  
 
-### AR_SetRangeGlobalToRender
+### ![AR_SetRangeGlobalToRender](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SetRange.png) AR_SetRangeGlobalToRender
 > **Default:** Sets global range to match render range.  
 
-### AR_SetRangeRenderToGlobal
+### ![AR_SetRangeRenderToGlobal](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SetRange.png) AR_SetRangeRenderToGlobal
 > **Default:** Sets render range to match global range.  
 
-### AR_SetRangeThisFrame
+### ![AR_SetRangeThisFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SetRange.png) AR_SetRangeThisFrame
 > **Default:** Sets render range to the current frame.  
 
-### AR_SplitToTiles *(GUI)*
+### ![AR_SplitToTiles](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SplitToTiles.png) AR_SplitToTiles *(GUI)*
 > **Default:** Splits the active tool in to tiles by given rows and clomuns.  
 
-### AR_TrimLoaderWithTimecode(SMPTE) *(GUI)*
+### ![AR_TrimLoaderWithTimecode(SMPTE)](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_TrimLoaderWithTimecode(SMPTE).png) AR_TrimLoaderWithTimecode(SMPTE) *(GUI)*
 > **Default:** Trims the loader with SMPTE timecode.  
 > *Loader's media has to have timecode in its metadata!*  
 
-### AR_Tracker(Points)ToGridWarp
+### ![AR_Tracker(Points)ToGridWarp](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_TrackerToGridWarp.png) AR_Tracker(Points)ToGridWarp
 > **Default:** Connects Tracker's points to GridWarp's published points.  
 
 > **How to use:** Select the Tracker and the GridWarp tools and run the script.  
@@ -278,12 +287,12 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 > Tracker point count and count of published GridWarp points must be the same!  
 > Order of the points must be the same!  
 
-### AR_Tracker(UnsteadyPosition)ToGridWarp
+### ![AR_Tracker(UnsteadyPosition)ToGridWarp](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_TrackerToGridWarp.png) AR_Tracker(UnsteadyPosition)ToGridWarp
 > **Default:** Connects Tracker's unsteady position to GridWarp's published points.  
 > **How to use:** Select the Tracker and the GridWarp tools and run the script.  
 > **Note:** Use clean Tracker and clean GridWarp!  
 
-### AR_VersionUp *(GUI)*
+### ![AR_VersionUp](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_VersionUp.png) AR_VersionUp *(GUI)*
 > **Default:** Easily change between different versions.  
 
 

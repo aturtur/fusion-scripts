@@ -3,7 +3,7 @@ AR_RangeManager
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Range Manager
-Version: 1.2.1
+Version: 1.2.2
 Description-US: Set global and render range easily.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -11,11 +11,12 @@ Python version 3.10.8 (64-bit).
 
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
-Normal function: Global range.
-Shift-modifier: Render range.
+Normal function: Render range.
+Shift-modifier: Global range.
 
 Changelog:
-1.2.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
+1.2.2 (14.05.2025)  - Major bug fixes. If sticky note is created it's selected. Swapped global range and render range key modifiers.
+1.2.1 (07.05.2025)  - Added hotkey Ctrl+Q to close the dialog.
 1.2.0 (09.10.2024)  - Name changed from AR_SetRange to AR_RangeManager.
                     - Added load and save buttons. Stores data to sticky note!
                     - Removed method combobox and added buttons instead.
@@ -78,7 +79,7 @@ def load_values(itm) -> None:
                     end = values[2]
 
                     itm['Comment'+alphabets[i]].Text = str(comment)
-                    itm['Start'+alphabets[i]].Text = str(start)
+                    itm['Start'+alphabets[i]].Value = int(start)
                     itm['End'+alphabets[i]].Value = int(end)
         else:
             clear_values(itm)
@@ -105,6 +106,11 @@ def save_values(itm) -> None:
     sticky_note = comp.FindTool(note_name)
     if not sticky_note:
         sticky_note = comp.AddTool("Note")
+        
+        flow = comp.CurrentFrame.FlowView
+        flow.Select()
+        flow.Select(sticky_note)
+
     sticky_note.SetAttrs({'TOOLS_Name': note_name})
     sticky_note.Comments[comp.CurrentTime] = comments
 
@@ -150,60 +156,60 @@ dlg  = disp.AddWindow({"WindowTitle": "Range Manager",
         ui.VGroup({"Spacing": 5},
         [
             ui.HGroup([
-                ui.LineEdit({"ID": "Label_CommentA", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Get", "ID": "Button_Get_A", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Render Range"}),
+                ui.LineEdit({"ID": "CommentA", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.Button({"Text": "Get", "ID": "Button_Get_A", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Global Range"}),
                 ui.SpinBox({"ID": "StartA", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalStart"), "Weight": 0.1}),
                 ui.SpinBox({"ID": "EndA", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalEnd"), "Weight": 0.1}),
-                ui.Button({"Text": "Set", "ID": "Button_Set_A", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Render Range"}),
+                ui.Button({"Text": "Set", "ID": "Button_Set_A", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Global Range"}),
             ]),
             ui.HGroup([
-                ui.LineEdit({"ID": "Label_CommentB", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Get", "ID": "Button_Get_B", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Render Range"}),
+                ui.LineEdit({"ID": "CommentB", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.Button({"Text": "Get", "ID": "Button_Get_B", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Global Range"}),
                 ui.SpinBox({"ID": "StartB", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalStart"), "Weight": 0.1}),
                 ui.SpinBox({"ID": "EndB", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalEnd"), "Weight": 0.1}),
-                ui.Button({"Text": "Set", "ID": "Button_Set_B", "Weight": 0.1, "ToolTip": "Set Render In/Out, Shift: Render Range"}),
+                ui.Button({"Text": "Set", "ID": "Button_Set_B", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Global Range"}),
             ]),
             ui.HGroup([
-                ui.LineEdit({"ID": "Label_CommentC", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Get", "ID": "Button_Get_C", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Render Range"}),
+                ui.LineEdit({"ID": "CommentC", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.Button({"Text": "Get", "ID": "Button_Get_C", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Global Range"}),
                 ui.SpinBox({"ID": "StartC", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalStart"), "Weight": 0.1}),
                 ui.SpinBox({"ID": "EndC", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalEnd"), "Weight": 0.1}),
-                ui.Button({"Text": "Set", "ID": "Button_Set_C", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Render Range"}),
+                ui.Button({"Text": "Set", "ID": "Button_Set_C", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Global Range"}),
             ]),
             ui.HGroup([
-                ui.LineEdit({"ID": "Label_CommentD", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Get", "ID": "Button_Get_D", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Render Range"}),
+                ui.LineEdit({"ID": "CommentD", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.Button({"Text": "Get", "ID": "Button_Get_D", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Global Range"}),
                 ui.SpinBox({"ID": "StartD", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalStart"), "Weight": 0.1}),
                 ui.SpinBox({"ID": "EndD", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalEnd"), "Weight": 0.1}),
-                ui.Button({"Text": "Set", "ID": "Button_Set_D", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Render Range"}),
+                ui.Button({"Text": "Set", "ID": "Button_Set_D", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Global Range"}),
             ]),
             ui.HGroup([
-                ui.LineEdit({"ID": "Label_CommentE", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Get", "ID": "Button_Get_E", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Render Range"}),
+                ui.LineEdit({"ID": "CommentE", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.Button({"Text": "Get", "ID": "Button_Get_E", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Global Range"}),
                 ui.SpinBox({"ID": "StartE", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalStart"), "Weight": 0.1}),
                 ui.SpinBox({"ID": "EndE", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalEnd"), "Weight": 0.1}),
-                ui.Button({"Text": "Set", "ID": "Button_Set_E", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Render Range"}),
+                ui.Button({"Text": "Set", "ID": "Button_Set_E", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Global Range"}),
             ]),
             ui.HGroup([
-                ui.LineEdit({"ID": "Label_CommentF", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Get", "ID": "Button_Get_F", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Render Range"}),
+                ui.LineEdit({"ID": "CommentF", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.Button({"Text": "Get", "ID": "Button_Get_F", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Global Range"}),
                 ui.SpinBox({"ID": "StartF", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalStart"), "Weight": 0.1}),
                 ui.SpinBox({"ID": "EndF", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalEnd"), "Weight": 0.1}),
-                ui.Button({"Text": "Set", "ID": "Button_Set_F", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Render Range"}),
+                ui.Button({"Text": "Set", "ID": "Button_Set_F", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Global Range"}),
             ]),
             ui.HGroup([
-                ui.LineEdit({"ID": "Label_CommentG", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Get", "ID": "Button_Get_G", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Render Range"}),
+                ui.LineEdit({"ID": "CommentG", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.Button({"Text": "Get", "ID": "Button_Get_G", "Weight": 0.1, "ToolTip": "Get Range In/Out, Shift: Global Range"}),
                 ui.SpinBox({"ID": "StartG", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalStart"), "Weight": 0.1}),
                 ui.SpinBox({"ID": "EndG", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalEnd"), "Weight": 0.1}),
-                ui.Button({"Text": "Set", "ID": "Button_Set_G", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Render Range"}),
+                ui.Button({"Text": "Set", "ID": "Button_Set_G", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Global Range"}),
             ]),
             ui.HGroup([
-                ui.LineEdit({"ID": "Label_CommentH", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Get", "ID": "Button_Get_H", "Weight": 0.1, "ToolTip": "Get GloRangebal In/Out, Shift: Render Range"}),
+                ui.LineEdit({"ID": "CommentH", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.Button({"Text": "Get", "ID": "Button_Get_H", "Weight": 0.1, "ToolTip": "Get GloRangebal In/Out, Shift: Global Range"}),
                 ui.SpinBox({"ID": "StartH", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalStart"), "Weight": 0.1}),
                 ui.SpinBox({"ID": "EndH", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalEnd"), "Weight": 0.1}),
-                ui.Button({"Text": "Set", "ID": "Button_Set_H", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Render Range"}),
+                ui.Button({"Text": "Set", "ID": "Button_Set_H", "Weight": 0.1, "ToolTip": "Set Range In/Out, Shift: Global Range"}),
             ]),
             ui.HGroup([
                 ui.Button({"Text": "Load Data", "ID": "Button_Load_Data", "Weight": 0.5}),
@@ -235,12 +241,12 @@ dlg.On.MyWin.KeyPress = _func
 # Buttons are pressed.
 ## Get Range.
 def _func(ev):
-    idx = ev['who'][8:]
+    idx = ev['who'][11:]
     key_modifiers = get_key_modifiers(ev)
-    if SHIFT in key_modifiers:
+    if not key_modifiers:
         itm['Start'+idx].Value = comp.GetAttrs("COMPN_RenderStart")
         itm['End'+idx].Value = comp.GetAttrs("COMPN_RenderEnd")
-    else:
+    if SHIFT in key_modifiers:
         itm['Start'+idx].Value = comp.GetAttrs("COMPN_GlobalStart")
         itm['End'+idx].Value = comp.GetAttrs("COMPN_GlobalEnd")
 dlg.On.Button_Get_A.Clicked = _func
@@ -256,14 +262,14 @@ dlg.On.Button_Get_H.Clicked = _func
 # Set Range.
 def _func(ev):
     comp.StartUndo("Set Range")
-    idx = ev['who'][8:]
+    idx = ev['who'][11:]
     key_modifiers = get_key_modifiers(ev)
     if not key_modifiers:
-        comp.SetAttrs({"COMPN_GlobalStart":itm['Start'+idx].Value,
-                    "COMPN_GlobalEnd":itm['End'+idx].Value})
-    if SHIFT in key_modifiers:
         comp.SetAttrs({"COMPN_RenderStart":itm['Start'+idx].Value,
                        "COMPN_RenderEnd":itm['End'+idx].Value})
+    if SHIFT in key_modifiers:
+        comp.SetAttrs({"COMPN_GlobalStart":itm['Start'+idx].Value,
+                    "COMPN_GlobalEnd":itm['End'+idx].Value})
     comp.EndUndo(True)
 dlg.On.Button_Set_A.Clicked = _func
 dlg.On.Button_Set_B.Clicked = _func

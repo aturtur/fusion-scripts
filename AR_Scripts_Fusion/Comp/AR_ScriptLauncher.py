@@ -295,7 +295,7 @@ header = script_tree.NewItem()
 header.Text[0] = "Script"
 script_tree.SetHeaderItem(header)
 script_tree.ColumnCount = 1
-script_tree.IconSize = [32, 32]
+script_tree.IconSize = [20, 20]
 populate_tree(script_tree, scripts)
 select_first_item(script_tree)
 

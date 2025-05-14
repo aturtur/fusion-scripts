@@ -5,7 +5,7 @@ Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Freeze Frame
 Version: 1.0.1
-Description-US: Creates a time_speed node that freezes frame at current frame.
+Description-US: Creates a TimeSpeed node that freezes frame at current frame.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
 Python version 3.10.8 (64-bit).

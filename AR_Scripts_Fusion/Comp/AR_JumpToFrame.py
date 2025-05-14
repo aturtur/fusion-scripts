@@ -4,7 +4,7 @@ AR_JumpToFrame
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Jump To Frame
-Version: 1.3.1
+Version: 1.3.2
 Description-US: Jumps to given frame in the timeline.
 
 Tip: Use Ctrl + 1-8 to jump to the frame.
@@ -15,8 +15,9 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.3.2 (14.05.2025) - If sticky note is created it's selected.
 1.3.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
-1.3.0 (06.04.2025) - Added hotkeys to jump to frame (Ctrl + 1-8).
+1.3.0 (06.04.2025) - Added hotkeys to go to frame (Ctrl + 1-8).
 1.2.0 (29.09.2024) - Added load and save buttons. Stores data to sticky note!
 1.1.1 (25.09.2024) - Changed code to follow more PEP 8 recommendations.
 1.1.0 (21.04.2024) - Added get buttons.
@@ -102,6 +103,11 @@ def save_values(itm) -> None:
     sticky_note = comp.FindTool(note_name)
     if not sticky_note:
         sticky_note = comp.AddTool("Note")
+
+        flow = comp.CurrentFrame.FlowView
+        flow.Select()
+        flow.Select(sticky_note)
+
     sticky_note.SetAttrs({'TOOLS_Name': note_name})
     sticky_note.Comments[comp.CurrentTime] = comments
 
