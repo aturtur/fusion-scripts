@@ -214,7 +214,7 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 > - Color Space Transform
 > - Gamut  
 
-### ![AR_ReverseStabilizationSetup](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ReverseStabilizationSetup.png) AR_ReverseStabilizationSetup
+### ![AR_ReverseStabilizationSetup](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ReverseStabilization.png) AR_ReverseStabilizationSetup
 > **Default:** Creates reverse stabilization setup for clean up painting from a active Tracker Node.   
 
 ### ![AR_SampleImage](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SampleImage.png) AR_SampleImage
