@@ -15,7 +15,11 @@ Normal function: Render range.
 Shift-modifier: Global range.
 
 Changelog:
-1.2.2 (14.05.2025)  - Major bug fixes. If sticky note is created it's selected. Swapped global range and render range key modifiers.
+1.3.0 (15.05.2025)  - GUI width reduced a bit.
+                    - If timeline range is smaller than 
+1.2.2 (14.05.2025)  - Major bug fixes.
+                    - If sticky note is created it's selected.
+                    - Swapped global range and render range key modifiers.
 1.2.1 (07.05.2025)  - Added hotkey Ctrl+Q to close the dialog.
 1.2.0 (09.10.2024)  - Name changed from AR_SetRange to AR_RangeManager.
                     - Added load and save buttons. Stores data to sticky note!
@@ -41,6 +45,29 @@ SHIFT: str = "SHIFT"
 
 
 # Functions
+def set_range(start, end, method):
+    """Sets timeline range with given values."""
+
+    current_global_start = comp.GetAttrs("COMPN_GlobalStart")
+    current_global_end = comp.GetAttrs("COMPN_GlobalEnd")
+
+    if method == "render":
+        # If global range is smaller than given render range -> extend time line.
+        if start <= current_global_start:
+            comp.SetAttrs({"COMPN_GlobalStart": start})
+        if end >= current_global_end:
+            comp.SetAttrs({"COMPN_GlobalEnd": end})
+
+        # Set render range,
+        comp.SetAttrs({"COMPN_RenderStart": start,
+                       "COMPN_RenderEnd": end})
+                
+    elif method == "global":
+        # Set global range,
+        comp.SetAttrs({"COMPN_GlobalStart": start,
+                       "COMPN_GlobalEnd": end})
+
+
 def get_key_modifiers(ev: dict) -> list:
     """Get keyboard modifiers."""
 
@@ -139,7 +166,7 @@ def gui_geometry(width: int, height: int, x: float, y: float) -> dict:
     return {"width": gui_width, "height": gui_height, "x": gui_x, "y": gui_y}
 
 
-gui_geo = gui_geometry(700, 270, 0.5, 0.5)
+gui_geo = gui_geometry(500, 270, 0.5, 0.5)
 
 
 # GUI
@@ -265,11 +292,9 @@ def _func(ev):
     idx = ev['who'][11:]
     key_modifiers = get_key_modifiers(ev)
     if not key_modifiers:
-        comp.SetAttrs({"COMPN_RenderStart":itm['Start'+idx].Value,
-                       "COMPN_RenderEnd":itm['End'+idx].Value})
+        set_range(itm['Start'+idx].Value, itm['End'+idx].Value, "render")
     if SHIFT in key_modifiers:
-        comp.SetAttrs({"COMPN_GlobalStart":itm['Start'+idx].Value,
-                    "COMPN_GlobalEnd":itm['End'+idx].Value})
+        set_range(itm['Start'+idx].Value, itm['End'+idx].Value, "global")
     comp.EndUndo(True)
 dlg.On.Button_Set_A.Clicked = _func
 dlg.On.Button_Set_B.Clicked = _func
