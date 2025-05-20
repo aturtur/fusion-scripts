@@ -4,7 +4,7 @@ AR_SplitEXRFile
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Split EXR Multichannel File
-Version: 1.0.0
+Version: 1.0.1
 Description-US: Splits EXR multi-channel loader to multiple loaders.
 
 Written for Blackmagic Design Fusion Studio .0.3 build 3.
@@ -13,6 +13,7 @@ Python version 3.13.2 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.1 (20.05.2025) - Bug fixes.
 1.0.0 (19.04.2025) - Initial release.
 """
 # Libraries
@@ -23,6 +24,13 @@ from collections import defaultdict
 bmd = bmd  # import BlackmagicFusion as bmd
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
+
+channel_aliases = {
+    'r': ['r', 'red'],
+    'g': ['g', 'green'],
+    'b': ['b', 'blue'],
+    'a': ['a', 'alpha']
+}
 
 
 # Functions
@@ -50,19 +58,43 @@ def split_exr_multichannel_file(tool) -> None:
         current_tool.SetAttrs({'TOOLB_NameSet': True, 'TOOLS_Name': layer_name})
         flow.SetPos(current_tool, x, y+i+1)
 
-        red_channel   = f"{layer_name}.R" if 'R' in channels else None
-        green_channel = f"{layer_name}.G" if 'G' in channels else None
-        blue_channel  = f"{layer_name}.B" if 'B' in channels else None
-        alpha_channel = f"{layer_name}.A" if 'A' in channels else None
+        normalized_channels = {ch.lower(): ch for ch in channels}
+
+        def find_channel_key(possible_keys):
+            for key in possible_keys:
+                if key in normalized_channels:
+                    return normalized_channels[key]
+            return None
+        
+        red_key   = find_channel_key(channel_aliases['r'])
+        green_key = find_channel_key(channel_aliases['g'])
+        blue_key  = find_channel_key(channel_aliases['b'])
+        alpha_key = find_channel_key(channel_aliases['a'])
+
+        red_channel   = f"{layer_name}.{red_key}" if red_key else None
+        green_channel = f"{layer_name}.{green_key}" if green_key else None
+        blue_channel  = f"{layer_name}.{blue_key}" if blue_key else None
+        alpha_channel = f"{layer_name}.{alpha_key}" if alpha_key else None
 
         if red_channel:
             current_tool.SetInput("Clip1.OpenEXRFormat.RedName", red_channel)
+        else:
+            current_tool.SetInput("Clip1.OpenEXRFormat.RedName", "SomethingThatWontMatchHopefully")
+
         if green_channel:
             current_tool.SetInput("Clip1.OpenEXRFormat.GreenName", green_channel)
+        else:
+            current_tool.SetInput("Clip1.OpenEXRFormat.GreenName", "SomethingThatWontMatchHopefully")
+
         if blue_channel:
             current_tool.SetInput("Clip1.OpenEXRFormat.BlueName", blue_channel)
+        else:
+            current_tool.SetInput("Clip1.OpenEXRFormat.BlueName", "SomethingThatWontMatchHopefully")
+
         if alpha_channel:
             current_tool.SetInput("Clip1.OpenEXRFormat.AlphaName", alpha_channel)
+        else:
+            current_tool.SetInput("Clip1.OpenEXRFormat.AlphaName", "SomethingThatWontMatchHopefully")
 
     flow.SetPos(tool, x, y)
 

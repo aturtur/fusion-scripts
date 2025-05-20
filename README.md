@@ -7,8 +7,8 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming to 1.4.0**
+- _20.05.2025_ **Updated:** AR_SplitEXRFile.
 - _15.05.2025_ **Updated:** AR_RangeManager.
-- ...
 
 **Changes in 1.3.0**
 - _14.05.2025_ **Updated:** AR_RangeManager, AR_JumpToFrame.
