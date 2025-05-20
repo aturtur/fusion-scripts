@@ -16,7 +16,7 @@ Shift-modifier: Global range.
 
 Changelog:
 1.3.0 (15.05.2025)  - GUI width reduced a bit.
-                    - If timeline range is smaller than 
+                    - Expand the timeline if given range is shorter/longer than the current timeline.
 1.2.2 (14.05.2025)  - Major bug fixes.
                     - If sticky note is created it's selected.
                     - Swapped global range and render range key modifiers.
