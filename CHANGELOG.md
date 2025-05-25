@@ -1,8 +1,4 @@
 ## Changelog
-**Changes coming to 1.4.0**
-- _20.05.2025_ **Updated:** AR_SplitEXRFile, bug fixes.
-- _15.05.2025_ **Updated:** AR_RangeManager, tweaks.
-
 **Changes in 1.3.0**
 - _14.05.2025_ **Updated:** AR_RangeManager, AR_JumpToFrame.
 - _14.05.2025_ **New:** AR_SelectAllThisTypeSameColor.

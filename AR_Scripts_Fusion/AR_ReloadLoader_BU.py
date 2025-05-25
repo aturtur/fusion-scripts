@@ -7,9 +7,6 @@ Name-US: Reload Loader
 Version: 1.2.0
 Description-US: Reloads selected loaders and extends ranges if needed.
 
-Note:   - The script resets trim values!
-        - Old length value has hold frame values included and new length value doesn't!
-
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
 Python version 3.10.8 (64-bit).
 
@@ -18,7 +15,6 @@ Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 Changelog:
 1.2.0 (24.05.2025) - Prints useful data to the console.
                    - Hold frame handling.
-                   - Fixed length value.
 1.1.0 (11.04.2025) - Added support for selection.
 1.0.0 (20.09.2024) - Initial release.
 """
@@ -111,8 +107,6 @@ def reload_loader(loader) -> bool:
     clip_file_path      = loader.GetInput("Clip")
     clip_global_in      = loader.GlobalIn[1]
     clip_global_out     = loader.GlobalOut[1]
-    clip_trim_start     = loader.ClipTimeStart[1]
-    clip_trim_end       = loader.ClipTimeEnd[1]
     clip_hold_first     = loader.HoldFirstFrame[1]
     clip_hold_last      = loader.HoldLastFrame[1]
     clip_reverse        = loader.Reverse[1]
@@ -140,7 +134,7 @@ def reload_loader(loader) -> bool:
         # Calculate offset and new start and and frames.
         offset = clip_global_in - loader.GetAttrs()['TOOLIT_Clip_StartFrame'][1]
         start_frame = file_start_frame + offset
-        end_frame = file_end_frame + offset + clip_hold_first + clip_hold_last
+        end_frame = file_end_frame + offset
 
         # Update loader's attributes.
         loader.Clip[1] = clip_file_path+""  # Update file path.
@@ -163,7 +157,7 @@ def reload_loader(loader) -> bool:
         pd['old_global_out'] = clip_global_out
         pd['new_global_out'] = end_frame
         pd['old_length'] = old_length
-        pd['new_length'] = file_length #+ clip_hold_first + clip_hold_last
+        pd['new_length'] = file_length
 
         print("")
         print(f"{loader_name} - Updated!")

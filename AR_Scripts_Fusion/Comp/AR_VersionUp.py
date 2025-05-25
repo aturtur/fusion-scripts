@@ -4,8 +4,11 @@ AR_VersionUp
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Version Up
-Version: 1.3.4
+Version: 1.3.6
 Description-US: Easily change between different versions.
+
+Note:   - The script resets trim values!
+        - Old length value has hold frame values included and new length value doesn't!
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
 Python version 3.10.8 (64-bit).
@@ -15,6 +18,8 @@ Uses v character paired with digits to point out the version number (e.g. v1, v0
 File path syntax example: ../VERSIONS/ProjectName_v001/../../ProjectName_v001_0000.tif
 
 Changelog:
+1.3.6 (25.05.2025) - Fixed length value.
+1.3.5 (22.05.2025) - Tweaked how stuff is printed to the console.
 1.3.4 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.3.3 (11.04.2025) - Added error checking and tooltip.
 1.3.2 (09.10.2024) - Added handling for hold frames.
@@ -202,6 +207,7 @@ def get_loader_settings(tool) -> dict:
 
 
 def print_data(pd) -> None:
+    """Prints data to the console about changed values."""
 
     old_in = int(pd['old_global_in'])
     old_out = int(pd['old_global_out'])
@@ -224,11 +230,13 @@ def update_loader_settings(tool, settings: dict, path: str, lock_global_in: bool
 
     # Get possibly changed start and end frames from file (extended or reduced).
     file_start_frame, file_end_frame = get_frame_range(path)
-    file_length = file_end_frame - file_start_frame
+    file_length = file_end_frame - file_start_frame + 1
 
     # Collect variables.
     old_global_in = settings['GlobalIn']
     old_global_out = settings['GlobalOut']
+    clip_hold_last = settings['HoldLast']
+    clip_hold_first = settings['HoldFirst']
     old_start_frame = tool.GetAttrs()['TOOLIT_Clip_StartFrame'][1]
     old_length = old_global_out - old_global_in
     new_start_frame = file_start_frame
@@ -240,14 +248,14 @@ def update_loader_settings(tool, settings: dict, path: str, lock_global_in: bool
         offset = old_global_in - new_start_frame
     
     new_global_in = new_start_frame + offset
-    new_global_out = file_end_frame + offset
+    new_global_out = file_end_frame + offset + clip_hold_first + clip_hold_last
 
     # Update settings.
     tool.SetInput("Clip", path + "")
     settings['StartFrame'] = file_start_frame
     settings['GlobalOut'] = new_global_out
     settings['GlobalIn'] = new_global_in
-    settings['TrimOut'] = file_length
+    settings['TrimOut'] = file_length-1
 
     # Collect some data for printing.
     pd = {}
@@ -315,10 +323,13 @@ def version_up_run(lock_global_in: bool) -> bool:
                     refresh_tool(tool)
 
                     # Print data to console.
-                    print(f"{loader_name} - Updated from v{current_version} to v{version_up}")
+                    print("")
+                    print(f"{loader_name} - Updated!")
+                    print(f"\tVersion change:\tv{current_version} → v{version_up}")
                     print(f"\tOld path:\t\t{file_path}")
                     print(f"\tUpdated path:\t{updated_path_version}")
                     print("\tHold frame")
+                    print("")
                     break
 
             else:
@@ -329,10 +340,13 @@ def version_up_run(lock_global_in: bool) -> bool:
                     refresh_tool(tool)
 
                     # Print data to console.
-                    print(f"{loader_name} - Updated from v{current_version} to v{version_up}")
+                    print("")
+                    print(f"{loader_name} - Updated!")
+                    print(f"\tVersion change:\tv{current_version} → v{version_up}")
                     print(f"\tOld path:\t\t{file_path}")
                     print(f"\tUpdated path:\t{updated_path_full}")
                     print_data(pd)
+                    print("")
                     break
 
         else:
@@ -371,10 +385,13 @@ def version_down_run(lock_global_in: bool) -> bool:
                     refresh_tool(tool)
 
                     # Print data to console.
-                    print(f"{loader_name} - Updated from v{current_version} to v{version_down}")
+                    print("")
+                    print(f"{loader_name} - Updated!")
+                    print(f"\tVersion change:\tv{current_version} → v{version_down}")
                     print(f"\tOld path:\t\t{file_path}")
                     print(f"\tUpdated path:\t{updated_path_version}")
                     print("\tHold frame")
+                    print("")
                     break
 
             else:
@@ -385,10 +402,13 @@ def version_down_run(lock_global_in: bool) -> bool:
                     refresh_tool(tool)
 
                     # Print data to console.
-                    print(f"{loader_name} - Updated from v{current_version} to v{version_down}")
+                    print("")
+                    print(f"{loader_name} - Updated!")
+                    print(f"\tVersion change:\tv{current_version} → v{version_down}")
                     print(f"\tOld path:\t\t{file_path}")
                     print(f"\tUpdated path:\t{updated_path_full}")
                     print_data(pd)
+                    print("")
                     break
 
         else:
@@ -453,10 +473,13 @@ def latest_run(lock_global_in: bool) -> None:
             refresh_tool(tool)
 
             if hold_frame:
-                    print(f"{loader_name} - Updated from v{current_version} to v{last_valid_version}")
+                    print("")
+                    print(f"{loader_name} - Updated!")
+                    print(f"\tVersion change:\tv{current_version} → v{last_valid_version}")
                     print(f"\tOld path:\t\t{file_path}")
                     print(f"\tUpdated path:\t{last_valid_path}")
                     print("\tHold frame")
+                    print("")
 
             else:
                 # Print data to console.
@@ -464,14 +487,19 @@ def latest_run(lock_global_in: bool) -> None:
                 pd['old_global_out'] = old_settings['GlobalOut']
                 pd['old_length'] = old_settings['GlobalOut'] - old_settings['GlobalIn']
 
-                print(f"{loader_name} - Updated from v{current_version} to v{last_valid_version}")
+                print("")
+                print(f"{loader_name} - Updated!")
+                print(f"\tVersion change:\tv{current_version} → v{last_valid_version}")
                 print(f"\tOld path:\t\t{file_path}")
                 print(f"\tUpdated path:\t{last_valid_path}")
                 print_data(pd)
+                print("")
 
         else:  # If newer version not found.
             # Print errors to console.
+            print("")
             print(f"{loader_name} - Newer version not found!")
+            print("")
 
 
 def custom_run(custom_version: int, lock_global_in: bool) -> bool:
@@ -500,10 +528,13 @@ def custom_run(custom_version: int, lock_global_in: bool) -> bool:
                 refresh_tool(tool)
 
                 # Print data to console.
-                print(f"{loader_name} - Updated from v{current_version} to v{custom_version}")
+                print("")
+                print(f"{loader_name} - Updated!")
+                print(f"\tVersion change:\tv{current_version} → v{custom_version}")
                 print(f"\tOld path:\t\t{file_path}")
                 print(f"\tUpdated path:\t{updated_path_version}")
                 print("\tHold frame")
+                print("")
                 return True
 
             else:
@@ -519,10 +550,13 @@ def custom_run(custom_version: int, lock_global_in: bool) -> bool:
                 refresh_tool(tool)
 
                 # Print data to console.
-                print(f"{loader_name} - Updated from v{current_version} to v{custom_version}")
+                print("")
+                print(f"{loader_name} - Updated!")
+                print(f"\tVersion change:\tv{current_version} → v{custom_version}")
                 print(f"\tOld path:\t\t{file_path}")
                 print(f"\tUpdated path:\t{updated_path_full}")
                 print_data(pd)
+                print("")
                 return True
 
             else:

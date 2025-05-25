@@ -1,5 +1,5 @@
 # Aturtur's Fusion Scripts
-My collection of Blackmagic Design Fusion scripts ([@aturtur.bsky.social](https://bsky.app/profile/aturtur.bsky.social)).  
+My collection of Blackmagic Design Fusion Studio (standalone) scripts ([@aturtur.bsky.social](https://bsky.app/profile/aturtur.bsky.social)).  
 
 Latest version **1.3.0** *(Released 15.05.2025)*  
 
@@ -7,6 +7,8 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming to 1.4.0**
+- _25.05.2025_ **Updated:** AR_VersionUp.
+- _24.05.2025_ **Updated:** AR_ReloadLoader.
 - _20.05.2025_ **Updated:** AR_SplitEXRFile.
 - _15.05.2025_ **Updated:** AR_RangeManager.
 
