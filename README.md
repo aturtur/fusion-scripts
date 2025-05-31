@@ -245,6 +245,9 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![AR_SetCompResolution](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SetCompResolution.png) AR_SetCompResolution
 > **Default:** Sets composition's frame format resolution from the active tool.  
 
+### ![AR_SetRangeFromMetadata](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SetRange.png) AR_SetRangeFromMetadata
+> **Default:** Sets global and render range from selected tool's metadata.  
+
 ### ![AR_SetRangeFromTool(s)](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SetRange.png) AR_SetRangeFromTool(s)
 > **Default:** Sets global and render range from selected tool(s).  
 
