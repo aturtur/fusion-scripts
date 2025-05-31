@@ -4,7 +4,7 @@ AR_AddMetadata
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Add Metadata
-Version: 1.2.0
+Version: 1.3.0
 Description-US: Adds metadata nodes.
 
 Note: Grouping requires pyautogui module.
@@ -15,6 +15,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.3.0 (29.05.2025) - Added more custom fields.
 1.2.0 (14.04.2025) - Fixed bug if tool is not active.
                    - Group is now named.
                    - Added Fusion version preset.
@@ -133,6 +134,46 @@ def add_metadata(itm: list) -> any:
         md_custom4.SetAttrs({'TOOLS_Name': 'Metadata_' + key})
         metadata_nodes.append(md_custom4)
 
+    if itm['Checkbox_Custom5'].Checked:
+        key = itm['Key5'].Text
+        value = itm['Value5'].Text
+
+        md_custom5 = comp.AddTool("Fuse.SetMetaData")
+        md_custom5.SetInput("FieldName", key)
+        md_custom5.SetInput("FieldValue", value)
+        md_custom5.SetAttrs({'TOOLS_Name': 'Metadata_' + key})
+        metadata_nodes.append(md_custom5)
+
+    if itm['Checkbox_Custom6'].Checked:
+        key = itm['Key6'].Text
+        value = itm['Value6'].Text
+
+        md_custom6 = comp.AddTool("Fuse.SetMetaData")
+        md_custom6.SetInput("FieldName", key)
+        md_custom6.SetInput("FieldValue", value)
+        md_custom6.SetAttrs({'TOOLS_Name': 'Metadata_' + key})
+        metadata_nodes.append(md_custom6)
+
+    if itm['Checkbox_Custom7'].Checked:
+        key = itm['Key7'].Text
+        value = itm['Value7'].Text
+
+        md_custom7 = comp.AddTool("Fuse.SetMetaData")
+        md_custom7.SetInput("FieldName", key)
+        md_custom7.SetInput("FieldValue", value)
+        md_custom7.SetAttrs({'TOOLS_Name': 'Metadata_' + key})
+        metadata_nodes.append(md_custom7)
+
+    if itm['Checkbox_Custom8'].Checked:
+        key = itm['Key8'].Text
+        value = itm['Value8'].Text
+
+        md_custom8 = comp.AddTool("Fuse.SetMetaData")
+        md_custom8.SetInput("FieldName", key)
+        md_custom8.SetInput("FieldValue", value)
+        md_custom8.SetAttrs({'TOOLS_Name': 'Metadata_' + key})
+        metadata_nodes.append(md_custom8)
+
     if itm['Checkbox_Compname'].Checked:
         key = "COMP_NAME"
 
@@ -205,7 +246,7 @@ def gui_geometry(width: int, height: int, x: float, y: float) -> dict:
     return {"width": gui_width, "height": gui_height, "x": gui_x, "y": gui_y}
 
 
-gui_geo = gui_geometry(400, 345, 0.5, 0.5)
+gui_geo = gui_geometry(400, 450, 0.5, 0.5)
 
 
 # GUI
@@ -248,6 +289,30 @@ dlg  = disp.AddWindow({"WindowTitle": "Add Metadata",
                     ui.CheckBox({"Text": "Custom 4", "ID": "Checkbox_Custom4", "Weight": 0.1}),
                     ui.LineEdit({"Text": "", "PlaceholderText": "Key", "ID": "Key4"}),
                     ui.LineEdit({"Text": "", "PlaceholderText": "Value", "ID": "Value4"}),
+                ]),
+                ui.HGroup(
+                [
+                    ui.CheckBox({"Text": "Custom 5", "ID": "Checkbox_Custom5", "Weight": 0.1}),
+                    ui.LineEdit({"Text": "", "PlaceholderText": "Key", "ID": "Key5"}),
+                    ui.LineEdit({"Text": "", "PlaceholderText": "Value", "ID": "Value5"}),
+                ]),
+                ui.HGroup(
+                [
+                    ui.CheckBox({"Text": "Custom 6", "ID": "Checkbox_Custom6", "Weight": 0.1}),
+                    ui.LineEdit({"Text": "", "PlaceholderText": "Key", "ID": "Key6"}),
+                    ui.LineEdit({"Text": "", "PlaceholderText": "Value", "ID": "Value6"}),
+                ]),
+                ui.HGroup(
+                [
+                    ui.CheckBox({"Text": "Custom 7", "ID": "Checkbox_Custom7", "Weight": 0.1}),
+                    ui.LineEdit({"Text": "", "PlaceholderText": "Key", "ID": "Key7"}),
+                    ui.LineEdit({"Text": "", "PlaceholderText": "Value", "ID": "Value7"}),
+                ]),
+                ui.HGroup(
+                [
+                    ui.CheckBox({"Text": "Custom 8", "ID": "Checkbox_Custom8", "Weight": 0.1}),
+                    ui.LineEdit({"Text": "", "PlaceholderText": "Key", "ID": "Key8"}),
+                    ui.LineEdit({"Text": "", "PlaceholderText": "Value", "ID": "Value8"}),
                 ]),
                 
             ]),
@@ -303,6 +368,18 @@ group = False
 itm['Checkbox_Custom1'].Checked = True
 itm['Key1'].Text = "Artist"
 itm['Value1'].Text = os.getenv("USERNAME")
+
+itm['Checkbox_Custom2'].Checked = True
+itm['Key2'].Text = "ColorSpace"
+itm['Value2'].Text = "ACEScg"
+
+itm['Checkbox_Custom3'].Checked = True
+itm['Key3'].Text = "StartFrame"
+itm['Value3'].Text = str(comp.GetAttrs("COMPN_RenderStart"))
+
+itm['Checkbox_Custom4'].Checked = True
+itm['Key4'].Text = "EndFrame"
+itm['Value4'].Text = str(comp.GetAttrs("COMPN_RenderEnd"))
 
 
 # Keys are pressed.

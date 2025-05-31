@@ -1,4 +1,13 @@
 ## Changelog
+**Changes in 1.4.0**
+- _31.05.2025_ **Updated:** AR_ImportFolder.
+- _29.05.2025_ **Updated:** AR_AddMetadata.
+- _27.05.2025_ **New:** AR_SetRangeFromMetadata.
+- _25.05.2025_ **Updated:** AR_VersionUp.
+- _24.05.2025_ **Updated:** AR_ReloadLoader.
+- _20.05.2025_ **Updated:** AR_SplitEXRFile.
+- _15.05.2025_ **Updated:** AR_RangeManager.
+
 **Changes in 1.3.0**
 - _14.05.2025_ **Updated:** AR_RangeManager, AR_JumpToFrame.
 - _14.05.2025_ **New:** AR_SelectAllThisTypeSameColor.

@@ -1,21 +1,19 @@
 # Aturtur's Fusion Scripts
 My collection of Blackmagic Design Fusion Studio (standalone) scripts ([@aturtur.bsky.social](https://bsky.app/profile/aturtur.bsky.social)).  
 
-Latest version **1.3.0** *(Released 15.05.2025)*  
+Latest version **1.4.0** *(Released 31.05.2025)*  
 
 All of the scripts are developed and tested with Windows 11 machine. All of the scripts might not work in Linux or Mac.  
 
 ## Changelog
-**Changes coming to 1.4.0**
+**Changes in 1.4.0**
+- _31.05.2025_ **Updated:** AR_ImportFolder.
+- _29.05.2025_ **Updated:** AR_AddMetadata.
+- _27.05.2025_ **New:** AR_SetRangeFromMetadata.
 - _25.05.2025_ **Updated:** AR_VersionUp.
 - _24.05.2025_ **Updated:** AR_ReloadLoader.
 - _20.05.2025_ **Updated:** AR_SplitEXRFile.
 - _15.05.2025_ **Updated:** AR_RangeManager.
-
-**Changes in 1.3.0**
-- _14.05.2025_ **Updated:** AR_RangeManager, AR_JumpToFrame.
-- _14.05.2025_ **New:** AR_SelectAllThisTypeSameColor.
-- _09.04.2025_ **Other:** *Tweaking icon sizes.*
 
 Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/blob/master/CHANGELOG.md) file.  
 
