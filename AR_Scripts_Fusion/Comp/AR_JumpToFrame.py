@@ -4,7 +4,7 @@ AR_JumpToFrame
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Jump To Frame
-Version: 1.3.2
+Version: 1.4.0
 Description-US: Jumps to given frame in the timeline.
 
 Tip: Use Ctrl + 1-8 to jump to the frame.
@@ -15,6 +15,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.4.0 (03.06.2025) - Combined Get and Go buttons together. Go by default, Get with shift modifier.
 1.3.2 (14.05.2025) - If sticky note is created it's selected.
 1.3.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.3.0 (06.04.2025) - Added hotkeys to go to frame (Ctrl + 1-8).
@@ -142,7 +143,7 @@ def gui_geometry(width: int, height: int, x: float, y: float) -> dict:
     return {"width": gui_width, "height": gui_height, "x": gui_x, "y": gui_y}
 
 
-gui_geo = gui_geometry(400, 300, 0.5, 0.5)
+gui_geo = gui_geometry(380, 285, 0.5, 0.5)
 
 # GUI
 ui   = fusion.UIManager
@@ -163,58 +164,50 @@ dlg  = disp.AddWindow({"WindowTitle": "Jump To Frame",
         [
             ui.HGroup([
                 ui.LineEdit({"ID": "COM_A", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Go", "ID": "SET_A", "Weight": 0.1}),
-                ui.Button({"Text": "Get", "ID": "GET_A", "Weight": 0.1}),
                 ui.SpinBox({"ID": "FRM_A", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
+                ui.Button({"Text": "Go", "ID": "SET_A", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
                 ui.LineEdit({"ID": "COM_B", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Go", "ID": "SET_B", "Weight": 0.1}),
-                ui.Button({"Text": "Get", "ID": "GET_B", "Weight": 0.1}),
                 ui.SpinBox({"ID": "FRM_B", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
+                ui.Button({"Text": "Go", "ID": "SET_B", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
                 ui.LineEdit({"ID": "COM_C", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Go", "ID": "SET_C", "Weight": 0.1}),
-                ui.Button({"Text": "Get", "ID": "GET_C", "Weight": 0.1}),
                 ui.SpinBox({"ID": "FRM_C", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
+                ui.Button({"Text": "Go", "ID": "SET_C", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
                 ui.LineEdit({"ID": "COM_D", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Go", "ID": "SET_D", "Weight": 0.1}),
-                ui.Button({"Text": "Get", "ID": "GET_D", "Weight": 0.1}),
                 ui.SpinBox({"ID": "FRM_D", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
+                ui.Button({"Text": "Go", "ID": "SET_D", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
                 ui.LineEdit({"ID": "COM_E", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Go", "ID": "SET_E", "Weight": 0.1}),
-                ui.Button({"Text": "Get", "ID": "GET_E", "Weight": 0.1}),
                 ui.SpinBox({"ID": "FRM_E", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
+                ui.Button({"Text": "Go", "ID": "SET_E", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
                 ui.LineEdit({"ID": "COM_F", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Go", "ID": "SET_F", "Weight": 0.1}),
-                ui.Button({"Text": "Get", "ID": "GET_F", "Weight": 0.1}),
                 ui.SpinBox({"ID": "FRM_F", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
+                ui.Button({"Text": "Go", "ID": "SET_F", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
                 ui.LineEdit({"ID": "COM_G", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Go", "ID": "SET_G", "Weight": 0.1}),
-                ui.Button({"Text": "Get", "ID": "GET_G", "Weight": 0.1}),
                 ui.SpinBox({"ID": "FRM_G", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
+                ui.Button({"Text": "Go", "ID": "SET_G", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
                 ui.LineEdit({"ID": "COM_H", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
-                ui.Button({"Text": "Go", "ID": "SET_H", "Weight": 0.1}),
-                ui.Button({"Text": "Get", "ID": "GET_H", "Weight": 0.1}),
                 ui.SpinBox({"ID": "FRM_H", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
+                ui.Button({"Text": "Go", "ID": "SET_H", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
@@ -238,10 +231,11 @@ dlg.On.MyWin.Close = _func
 # Keyboard events.
 def _func(ev):
     key_modifiers = get_key_modifiers(ev)
-    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+    if set(key_modifiers) == {CTRL} and ev['Key'] == 81:  # Ctrl + Q.
         disp.ExitLoop()
         dlg.Hide()
 
+    # Shortcuts are optimized to work with Nordic ISO layout.
     if ev['Key'] == 49:  # Ctrl + 1 (!).
         jump_to_frame(itm['FRM_A'].Value)
     if ev['Key'] == 50:  # Ctrl + 2 (").
@@ -258,14 +252,41 @@ def _func(ev):
         jump_to_frame(itm['FRM_G'].Value)
     if ev['Key'] == 56:  # Ctrl + 8 (().
         jump_to_frame(itm['FRM_H'].Value)
+
+    if set(key_modifiers) == {SHIFT}:
+        itm['SET_A'].Text = "Get"
+        itm['SET_B'].Text = "Get"
+        itm['SET_C'].Text = "Get"
+        itm['SET_D'].Text = "Get"
+        itm['SET_E'].Text = "Get"
+        itm['SET_F'].Text = "Get"
+        itm['SET_G'].Text = "Get"
+        itm['SET_H'].Text = "Get"
 dlg.On.MyWin.KeyPress = _func
+
+def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
+    if set(key_modifiers) == {SHIFT}:
+        itm['SET_A'].Text = "Go"
+        itm['SET_B'].Text = "Go"
+        itm['SET_C'].Text = "Go"
+        itm['SET_D'].Text = "Go"
+        itm['SET_E'].Text = "Go"
+        itm['SET_F'].Text = "Go"
+        itm['SET_G'].Text = "Go"
+        itm['SET_H'].Text = "Go"
+dlg.On.MyWin.KeyRelease = _func
 
 
 # Set frame.
 def _func(ev):
     comp.StartUndo("Jump to frame")
     idx = ev['who'][4:]
-    jump_to_frame(itm['FRM_'+idx].Value)
+    key_modifiers = get_key_modifiers(ev)
+    if not key_modifiers:
+        jump_to_frame(itm['FRM_'+idx].Value)
+    elif set(key_modifiers) == {SHIFT}:
+        itm['FRM_'+idx].Value = comp.CurrentTime
     comp.EndUndo(True)
 dlg.On.SET_A.Clicked = _func
 dlg.On.SET_B.Clicked = _func
@@ -275,22 +296,6 @@ dlg.On.SET_E.Clicked = _func
 dlg.On.SET_F.Clicked = _func
 dlg.On.SET_G.Clicked = _func
 dlg.On.SET_H.Clicked = _func
-
-
-# Get frame.
-def _func(ev):
-    comp.StartUndo("Get frame")
-    idx = ev['who'][4:]
-    itm['FRM_'+idx].Value = comp.CurrentTime
-    comp.EndUndo(True)
-dlg.On.GET_A.Clicked = _func
-dlg.On.GET_B.Clicked = _func
-dlg.On.GET_C.Clicked = _func
-dlg.On.GET_D.Clicked = _func
-dlg.On.GET_E.Clicked = _func
-dlg.On.GET_F.Clicked = _func
-dlg.On.GET_G.Clicked = _func
-dlg.On.GET_H.Clicked = _func
 
 
 # Load data.

@@ -6,6 +6,10 @@ Latest version **1.4.0** *(Released 31.05.2025)*
 All of the scripts are developed and tested with Windows 11 machine. All of the scripts might not work in Linux or Mac.  
 
 ## Changelog
+**Changes coming to 1.5.0**
+- _04.06.2025_ **Updated:** AR_PrintUsedLoaders, AR_PrintUsedSavers.
+- _03.06.2025_ **Updated:** AR_RangeManager, AR_JumpToFrame.
+
 **Changes in 1.4.0**
 - _31.05.2025_ **Updated:** AR_ImportFolder.
 - _29.05.2025_ **Updated:** AR_AddMetadata.
@@ -114,7 +118,8 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 > *Tiles has to line up perfectly! Use `Arrange Tools -> to Grid`*.  
 
 ### ![AR_JumpToFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_JumpToFrame.png) AR_JumpToFrame *(GUI)*
-> **Default:** Jumps to given frame in the timeline.  
+> **Default:** Jumps to the given frame in the timeline.  
+> **Shift:** Get the frame.
 > **Ctrl+1-8:** Jumps to the frame (1-8 slots).  
 
 ### ![AR_LoaderFromSaver](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_LoaderFromSaver.png) AR_LoaderFromSaver
@@ -173,8 +178,10 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![AR_RangeManager](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_RangeManager.png) AR_RangeManager *(GUI)*
 > Set global and render range easily.  
 > Option to save ranges with comments in a sticky note and load settings from it.
-> **Default:** Render range.  
-> **Shift:** Global range.  
+> **Default:** Set render range.
+> **Shift:** Get render range.
+> **Ctrl:** Set Global range.
+> **Ctrl+Shift:** Get global range.
 
 ### ![AR_ReloadLoader](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ReloadLoader.png) AR_ReloadLoader
 > **Default:** Reloads selected loaders and extends ranges if needed.  

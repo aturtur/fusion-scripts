@@ -4,7 +4,7 @@ AR_PrintUsedLoaders
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Print Used Loaders
-Version: 1.2.0
+Version: 1.2.1
 Description-US: Prints file paths that loaders of the current composition uses.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.2.1 (04.06.2025) - Small tweak.
 1.2.0 (11.04.2025) - Added more stylized printing and added selection support.
 1.1.1 (25.09.2024) - Modified code to follow more PEP 8 recommendations.
 1.1.0 (20.10.2021) - Alphabetically sorted.
@@ -59,10 +60,22 @@ def print_used_loaders(loaders) -> None:
             "Status": check_status(loader)
         }
 
-    print("Used loaders:")
     max_name_length = max(len(item["Name"]) for item in loaders_data.values())
+
+    name   = "Loader Name:"
+    status = "Mode:"
+    path   = "Path:"
+
+    print("")
+    print("Used Loaders:")
+    print(f"{name:<{max_name_length+2}} {status:<8} {path}")
+
     for item in loaders_data.values():
-        print(f"{item['Name']:<{max_name_length+2}} {str(item['Status']):<5} {item['Path']}")
+        print(f"{item['Name']:<{max_name_length+2}} {str(item['Status']):<8} {item['Path']}")
+
+    print("")
+    print("Mode: [x] in use \t [ ] not connected \t [-] connected but disabled.")
+    print("")
     print("")
 
 
