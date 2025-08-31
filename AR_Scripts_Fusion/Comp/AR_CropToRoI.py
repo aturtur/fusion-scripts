@@ -4,8 +4,8 @@ AR_CropToRoI
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Crop To RoI
-Version: 1.0.0
-Description-US: Crops the canvas to the active viewport's region of interest.
+Version: 1.1.0
+Description-US: Crops the canvas based on the region of interest.
 
 Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
 Python version 3.10.8 (64-bit).
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.1.0 (29.08.2025) - Added GUI to select which view to crop, instead of using active viewport.
 1.0.0 (12.03.2025) - Initial realease.
 """
 # Libraries
@@ -24,8 +25,26 @@ bmd = bmd  # import BlackmagicFusion as bmd
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
+ALT: str = "ALT"
+CTRL: str = "CTRL"
+SHIFT: str = "SHIFT"
+
 
 # Functions
+def get_key_modifiers(ev: dict) -> list:
+    """Get keyboard modifiers."""
+
+    key_modifiers = []
+    if ev['modifiers']['AltModifier'] == True:
+        key_modifiers.append(ALT)
+    if ev['modifiers']['ControlModifier'] == True:
+        key_modifiers.append(CTRL)
+    if ev['modifiers']['ShiftModifier'] == True:
+        key_modifiers.append(SHIFT)
+
+    return key_modifiers
+
+
 def interpolate(value: float, x1: float, x2: float, y1: float, y2: float):
     """Perform linear interpolation for value between (x1,y1) and (x2,y2)."""
 
@@ -67,41 +86,34 @@ def get_region_data(view, tool) -> dict:
     Returns region points in pixels (based on the given tool's image dimensions).
     """
 
-    #print(view)
-    #previews = comp.CurrentFrame.GetPreviewList()
-    #left_a_view = previews['LeftView'].View
-    #left_b_view = previews['LeftView.B'].View
-    #right_a_view = previews['RightView'].View
-    #right_b_view = previews['RightView.B'].View
-
     width = tool.GetAttrs("TOOLI_ImageWidth")
     height = tool.GetAttrs("TOOLI_ImageHeight")
 
-    view_prefs = view.GetPrefs()
     try:
-        region = view_prefs['Viewer']['Region']
-        roi_enabled = region['Enable']
+        if view == "Left A":
+            region = comp.GetPrefs()['Comp']['Views']['LeftView']['Viewer']['Region']
+        elif view == "Left B":
+            region = comp.GetPrefs()['Comp']['Views']['LeftView']['SideB']['Viewer']['Region']
+        elif view == "Right A":
+            region = comp.GetPrefs()['Comp']['Views']['RightView']['Viewer']['Region']
+        elif view == "Right B":
+            region = comp.GetPrefs()['Comp']['Views']['RightView']['SideB']['Viewer']['Region']
 
-        if roi_enabled == False:
-            print("RoI not enabled.")
-            return None
-        else:
-            roi_left = region['Left']
-            roi_bot = region['Bottom']
-            roi_right = region['Right']
-            roi_top = region['Top']
+        roi_left = region['Left']
+        roi_bot = region['Bottom']
+        roi_right = region['Right']
+        roi_top = region['Top']
 
-            region_values = {
-                'left': int(interpolate(roi_left, 0, 1, 0, width)),
-                'top': int(interpolate(roi_top, 0, 1, 0, height)),
-                'right': int(interpolate(roi_right, 0, 1, 0, width)),
-                'bot': int(interpolate(roi_bot, 0, 1, 0, height))
-            }
+        region_values = {
+            'left': int(interpolate(roi_left, 0, 1, 0, width)),
+            'top': int(interpolate(roi_top, 0, 1, 0, height)),
+            'right': int(interpolate(roi_right, 0, 1, 0, width)),
+            'bot': int(interpolate(roi_bot, 0, 1, 0, height))
+        }
 
-            #view.EnableRoI(False)  # Disable region of interest.
-            return region_values
+        return region_values
 
-    except:
+    except Exception:
         print("No region found.")
         return None
     
@@ -134,7 +146,7 @@ def keep_in_place(tool, region_values) -> any:
     return transform_node
 
 
-def crop_to_roi() -> None:
+def crop_to_roi(view) -> None:
     """Crops the canvas to the region of interest.
     Creates also transform node that keeps cropped area in place.
     """
@@ -142,12 +154,15 @@ def crop_to_roi() -> None:
     try:
         tool = comp.ActiveTool()
     
-    except:
+    except Exception:
         print("No active node found!")
         return None
-        
-    active_view = comp.CurrentFrame.CurrentView
-    region_values = get_region_data(active_view, tool)
+    
+    region_values = get_region_data(view, tool)
+    
+    if region_values == None:
+        return None
+
     crop_node = crop_to(tool, region_values)
     transform_node = keep_in_place(tool, region_values)
 
@@ -160,19 +175,115 @@ def crop_to_roi() -> None:
     crop_node.Input = tool.Output
     merge_node.Background = tool.Output
     merge_node.Foreground = transform_node.Output
-    
 
-def main() -> None:
-    """The main function."""
 
+def gui_geometry(width: int, height: int, x: float, y: float) -> dict:
+    """Maps GUI position with 0-1 values.
+    0.5 being in the center of the screen.
+    Uses tkinter to get screen resolution."""
+
+    import tkinter as tk
+
+    def lerp(a: float, b: float, t: float) -> float:
+        return a + t * (b - a)
+
+    temp_win = tk.Tk()
+    screen_width = temp_win.winfo_screenwidth()
+    screen_height = temp_win.winfo_screenheight()
+    temp_win.destroy()
+
+    gui_width = width
+    gui_height = height
+
+    gui_x = lerp(0, screen_width, x) - (gui_width * 0.5)
+    gui_y = lerp(0, screen_height, y) - (gui_height * 0.5)
+
+    return {"width": gui_width, "height": gui_height, "x": gui_x, "y": gui_y}
+
+
+gui_geo = gui_geometry(325, 100, 0.5, 0.5)
+
+
+# GUI
+ui   = fusion.UIManager
+disp = bmd.UIDispatcher(ui)
+dlg  = disp.AddWindow({"WindowTitle": "Crop to RoI",
+                       "ID": "MyWin",
+                       "WindowFlags": {
+                          "Window": True,
+                          "CustomizeWindowHint": True,
+                          "WindowMinimizeButtonHint": False,
+                          "WindowMaximizeButtonHint": False,
+                          "WindowCloseButtonHint": True,
+                        },
+                       "Geometry": [gui_geo['x'], gui_geo['y'], gui_geo['width'], gui_geo['height']],
+                       "Events": {"Close": True,
+                                  "KeyPress": True,
+                                  "KeyRelease": True},
+                       },
+    [
+        ui.VGroup({"Spacing": 5},
+        [
+            # GUI elements.
+
+            # Select folder path.
+            ui.HGroup(
+            [
+                ui.Label({"Text": "Viewport", "ID": "Label_Viewport", "Weight": 0.1}),
+                ui.ComboBox(
+                    {
+                        "ID": "ComboBox_View",
+                        "Weight": 0.7,
+                    }
+                ),
+            ]),
+
+            # Import and Cancel buttons.
+            ui.HGroup(
+            [
+                ui.Button({"Text": "Ok", "ID": "Button_Ok", "Weight": 0.5}),
+                ui.Button({"Text": "Cancel", "ID": "Button_Cancel", "Weight": 0.5}),
+            ]),
+        ]),
+    ])
+
+
+
+# Collect ui items.
+itm = dlg.GetItems()
+
+combo_view = itm['ComboBox_View']
+combo_view.AddItem("Left A")
+combo_view.AddItem("Left B")
+combo_view.AddItem("Right A")
+combo_view.AddItem("Right B")
+
+# Keys are pressed.
+def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
+    if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
+        disp.ExitLoop()
+        dlg.Hide()
+dlg.On.MyWin.KeyPress = _func
+
+# The window was closed.
+def _func(ev):
+    disp.ExitLoop()
+dlg.On.MyWin.Close = _func
+dlg.On.Button_Cancel.Clicked = _func
+
+# Ok.
+def _func(ev):
+    selected_view = combo_view.CurrentText
     comp.Lock()
     comp.StartUndo("Crop to RoI")
-
-    crop_to_roi()
-
+    crop_to_roi(selected_view)
     comp.EndUndo(True)
     comp.Unlock()
+    disp.ExitLoop()
+dlg.On.Button_Ok.Clicked = _func
 
-
-if __name__ == "__main__":
-    main()
+# Open the dialog.
+dlg.Show()
+disp.RunLoop()
+dlg.Hide()

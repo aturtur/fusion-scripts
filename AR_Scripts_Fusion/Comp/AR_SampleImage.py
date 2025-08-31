@@ -4,8 +4,8 @@ AR_SampleImage
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Sample Image
-Version: 1.0.0
-Description-US: Creates a sample image setup for the selected tool(s)
+Version: 1.0.1
+Description-US: Creates a sample image setup for the selected tool(s).
 
 Written for Blackmagic Design Fusion Studio 19.1 build 34.
 Python version 3.10.8 (64-bit).
@@ -13,6 +13,8 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.1 (13.08.2025) - Bug fix - probe is now connected also to red channel.
+                   - Previously red channel was clamped to 1.0 value.
 1.0.0 (17.11.2024) - Initial release.
 """
 # Libraries
@@ -40,6 +42,7 @@ def create_sample_image_node(tool) -> None:
     #probe_modifier_info = fusion.GetRegAttrs(probe_modifier.ID)
     probe_modifier.ImageToProbe = tool
 
+    custom_tool.NumberIn1.ConnectTo(probe_modifier.Red)
     custom_tool.NumberIn2.ConnectTo(probe_modifier.Green)
     custom_tool.NumberIn3.ConnectTo(probe_modifier.Blue)
     custom_tool.NumberIn4.ConnectTo(probe_modifier.Alpha)

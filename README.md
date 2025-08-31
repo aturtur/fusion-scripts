@@ -7,6 +7,9 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming to 1.5.0**
+- _29.08.2025_ **Updated:** AR_CropToRoI.
+- _13.08.2025_ **New:** AR_AutoBalanceFromSampleImage.
+- _13.08.2025_ **Updated:** AR_SampleImage.
 - _04.06.2025_ **Updated:** AR_PrintUsedLoaders, AR_PrintUsedSavers.
 - _03.06.2025_ **Updated:** AR_RangeManager, AR_JumpToFrame.
 
@@ -33,7 +36,7 @@ Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/bl
     - `C:/ProgramData/Blackmagic Design/Fusion/Scripts/Comp`
     - Or setup custom scripts path with **Path Map**.
 
-Some of the scripts requires third-party libraries.  
+Some of the scripts requires third-party libraries.
 
 #### Dependencies:  
 - Pyautogui
@@ -95,9 +98,8 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 > **Default:** Creates a saver for selected tools with custom export settings.  
 > *Edit the script to match your saver settings.*  
 
-### ![AR_CropToRoI](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_CropToRoI.png) AR_CropToRoI
-> **Default:** Crops the canvas to the active viewport's region of interest.  
-> *Select first the correct viewport and then run the script!*  
+### ![AR_CropToRoI](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_CropToRoI.png) AR_CropToRoI *(GUI)*
+> **Default:** Crops the canvas to the region of interest.  
 
 ### ![AR_DisableAllSavers](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_DisableAllSavers.png) AR_DisableAllSavers
 > **Default:** Disables all savers in the active composition.  
