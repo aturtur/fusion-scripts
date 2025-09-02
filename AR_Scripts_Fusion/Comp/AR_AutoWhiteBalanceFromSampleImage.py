@@ -5,7 +5,7 @@ Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Auto White Balance From Sample Image
 Version: 1.0.0
-Description-US: Creates an auto white balance setup from selected sample image tool.
+Description-US: Creates an auto white balance setup from selected sample image tool.\nCurrent frame is used as a reference frame.
 
 Written for Blackmagic Design Fusion Studio 20.1 build 45.
 Python version 3.10.8 (64-bit).

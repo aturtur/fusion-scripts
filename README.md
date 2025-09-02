@@ -7,6 +7,7 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming to 1.5.0**
+- _01.09.2025_ **New:** AR_SwitchFromSelected.
 - _29.08.2025_ **Updated:** AR_CropToRoI.
 - _13.08.2025_ **New:** AR_AutoBalanceFromSampleImage.
 - _13.08.2025_ **Updated:** AR_SampleImage.
@@ -32,17 +33,14 @@ Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/bl
 2. Download the latest AR_Scripts_Fusion [release](https://github.com/aturtur/fusion-scripts/releases).
 3. Put script files to one of these paths:  
     - `C:/Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp`
-    - `C:/Program Files/Blackmagic Design/Fusion 20/Scripts/Comp`
     - `C:/ProgramData/Blackmagic Design/Fusion/Scripts/Comp`
+    - `C:/Program Files/Blackmagic Design/Fusion 20/Scripts/Comp`
     - Or setup custom scripts path with **Path Map**.
-
-Some of the scripts requires third-party libraries.
-
-#### Dependencies:  
-- Pyautogui
-- Pyperclip
-
-You can install third party modules opening cmd and running command `pip install [module name]`.  
+4. Some of the scripts requires third-party libraries.
+    - You can install all dependencies using `pip install -r requirements.txt`.
+    - Or install manually with `pip install [module name]`:
+        - Pyautogui
+        - Pyperclip
 
 If you want the latest scripts (including an experimental ones too), download this [repository](https://github.com/aturtur/fusion-scripts/archive/refs/heads/master.zip) and use scripts from it.  
 
@@ -69,6 +67,10 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![AR_AutoCrop](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_AutoCrop.png) AR_AutoCrop
 > **Default:** Auto crops selected tools.  
 
+### ![AR_AutoWhiteBalanceFromSampleImage](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_AutoWhiteBalanceFromSampleImage.png) AR_AutoWhiteBalanceFromSampleImage
+> **Default:** Creates an auto white balance setup from selected sample image tool.\nCurrent frame is used as a reference frame.  
+> *It's recommended to bake sample image values, before using this script.*  
+
 ### ![AR_CleanNodeNames](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_CleanNodeNames.png) AR_CleanNodeNames
 > **Default:** Cleans node names (eg. ..._1_1_1_1_1).  
 > *Supports expressions.*  
@@ -78,10 +80,6 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 
 ### ![AR_Colorise](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_Colorise.png) AR_ColoriseNodes *(GUI)*
 > **Default:** Colorises selected nodes.  
-> *Uses icons from Icons folder!*
-
-### ![AR_Colorise](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_Colorise.png) AR_ColoriseSaversPink
-> **Default:** Colorises all savers to pink.  
 
 ### ![AR_CopyToClipboard](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_CopyToClipboard.png) AR_CopyPathToClipboard
 > **Default:** Copies selected tool(s) path(s) to the clipboard.  
@@ -271,6 +269,9 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 
 ### ![AR_SplitToTiles](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SplitToTiles.png) AR_SplitToTiles *(GUI)*
 > **Default:** Splits the active tool in to tiles by given rows and clomuns.  
+
+### ![AR_SwitchFromSelected](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SwitchFromSelected.png) AR_SwitchFromSelected
+> **Default:** Creates a switch tool from selected tools.
 
 ### ![AR_TrimLoaderWithTimecode(SMPTE)](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_TrimLoaderWithTimecode(SMPTE).png) AR_TrimLoaderWithTimecode(SMPTE) *(GUI)*
 > **Default:** Trims the loader with SMPTE timecode.  
