@@ -351,7 +351,9 @@ def version_up_run(lock_global_in: bool) -> bool:
 
         else:
             # Print errors to console.
+            print("")
             print(f"{loader_name} - Newer version not found!")
+            print("")
             return False
         
         return True
@@ -413,7 +415,9 @@ def version_down_run(lock_global_in: bool) -> bool:
 
         else:
             # Print errors to console.
+            print("")
             print(f"{loader_name} - Older version not found!")
+            print("")
             return False
         
         return True
@@ -539,7 +543,9 @@ def custom_run(custom_version: int, lock_global_in: bool) -> bool:
 
             else:
                 # Print errors to console.
+                print("")
                 print(f"{loader_name} - Given version ({custom_version}) not found!")
+                print("")
                 return False
 
         else:
@@ -561,7 +567,9 @@ def custom_run(custom_version: int, lock_global_in: bool) -> bool:
 
             else:
                 # Print errors to console.
+                print("")
                 print(f"{loader_name} - Given version ({custom_version}) not found!")
+                print("")
                 return False
 
 

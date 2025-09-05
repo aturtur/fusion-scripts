@@ -4,8 +4,8 @@ AR_SetRangeFromMetadata
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Set Range From Metadata
-Version: 1.0.1
-Description-US: Sets global and render range from selected tool's metadata.
+Version: 1.0.2
+Description-US: Sets render range from selected tool's metadata.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
 Python version 3.10.8 (64-bit).
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.2 (05.09.2025) - Tweaking.
 1.0.1 (28.05.2025) - Small improvement.
 1.0.0 (27.05.2025) - Initial realease.
 """
@@ -43,9 +44,15 @@ def set_range(start, end) -> None:
     """Sets global and render range."""
 
     if (start != None) and (end != None):
-        comp.SetAttrs({"COMPN_GlobalStart":start,
-                    "COMPN_GlobalEnd":end})
+
+        current_start = float(comp.GetAttrs("COMPN_GlobalStart"))
+        current_end = float(comp.GetAttrs("COMPN_GlobalEnd"))
         
+        if current_start > start:
+            comp.SetAttrs({"COMPN_GlobalStart":start})
+        if current_end < end:
+            comp.SetAttrs({"COMPN_GlobalEnd":end})
+
         comp.SetAttrs({"COMPN_RenderStart":start,
                     "COMPN_RenderEnd":end})
     
@@ -81,9 +88,9 @@ def main() -> None:
 
     comp.StartUndo("Set Range From Metadata")
 
-    tool = comp.ActiveTool()
+    tool = comp.ActiveTool
     start, end = get_range_from_metadata(tool)
-    print(start, end)
+    #print(start, end)
     set_range(float(start), float(end))
     set_current_time(start)
 

@@ -7,6 +7,7 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming to 1.5.0**
+- _04.09.2025_ **Updated:** AR_CleanNodeNames.
 - _01.09.2025_ **New:** AR_SwitchFromSelected.
 - _29.08.2025_ **Updated:** AR_CropToRoI.
 - _13.08.2025_ **New:** AR_AutoBalanceFromSampleImage.
