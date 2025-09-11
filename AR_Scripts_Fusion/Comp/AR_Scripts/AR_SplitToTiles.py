@@ -127,7 +127,7 @@ def gui_geometry(width: int, height: int, x: float, y: float) -> dict:
     return {"width": gui_width, "height": gui_height, "x": gui_x, "y": gui_y}
 
 
-gui_geo = gui_geometry(250, 140, 0.5, 0.5)
+gui_geo = gui_geometry(310, 140, 0.5, 0.5)
 
 
 # GUI

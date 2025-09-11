@@ -1,12 +1,13 @@
 # Aturtur's Fusion Scripts
 My collection of Blackmagic Design Fusion Studio (standalone) scripts ([@aturtur.bsky.social](https://bsky.app/profile/aturtur.bsky.social)).  
 
-Latest version **1.4.0** *(Released 31.05.2025)*  
+Latest version **1.5.0** *(Released 11.09.2025)*  
 
 All of the scripts are developed and tested with Windows 11 machine. All of the scripts might not work in Linux or Mac.  
 
 ## Changelog
 **Changes coming to 1.5.0**
+- _11.09.2025_ **Updated:** AR_VersionUp, AR_RevealInExplorer, AR_ScriptLauncher.
 - _09.09.2025_ **Renamed:** AR_AutoCrop -> AR_CropToDoD.
 - _07.09.2025_ **Updated:** AR_AlignImage, AR_SplitToTiles.
 - _04.09.2025_ **Updated:** AR_CleanNodeNames.

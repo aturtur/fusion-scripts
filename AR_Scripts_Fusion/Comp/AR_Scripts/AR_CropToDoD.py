@@ -34,7 +34,7 @@ def auto_crop(tool) -> None:
     flow.Select()
     x, y = flow.GetPosTable(tool).values()
     crop_node = comp.AddTool("Crop", x+2, y)
-    crop_node.SetAttrs({"TOOLS_Name": "AutoCrop"})
+    crop_node.SetAttrs({"TOOLS_Name": "CropToDoD"})
     crop_node.Input = tool.Output
     crop_node.AutoCrop = 1
     flow.Select(crop_node)

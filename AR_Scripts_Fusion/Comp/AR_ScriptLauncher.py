@@ -4,7 +4,7 @@ AR_ScriptLauncher
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Script Launcher
-Version: 1.2.0
+Version: 1.2.1
 Description-US: Search and run sripts easily.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -21,6 +21,7 @@ Highly recommended to add this script to hotkey:
             Scripts -> AR_ScriptLauncher
 
 Changelog:
+1.2.1 (11.09.2025) - Doesn't add this script to the list.
 1.2.0 (10.04.2025) - Added support for icons. Put the icon (png-file) in Icons folder named same as the script file.
 1.1.1 (01.04.2025) - Error check for parsing data.
 1.1.0 (24.03.2025) - Parses info from the script file and uses that to populate the treeview.
@@ -133,6 +134,8 @@ def populate_tree(tree, scripts: dict) -> None:
         itRow.Text[0] = "  " + script_name
         #itRow.Font[0] = ui.Font({ 'PointSize': 12})
         itRow.ToolTip[0] = details['Description']
+        if script_name == "Script Launcher":  # Skip this script.
+            continue
         if use_icons:
             icon_path = icon_folder / f"{details['FileName']}.png"
             default_icon_path = icon_folder / "default_script.png"

@@ -4,11 +4,8 @@ AR_VersionUp
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Version Up
-Version: 1.3.6
+Version: 1.4.0
 Description-US: Easily change between different versions.
-
-Note:   - The script resets trim values!
-        - Old length value has hold frame values included and new length value doesn't!
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
 Python version 3.10.8 (64-bit).
@@ -18,6 +15,7 @@ Uses v character paired with digits to point out the version number (e.g. v1, v0
 File path syntax example: ../VERSIONS/ProjectName_v001/../../ProjectName_v001_0000.tif
 
 Changelog:
+1.4.0 (11.09.2025) - Added path mapping support (manual).
 1.3.6 (25.05.2025) - Fixed length value.
 1.3.5 (22.05.2025) - Tweaked how stuff is printed to the console.
 1.3.4 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
@@ -48,6 +46,7 @@ comp = comp  # comp = fusion.GetCurrentComp()
 
 pattern = r'(?:[^a-zA-Z]|^)v\d{1,4}(?:[^a-zA-Z]|$)'  # Searches v1, v01, v001, v0001 types of versioning.
 tries = 50  # Amount of tries for looking newer or older version number.
+path_mappings = {"\\server": "\\\\server"}  # Custom path mappings.
 
 ALT: str = "ALT"
 CTRL: str = "CTRL"
@@ -77,6 +76,36 @@ def check_path_compatibility(file_path: str) -> bool:
         print(f"Warning! File path is not compatible with VersionUp:\n\t{file_path}")
     return check
 
+
+def apply_path_mapping(file_path: str) -> str:
+    """Does the path mapping."""
+
+    for search, replace in path_mappings.items():
+        pattern = r"^" + re.escape(search)
+        if re.match(pattern, file_path):
+            return re.sub(pattern, lambda m: replace, file_path, count=1)
+    return file_path
+
+
+def reverse_path_mapping(file_path: str) -> str:
+    """Restores path mapped file_path to original."""
+
+    for search, replace in path_mappings.items():
+        pattern = r"^" + re.escape(replace)
+        if re.match(pattern, file_path):
+            return re.sub(pattern, lambda m: search, file_path, count=1)
+    return file_path
+
+
+def restore_path_mapping(tool) -> bool:
+    """Restores path mapping from given tool"""
+
+    reversed_path = reverse_path_mapping(str(tool.GetInput("Clip")))
+    print(reversed_path)
+    tool.SetInput("Clip", reversed_path + "")
+
+    return True
+    
 
 def check_file(file_path: str) -> bool:
     """Checks does the file exist."""
@@ -306,6 +335,7 @@ def version_up_run(lock_global_in: bool) -> bool:
         if not check_path_compatibility(file_path):
             break
 
+        file_path = apply_path_mapping(file_path)
         current_version = get_current_version(file_path)
 
         for i in range(1, tries + 1):
@@ -321,6 +351,7 @@ def version_up_run(lock_global_in: bool) -> bool:
                     tool.SetInput("Clip", updated_path_version + "")
                     set_loader_settings(tool, settings)
                     refresh_tool(tool)
+                    restore_path_mapping(tool)
 
                     # Print data to console.
                     print("")
@@ -337,7 +368,8 @@ def version_up_run(lock_global_in: bool) -> bool:
                     settings = get_loader_settings(tool)
                     settings, pd = update_loader_settings(tool, settings, updated_path_full, lock_global_in)
                     set_loader_settings(tool, settings)
-                    refresh_tool(tool)
+                    refresh_tool(tool)                    
+                    restore_path_mapping(tool)
 
                     # Print data to console.
                     print("")
@@ -370,6 +402,7 @@ def version_down_run(lock_global_in: bool) -> bool:
         if not check_path_compatibility(file_path):
             break
 
+        file_path = apply_path_mapping(file_path)
         current_version = get_current_version(file_path)
 
         for i in range(1, tries + 1):
@@ -385,6 +418,7 @@ def version_down_run(lock_global_in: bool) -> bool:
                     tool.SetInput("Clip", updated_path_version + "")
                     set_loader_settings(tool, settings)
                     refresh_tool(tool)
+                    restore_path_mapping(tool)
 
                     # Print data to console.
                     print("")
@@ -402,6 +436,7 @@ def version_down_run(lock_global_in: bool) -> bool:
                     settings, pd = update_loader_settings(tool, settings, updated_path_full, lock_global_in)
                     set_loader_settings(tool, settings)
                     refresh_tool(tool)
+                    restore_path_mapping(tool)
 
                     # Print data to console.
                     print("")
@@ -434,6 +469,7 @@ def latest_run(lock_global_in: bool) -> None:
         if not check_path_compatibility(file_path):
             break
 
+        file_path = apply_path_mapping(file_path)
         current_version = get_current_version(file_path)
 
         found = False
@@ -459,6 +495,7 @@ def latest_run(lock_global_in: bool) -> None:
                     tool.SetInput("Clip", updated_path_version + "")
                     set_loader_settings(tool, settings)
                     refresh_tool(tool)
+                    restore_path_mapping(tool)
 
                     found = True
 
@@ -470,6 +507,8 @@ def latest_run(lock_global_in: bool) -> None:
                     settings = get_loader_settings(tool)
                     settings, pd = update_loader_settings(tool, settings, last_valid_path, lock_global_in)
                     set_loader_settings(tool, settings)
+                    refresh_tool(tool)
+                    restore_path_mapping(tool)
                     
                     found = True
         
@@ -518,7 +557,9 @@ def custom_run(custom_version: int, lock_global_in: bool) -> bool:
         if not check_path_compatibility(file_path):
             break
 
+        file_path = apply_path_mapping(file_path)
         current_version = get_current_version(file_path)
+
         updated_path_version = update_file_path(file_path, custom_version)
         file_first_frame, _ = get_frame_range(updated_path_version)
         updated_path_full = replace_frame_number(updated_path_version, file_first_frame)
@@ -530,6 +571,7 @@ def custom_run(custom_version: int, lock_global_in: bool) -> bool:
                 tool.SetInput("Clip", updated_path_version + "")
                 set_loader_settings(tool, settings)
                 refresh_tool(tool)
+                restore_path_mapping(tool)
 
                 # Print data to console.
                 print("")
@@ -554,6 +596,7 @@ def custom_run(custom_version: int, lock_global_in: bool) -> bool:
                 settings, pd = update_loader_settings(tool, settings, updated_path_full, lock_global_in)
                 set_loader_settings(tool, settings)
                 refresh_tool(tool)
+                restore_path_mapping(tool)
 
                 # Print data to console.
                 print("")
