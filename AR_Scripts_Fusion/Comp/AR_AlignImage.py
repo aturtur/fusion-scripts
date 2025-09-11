@@ -4,7 +4,7 @@ AR_AlignImage
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Align Image
-Version: 1.0.2
+Version: 1.1.0
 Description-US: Aligns merge node's foreground image according to the background image.
 
 How to use: Select merge node that has foreground and background inputs connected,
@@ -16,6 +16,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
   
 Changelog:
+1.1.0 (07.09.2025) - Added option to set strength.
 1.0.2 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.0.1 (25.02.2025) - Added support for Merge node's Size parameter.
 1.0.0 (12.02.2025) - Initial release.
@@ -75,43 +76,45 @@ def get_merge_data() -> tuple | bool:
         return False
 
 
-def align_image(method: str) -> None:
+def align_image(method: str, strength: float) -> None:
     """Clears preview windows, also both A and B buffers."""
 
     if get_merge_data() == False: return
     merge_node, _, bg_width, bg_height, _, fg_width, fg_height = get_merge_data()
     merge_scale = merge_node.GetInput("Size")
+    merge_x = float(merge_node.GetInput("Center")[1])
+    merge_y = float(merge_node.GetInput("Center")[2])
 
     step_x = interpolate(0.5, 0, bg_width, 0, fg_width)
     step_y = interpolate(0.5, 0, bg_height, 0, fg_height)
 
     if method == "Button_Bot_Left":
-        pos_x = step_x * merge_scale
-        pos_y = step_y * merge_scale
+        pos_x = interpolate(strength, 0, 1, merge_x, step_x * merge_scale)
+        pos_y = interpolate(strength, 0, 1, merge_y, step_y * merge_scale)
     elif method == "Button_Bot_Center":
-        pos_x = 0.5
-        pos_y = step_y * merge_scale
+        pos_x = interpolate(strength, 0, 1, merge_x, 0.5)
+        pos_y = interpolate(strength, 0, 1, merge_y, step_y * merge_scale)
     elif method == "Button_Bot_Right":
-        pos_x = 1-step_x * merge_scale
-        pos_y = step_y * merge_scale
+        pos_x = interpolate(strength, 0, 1, merge_x, 1-step_x * merge_scale)
+        pos_y = interpolate(strength, 0, 1, merge_y, step_y * merge_scale)
     elif method == "Button_Mid_Left":
-        pos_x = step_x * merge_scale
-        pos_y = 0.5
+        pos_x = interpolate(strength, 0, 1, merge_x, step_x * merge_scale)
+        pos_y = interpolate(strength, 0, 1, merge_y, 0.5)
     elif method == "Button_Mid_Center":
-        pos_x = 0.5
-        pos_y = 0.5
+        pos_x = interpolate(strength, 0, 1, merge_x, 0.5)
+        pos_y = interpolate(strength, 0, 1, merge_y, 0.5)
     elif method == "Button_Mid_Right":
-        pos_x = 1-step_x * merge_scale
-        pos_y = 0.5
+        pos_x = interpolate(strength, 0, 1, merge_x, 1-step_x * merge_scale)
+        pos_y = interpolate(strength, 0, 1, merge_y, 0.5)
     elif method == "Button_Top_Left":
-        pos_x = step_x * merge_scale
-        pos_y = 1-step_y * merge_scale
+        pos_x = interpolate(strength, 0, 1, merge_x, step_x * merge_scale)
+        pos_y = interpolate(strength, 0, 1, merge_y, 1-step_y * merge_scale)
     elif method == "Button_Top_Center":
-        pos_x = 0.5
-        pos_y = 1-step_y * merge_scale
+        pos_x = interpolate(strength, 0, 1, merge_x, 0.5)
+        pos_y = interpolate(strength, 0, 1, merge_y, 1-step_y * merge_scale)
     elif method == "Button_Top_Right":
-        pos_x = 1-step_x * merge_scale
-        pos_y = 1-step_y * merge_scale
+        pos_x = interpolate(strength, 0, 1, merge_x, 1-step_x * merge_scale)
+        pos_y = interpolate(strength, 0, 1, merge_y, 1-step_y * merge_scale)
 
     merge_node.SetInput("Center", {1: pos_x, 2: pos_y, 3: 0.0})
 
@@ -203,6 +206,29 @@ dlg  = disp.AddWindow({"WindowTitle": "Align Image",
                 ui.Button({"Text": "┴", "ID": "Button_Bot_Center"}),
                 ui.Button({"Text": "┘", "ID": "Button_Bot_Right"}),
             ]),
+
+            ui.HGroup([
+                ui.Slider({
+                    "ID": "StrengthSlider",
+                    "Min": 0,
+                    "Max": 100,
+                    "Value": 100,      # aloitusarvo
+                    "NumSteps": 101,   # esim. 0–100 kokonaislukuna
+                    "Weight": 0.8,
+                    "Tracking": True
+                }),
+                ui.LineEdit({
+                    "ID": "StrengthEdit",
+                    "Text": "1.00",
+                    "Alignment": {"AlignHCenter": True},
+                    "Weight": 0.2,
+                    "ToolTip": "Strength"
+                }),
+            ]),
+
+            #{ "Step", "Slider", Integer = true, Default = 1, Min = 1, Max = 10}
+
+
             ui.HGroup([
                 ui.Button({"Text": "Convert to Transform", "ID": "Button_Convert"}),
             ]),
@@ -213,6 +239,12 @@ dlg  = disp.AddWindow({"WindowTitle": "Align Image",
 
 # Collect ui items.
 itm = dlg.GetItems()
+
+
+def OnSlider(ev):
+    val = itm["StrengthSlider"].Value / 100.0
+    itm["StrengthEdit"].Text = f"{val:.2f}"
+dlg.On.StrengthSlider.ValueChanged = OnSlider
 
 
 # The window was closed.
@@ -227,6 +259,15 @@ def _func(ev):
     if CTRL in key_modifiers and ev['Key'] == 81:  # Ctrl + Q.
         disp.ExitLoop()
         dlg.Hide()
+
+    if ev['Key'] in [16777220, 16777221]:  # Enter.
+        if itm["StrengthEdit"].HasFocus():
+            try:
+                val = float(itm["StrengthEdit"].Text)
+            except ValueError:
+                return
+            val = max(0.0, min(1.0, val))
+            itm["StrengthSlider"].Value = int(val * 100)
 dlg.On.MyWin.KeyPress = _func
 
 
@@ -235,7 +276,8 @@ def _func(ev):
     comp.StartUndo("Align Image")
     tool = comp.ActiveTool()
     if tool.ID == "Merge":
-        align_image(ev['who'])
+        strength = float(itm["StrengthEdit"].Text)
+        align_image(ev['who'], strength)
     else:
         print("This script only supports the merge tool!")
     comp.EndUndo(True)

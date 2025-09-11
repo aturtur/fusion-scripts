@@ -7,6 +7,8 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming to 1.5.0**
+- _09.09.2025_ **Renamed:** AR_AutoCrop -> AR_CropToDoD.
+- _07.09.2025_ **Updated:** AR_AlignImage, AR_SplitToTiles.
 - _04.09.2025_ **Updated:** AR_CleanNodeNames.
 - _01.09.2025_ **New:** AR_SwitchFromSelected.
 - _29.08.2025_ **Updated:** AR_CropToRoI.
@@ -65,8 +67,8 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![AR_AlignNodes](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_AlignNodes.png) AR_AlignNodes *(GUI)*
 > **Default:** Align selected nodes.  
 
-### ![AR_AutoCrop](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_AutoCrop.png) AR_AutoCrop
-> **Default:** Auto crops selected tools.  
+### ![AR_CropToDoD](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_CropToDoD.png) AR_CropToDoD
+> **Default:** Crops to selected tools' DoD (Domain of Definition).  
 
 ### ![AR_AutoWhiteBalanceFromSampleImage](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_AutoWhiteBalanceFromSampleImage.png) AR_AutoWhiteBalanceFromSampleImage
 > **Default:** Creates an auto white balance setup from selected sample image tool.\nCurrent frame is used as a reference frame.  

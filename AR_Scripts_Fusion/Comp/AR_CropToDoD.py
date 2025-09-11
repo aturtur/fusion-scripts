@@ -1,11 +1,11 @@
 """
-AR_AutoCrop
+AR_CropToDoD
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
-Name-US: Auto Crop
+Name-US: Crop to DoD
 Version: 1.1.0
-Description-US: Auto crops selected tools.
+Description-US: Crops to selected tools' DoD (Domain of Definition).
 
 Written for Blackmagic Design Fusion Studio 19.1.3 build 5.
 Python version 3.10.8 (64-bit).

@@ -3,9 +3,9 @@ AR_CropToRoI
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
-Name-US: Crop To RoI
+Name-US: Crop to RoI
 Version: 1.1.0
-Description-US: Crops the canvas based on the region of interest.
+Description-US: Crops the canvas based on the RoI (region of interest).
 
 Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
 Python version 3.10.8 (64-bit).
