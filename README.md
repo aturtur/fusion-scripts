@@ -1,12 +1,15 @@
 # Aturtur's Fusion Scripts
 My collection of Blackmagic Design Fusion Studio (standalone) scripts ([@aturtur.bsky.social](https://bsky.app/profile/aturtur.bsky.social)).  
 
-Latest version **1.5.0** *(Released 11.09.2025)*  
+Latest version **1.5.1** *(Released 12.09.2025)*  
 
 All of the scripts are developed and tested with Windows 11 machine. All of the scripts might not work in Linux or Mac.  
 
 ## Changelog
-**Changes coming to 1.5.0**
+**Changes in 1.5.1**
+- _12.09.2025_ **Hotfix:** Folder structure.
+
+**Changes in 1.5.0**
 - _11.09.2025_ **Updated:** AR_VersionUp, AR_RevealInExplorer, AR_ScriptLauncher.
 - _09.09.2025_ **Renamed:** AR_AutoCrop -> AR_CropToDoD.
 - _07.09.2025_ **Updated:** AR_AlignImage, AR_SplitToTiles.
@@ -17,15 +20,6 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 - _13.08.2025_ **Updated:** AR_SampleImage.
 - _04.06.2025_ **Updated:** AR_PrintUsedLoaders, AR_PrintUsedSavers.
 - _03.06.2025_ **Updated:** AR_RangeManager, AR_JumpToFrame.
-
-**Changes in 1.4.0**
-- _31.05.2025_ **Updated:** AR_ImportFolder.
-- _29.05.2025_ **Updated:** AR_AddMetadata.
-- _27.05.2025_ **New:** AR_SetRangeFromMetadata.
-- _25.05.2025_ **Updated:** AR_VersionUp.
-- _24.05.2025_ **Updated:** AR_ReloadLoader.
-- _20.05.2025_ **Updated:** AR_SplitEXRFile.
-- _15.05.2025_ **Updated:** AR_RangeManager.
 
 Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/blob/master/CHANGELOG.md) file.  
 

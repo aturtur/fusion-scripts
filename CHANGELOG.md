@@ -1,4 +1,19 @@
 ## Changelog
+**Changes in 1.5.1**
+- _12.09.2025_ **Hotfix:** Folder structure.
+
+**Changes in 1.5.0**
+- _11.09.2025_ **Updated:** AR_VersionUp, AR_RevealInExplorer, AR_ScriptLauncher.
+- _09.09.2025_ **Renamed:** AR_AutoCrop -> AR_CropToDoD.
+- _07.09.2025_ **Updated:** AR_AlignImage, AR_SplitToTiles.
+- _04.09.2025_ **Updated:** AR_CleanNodeNames.
+- _01.09.2025_ **New:** AR_SwitchFromSelected.
+- _29.08.2025_ **Updated:** AR_CropToRoI.
+- _13.08.2025_ **New:** AR_AutoBalanceFromSampleImage.
+- _13.08.2025_ **Updated:** AR_SampleImage.
+- _04.06.2025_ **Updated:** AR_PrintUsedLoaders, AR_PrintUsedSavers.
+- _03.06.2025_ **Updated:** AR_RangeManager, AR_JumpToFrame.
+
 **Changes in 1.4.0**
 - _31.05.2025_ **Updated:** AR_ImportFolder.
 - _29.05.2025_ **Updated:** AR_AddMetadata.
