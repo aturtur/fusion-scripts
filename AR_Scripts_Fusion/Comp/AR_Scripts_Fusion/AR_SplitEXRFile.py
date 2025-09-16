@@ -13,6 +13,7 @@ Python version 3.13.2 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.1.0 (14.09.2025) - Added support for multi-part files.
 1.0.1 (20.05.2025) - Bug fixes.
 1.0.0 (19.04.2025) - Initial release.
 """
@@ -34,11 +35,29 @@ channel_aliases = {
 
 
 # Functions
-def split_exr_multichannel_file(tool) -> None:
-    """Splits EXR multi-channel loader to multiple loaders."""
+def split_exr_multipart_file(tool) -> None:
+    """Splits EXR multi-part loader to multiple loaders."""
+
+    channels = tool.Clip1.OpenEXRFormat.Part.GetAttrs()['INPIDT_ComboControl_ID'].values()
+
+    flow = comp.CurrentFrame.FlowView
+    flow.Select()
+    x, y = flow.GetPosTable(tool).values()
+
+    for i, channel in enumerate(channels):
+        current_tool = comp.Loader({"Clip": tool.Clip[comp.CurrentTime]})
+        current_tool.SetInput("Clip1.OpenEXRFormat.Part", channel)
+
+        current_tool.SetAttrs({'TOOLB_NameSet': True, 'TOOLS_Name': channel})
+        flow.SetPos(current_tool, x, y+i+1)
+
+    flow.SetPos(tool, x, y)
+
+
+def split_exr_multilayer_file(tool) -> None:
+    """Splits EXR multi-layer loader to multiple loaders."""
 
     channels = tool.Clip1.OpenEXRFormat.RedName.GetAttrs()['INPIDT_ComboControl_ID'].values()
-
     channels_dict = defaultdict(list)
 
     for item in channels:
@@ -106,7 +125,11 @@ def main() -> None:
     comp.Lock()
 
     active_tool = comp.ActiveTool()
-    split_exr_multichannel_file(active_tool)
+
+    if active_tool.Clip1.OpenEXRFormat.Part != None:
+        split_exr_multipart_file(active_tool)
+    else:
+        split_exr_multilayer_file(active_tool)
 
     comp.Unlock()
     comp.EndUndo(True)

@@ -1,2 +1,3 @@
 pyautogui
 pyperclip
+tabulate

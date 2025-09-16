@@ -4,7 +4,7 @@ AR_ScriptLauncher
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Script Launcher
-Version: 1.2.1
+Version: 1.3.0
 Description-US: Search and run sripts easily.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -21,6 +21,7 @@ Highly recommended to add this script to hotkey:
             Scripts -> AR_ScriptLauncher
 
 Changelog:
+1.3.0 (16.09.2025) - Support to send keyboard modifiers to scripts.
 1.2.1 (11.09.2025) - Doesn't add this script to the list.
 1.2.0 (10.04.2025) - Added support for icons. Put the icon (png-file) in Icons folder named same as the script file.
 1.1.1 (01.04.2025) - Error check for parsing data.
@@ -46,7 +47,7 @@ except:
 
 
 # Global variables
-bmd = bmd  # import BlackmagicFusion as bmd
+bmd = bmd
 app = app
 fu = fu
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
@@ -176,7 +177,7 @@ def get_script_path(name: str) -> str | None:
     return scripts.get(name.strip(), {}).get("Path")
 
 
-def run_script(file_path: str) -> None:
+def run_script(file_path: str, key_modifiers: list) -> None:
     """Runs script file from given file path."""
 
     spec = importlib.util.spec_from_file_location(file_path.stem, file_path)
@@ -188,6 +189,7 @@ def run_script(file_path: str) -> None:
     module.fusion = fusion
     module.fu = fu
     module.comp = comp
+    module.key_modifiers = key_modifiers
     
     sys.modules[file_path.stem] = module
 
@@ -338,15 +340,16 @@ def _func(ev):
         dlg.Hide()
 
         if script_name:
-            run_script(get_script_path(script_name))
+            run_script(get_script_path(script_name), key_modifiers)
 dlg.On.MyWin.KeyPress = _func
 
 
 # Tree item double clicked.
 def _func(ev):
+    key_modifiers = get_key_modifiers(ev)
     disp.ExitLoop()
     dlg.Hide()
-    run_script(get_script_path(str(ev['item'].Text[0])))
+    run_script(get_script_path(str(ev['item'].Text[0])), key_modifiers)
 dlg.On.Tree.ItemDoubleClicked = _func
 
 

@@ -6,20 +6,12 @@ Latest version **1.5.1** *(Released 12.09.2025)*
 All of the scripts are developed and tested with Windows 11 machine. All of the scripts might not work in Linux or Mac.  
 
 ## Changelog
+**Changes coming in 1.6.0**
+- _16.09.2025_ **Updated:** AR_ScriptLauncher, AR_SetRangeFromMetadata, AR_SetRangeFromTool(s), AR_SetRangeThisFrame, AR_PrintUsedLoaders, AR_PrintUsedSavers.
+- _14.09.2025_ **Updated:** AR_SplitEXRFile.
+
 **Changes in 1.5.1**
 - _12.09.2025_ **Hotfix:** Folder structure.
-
-**Changes in 1.5.0**
-- _11.09.2025_ **Updated:** AR_VersionUp, AR_RevealInExplorer, AR_ScriptLauncher.
-- _09.09.2025_ **Renamed:** AR_AutoCrop -> AR_CropToDoD.
-- _07.09.2025_ **Updated:** AR_AlignImage, AR_SplitToTiles.
-- _04.09.2025_ **Updated:** AR_CleanNodeNames.
-- _01.09.2025_ **New:** AR_SwitchFromSelected.
-- _29.08.2025_ **Updated:** AR_CropToRoI.
-- _13.08.2025_ **New:** AR_AutoBalanceFromSampleImage.
-- _13.08.2025_ **Updated:** AR_SampleImage.
-- _04.06.2025_ **Updated:** AR_PrintUsedLoaders, AR_PrintUsedSavers.
-- _03.06.2025_ **Updated:** AR_RangeManager, AR_JumpToFrame.
 
 Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/blob/master/CHANGELOG.md) file.  
 
@@ -37,8 +29,9 @@ Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/bl
 4. Some of the scripts requires third-party libraries.
     - You can install all dependencies using `pip install -r requirements.txt`.
     - Or install manually with `pip install [module name]`:
-        - Pyautogui
-        - Pyperclip
+        - pyautogui
+        - pyperclip
+        - tabulate
 
 If you want the latest scripts (including an experimental ones too), download this [repository](https://github.com/aturtur/fusion-scripts/archive/refs/heads/master.zip) and use scripts from it.  
 
@@ -113,7 +106,7 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 
 ### ![AR_JoinTiles](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_JoinTiles.png) AR_JoinTiles
 > **Default:** Merges selected tools into one big image, based on node positions in Flow.  
-> *Tiles has to line up perfectly! Use `Arrange Tools -> to Grid`*.  
+> *Tiles has to line up perfectly! Use `Arrange Tools → to Grid`*.  
 
 ### ![AR_JumpToFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_JumpToFrame.png) AR_JumpToFrame *(GUI)*
 > **Default:** Jumps to the given frame in the timeline.  
@@ -233,10 +226,10 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 > Gets the name of the script with `Name-US:` and the tooltip with `Description-US`.  
 
 > Highly recommended to add this script to hotkey:
-> - View -> Customize Hotkeys...
->    - Views -> New...
+> - View → Customize Hotkeys...
+>    - Views → New...
 >        - <Enter Key Sequence> E.g. Shift+Tab
->            - Scripts -> AR_ScriptLauncher  
+>            - Scripts → AR_ScriptLauncher  
 
 ### ![AR_SelectAllLoaders](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SelectAll.png) AR_SelectAllLoaders
 > **Default:** Selects all loader tools of the active composition.  
