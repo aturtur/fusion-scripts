@@ -27,8 +27,8 @@ comp = comp  # comp = fusion.GetCurrentComp()
 
 
 # Functions
-def auto_crop(tool) -> None:
-    """Does the auto crop for the given tool."""
+def crop_to_dod(tool) -> None:
+    """Crops to selected tools' DoD (Domain of Definition)."""
     
     flow = comp.CurrentFrame.FlowView
     flow.Select()
@@ -47,10 +47,10 @@ def auto_crop(tool) -> None:
 def main() -> None:
     """The main function."""
 
-    comp.StartUndo("Auto Crop")
+    comp.StartUndo("Crop To DoD")
     tools = comp.GetToolList(True).values()
     for tool in tools:
-        auto_crop(tool)
+        crop_to_dod(tool)
     comp.EndUndo()
 
 if __name__ == "__main__":

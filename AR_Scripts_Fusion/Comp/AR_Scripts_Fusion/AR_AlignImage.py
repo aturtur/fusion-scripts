@@ -51,7 +51,7 @@ def get_key_modifiers(ev: dict) -> list:
 
 
 def interpolate(value: float, x1: float, x2: float, y1: float, y2: float) -> float:
-    """Perform linear interpolation for value between (x1,y1) and (x2,y2) """
+    """Perform linear interpolation for value between (x1,y1) and (x2,y2)."""
 
     return ((y2 - y1) * value + x2 * y1 - x1 * y2) / (x2 - x1)
 

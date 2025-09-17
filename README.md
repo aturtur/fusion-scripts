@@ -7,6 +7,7 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming in 1.6.0**
+- _17.09.2025_ **New:** AR_StackHorizontally, AR_StackVertically.
 - _16.09.2025_ **Updated:** AR_ScriptLauncher, AR_SetRangeFromMetadata, AR_SetRangeFromTool(s), AR_SetRangeThisFrame, AR_PrintUsedLoaders, AR_PrintUsedSavers.
 - _14.09.2025_ **Updated:** AR_SplitEXRFile.
 

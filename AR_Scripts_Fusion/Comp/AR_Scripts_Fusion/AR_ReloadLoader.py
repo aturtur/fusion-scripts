@@ -4,7 +4,7 @@ AR_ReloadLoader
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Reload Loader
-Version: 1.2.0
+Version: 1.3.0
 Description-US: Reloads selected loaders and extends ranges if needed.
 
 Note:   - The script resets trim values!
@@ -16,6 +16,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.3.0 (17.09.2025) - Added support for path mapping (manual).
 1.2.0 (24.05.2025) - Prints useful data to the console.
                    - Hold frame handling.
                    - Fixed length value.
@@ -31,9 +32,40 @@ import re
 bmd = bmd  # import BlackmagicFusion as bmd
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
- 
+
+path_mappings = {"\\server": "\\\\server"}
+
 
 # Functions
+def apply_path_mapping(file_path: str) -> str:
+    """Does the path mapping."""
+    
+    for search, replace in path_mappings.items():
+        pattern = r"^" + re.escape(search)
+        if re.match(pattern, file_path):
+            return re.sub(pattern, lambda m: replace, file_path, count=1)
+    return file_path
+
+
+def reverse_path_mapping(file_path: str) -> str:
+    """Restores path mapped file_path to original."""
+
+    for search, replace in path_mappings.items():
+        pattern = r"^" + re.escape(replace)
+        if re.match(pattern, file_path):
+            return re.sub(pattern, lambda m: search, file_path, count=1)
+    return file_path
+
+
+def restore_path_mapping(tool) -> bool:
+    """Restores path mapping from given tool"""
+
+    reversed_path = reverse_path_mapping(str(tool.GetInput("Clip")))
+    tool.SetInput("Clip", reversed_path + "")
+
+    return True
+
+
 def get_frame_range(file_path: str) -> tuple[int, int]:
     """Returns first and last frame numbers from given image sequence path."""
 
@@ -121,6 +153,9 @@ def reload_loader(loader) -> bool:
 
     old_length = clip_global_out - clip_global_in + 1
 
+    # Apply path mapping.
+    clip_file_path = apply_path_mapping(clip_file_path)
+
     # Get possibly changed start and end frames from file.
     file_start_frame, file_end_frame = get_frame_range(clip_file_path)
     file_length = file_end_frame - file_start_frame + 1
@@ -176,6 +211,7 @@ def reload_loader(loader) -> bool:
         print("")
 
     refresh_tool(loader)
+    restore_path_mapping(loader)
 
     return True
 
