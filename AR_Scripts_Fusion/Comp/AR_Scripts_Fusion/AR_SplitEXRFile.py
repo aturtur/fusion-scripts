@@ -4,7 +4,7 @@ AR_SplitEXRFile
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Split EXR Multichannel File
-Version: 1.0.1
+Version: 1.1.0
 Description-US: Splits EXR multi-channel loader to multiple loaders.
 
 Written for Blackmagic Design Fusion Studio .0.3 build 3.

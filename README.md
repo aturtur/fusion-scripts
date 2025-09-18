@@ -7,7 +7,7 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming in 1.6.0**
-- _17.09.2025_ **New:** AR_StackHorizontally, AR_StackVertically.
+- _18.09.2025_ **New:** AR_Stack.
 - _16.09.2025_ **Updated:** AR_ScriptLauncher, AR_SetRangeFromMetadata, AR_SetRangeFromTool(s), AR_SetRangeThisFrame, AR_PrintUsedLoaders, AR_PrintUsedSavers.
 - _14.09.2025_ **Updated:** AR_SplitEXRFile.
 
@@ -261,6 +261,9 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 
 ### ![AR_SplitToTiles](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SplitToTiles.png) AR_SplitToTiles *(GUI)*
 > **Default:** Splits the active tool in to tiles by given rows and clomuns.  
+
+### ![AR_Stack](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_Stack.png) AR_Stack *(GUI)*
+> **Default:** Stack selected tools.  
 
 ### ![AR_SwitchFromSelected](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SwitchFromSelected.png) AR_SwitchFromSelected
 > **Default:** Creates a switch tool from selected tools.

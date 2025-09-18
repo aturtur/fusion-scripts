@@ -42,9 +42,6 @@ def assign_tracker_to_gridwarp_points(gridwarp, tracker) -> list:
     for inp in gridwarp_inputs:
         if inp.Name.startswith("Point "):
             point_num = int(inp.Name.replace("Point ", ""))
-            #point_values = gridwarp.GetInput(inp.Name)
-            #point_x = point_values[1]
-            #point_y = point_values[2]
             inp.SetExpression(f"Point({tracker.Name}.TrackedCenter{point_num+1}.X+{tracker.Name}.XOffset{point_num+1}, {tracker.Name}.TrackedCenter{point_num+1}.Y+{tracker.Name}.YOffset{point_num+1})")
 
 
@@ -71,43 +68,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-# Point(Tracker2_1.TrackedCenter1.X+Tracker2_1.XOffset1, Tracker2_1.TrackedCenter1.Y+Tracker2_1.YOffset1)
-
-# Leftover scripts
-
-#tracker_outputs = tracker.GetOutputList().values()
-#for tracker_output in tracker_outputs:
-    #print(tracker_output.Name)
-    #if tracker_output.Name == "Unsteady Position":
-        #tracker_unsteady_position_values = tracker_output[comp.CurrentTime]
-        #tracker_unsteady_pos_x = tracker_unsteady_position_values[1]
-        #tracker_unsteady_pos_y = tracker_unsteady_position_values[2]
-        
-#print(gridwarp_points_list)
-# Published grid warp data.
-# GridWarp[i]Point[j].X
-# GridWarp[i]Point[j].Y
-
-#gridwarp.SetInput("")
-
-#print(gridwarp_points_list)
-#for point in gridwarp_points_list:
-    #point_values = gridwarp.GetInput(point)
-    #point_x = point_values[1]
-    #point_y = point_values[2]
-
-    #print(point_x, point_y)
-
-    #point_num = int(point.replace("Point ", ""))
-    #print(point_num)
-    #gridwarp.GetInput(point).SetExpression(f"Point({point_x}, {point_y})")
-    #gridwarp.Set
-
-#gridwarp.GetInput("")
-
-#return gridwarp_points_list

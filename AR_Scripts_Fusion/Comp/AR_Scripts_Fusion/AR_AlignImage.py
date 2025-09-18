@@ -212,8 +212,8 @@ dlg  = disp.AddWindow({"WindowTitle": "Align Image",
                     "ID": "StrengthSlider",
                     "Min": 0,
                     "Max": 100,
-                    "Value": 100,      # aloitusarvo
-                    "NumSteps": 101,   # esim. 0–100 kokonaislukuna
+                    "Value": 100,
+                    "NumSteps": 101,
                     "Weight": 0.8,
                     "Tracking": True
                 }),
@@ -225,9 +225,6 @@ dlg  = disp.AddWindow({"WindowTitle": "Align Image",
                     "ToolTip": "Strength"
                 }),
             ]),
-
-            #{ "Step", "Slider", Integer = true, Default = 1, Min = 1, Max = 10}
-
 
             ui.HGroup([
                 ui.Button({"Text": "Convert to Transform", "ID": "Button_Convert"}),

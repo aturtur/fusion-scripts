@@ -4,7 +4,7 @@ AR_ReverseStabilization
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Reverse Stabilization
-Version: 1.0.1
+Version: 1.0.2
 Description-US: Creates reverse stabilization setup for clean up painting from a active Tracker Node.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.

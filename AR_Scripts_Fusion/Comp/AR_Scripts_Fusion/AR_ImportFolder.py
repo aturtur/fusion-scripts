@@ -13,7 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 To do:
-- Detect and handle also still/single images and video files.
+- Detect and handle video files.
 
 Changelog:
 1.4.0 (31.05.2025) - Added support to import single images.
@@ -72,11 +72,7 @@ def collect_images(dir_path: str, subfolders: bool) -> list[str]:
     collected_images = []
     path = Path(dir_path)
 
-    print("OK1")
-
     if path.exists() and path.is_dir():
-
-        print("OK2")
 
         if subfolders:
             for file_path in sorted(path.rglob("*")):

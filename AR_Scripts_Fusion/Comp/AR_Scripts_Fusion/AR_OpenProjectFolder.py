@@ -4,7 +4,7 @@ AR_OpenProjectFolder
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Open Project Folder
-Version: 1.0.1
+Version: 1.0.2
 Description-US: Opens the folder where the project file is located.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.

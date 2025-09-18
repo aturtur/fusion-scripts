@@ -4,7 +4,7 @@ AR_RevealInExplorer
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Reveal In Explorer
-Version: 1.0.1
+Version: 1.2.0
 Description-US: Opens saver's or loader's media input in the explorer.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.

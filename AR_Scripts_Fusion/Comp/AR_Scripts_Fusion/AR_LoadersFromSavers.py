@@ -77,7 +77,6 @@ def loader_from_saver(saver: any) -> any:
         loader.SetInput("Clip", image_sequence_path)
         file_start_frame, file_end_frame = get_frame_range(image_sequence_path)
         file_length = file_end_frame - file_start_frame
-        print(file_start_frame, file_end_frame)
 
         # Set loader's ranges from found range data.
         clip_length = loader.GetInput("ClipTimeEnd")
