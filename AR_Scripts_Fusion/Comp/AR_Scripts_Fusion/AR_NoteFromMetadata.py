@@ -4,7 +4,7 @@ AR_NoteFromMetadata
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Note From Metadata
-Version: 1.0.0
+Version: 1.1.0
 Description-US: Creates a sticky note filled with metadata from selected tool(s).
 
 Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.1.0 (19.09.2025) - Support for macros and group nodes, where Output port is sometimes named as MainOutput1 or Output1.
 1.0.0 (09.11.2024) - Initial release.
 """
 # Libraries
@@ -35,7 +36,8 @@ def note_from_metadata(tool) -> None:
     note_name = "Metadata"
     note_content = ""
 
-    metadata = comp.ActiveTool.Output[comp.CurrentTime].Metadata
+    metadata = comp.ActiveTool.GetOutputList()[1][comp.CurrentTime].Metadata
+    
     for key, value in metadata.items():
         note_content += f"{key} = {value}\n"
     

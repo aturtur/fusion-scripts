@@ -90,7 +90,10 @@ def get_image_data() -> tuple | bool:
         width = tool_node.GetAttrs("TOOLI_ImageWidth")
         height = tool_node.GetAttrs("TOOLI_ImageHeight")
 
-        return tool_node, width, height
+        if (width == None) or (height == None):
+            print("Couldn't get width ir height information!")
+        else:
+            return tool_node, width, height
     else:
         print("Select Merge node first!")
         return False
@@ -104,7 +107,7 @@ def resize_canvas(method: str, new_width: int, new_height: int) -> None:
     x, y = flow.GetPosTable(active_tool).values()
     crop_node = comp.AddTool("Crop", x+1, y)
     crop_node.SetAttrs({'TOOLS_Name': "ResizeCanvas"})
-    crop_node.Input = active_tool.Output
+    crop_node.Input = active_tool.GetOutputList()[1]
 
     if method == "Button_Bot_Left":
         crop_node.SetInput("XOffset", 0)

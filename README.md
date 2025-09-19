@@ -7,8 +7,9 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming in 1.6.0**
+- _19.09.2025_ **Updated:** AR_PrintUsedLoaders, AR_PrintUsedSavers, AR_NoteFromMetadata, AR_SetRangeFromMetadata, AR_PrintMetadata, AR_SwitchFromSelected
 - _18.09.2025_ **New:** AR_Stack.
-- _16.09.2025_ **Updated:** AR_ScriptLauncher, AR_SetRangeFromMetadata, AR_SetRangeFromTool(s), AR_SetRangeThisFrame, AR_PrintUsedLoaders, AR_PrintUsedSavers.
+- _16.09.2025_ **Updated:** AR_ScriptLauncher, AR_SetRangeFromMetadata, AR_SetRangeFromTool(s), AR_SetRangeThisFrame.
 - _14.09.2025_ **Updated:** AR_SplitEXRFile.
 
 **Changes in 1.5.1**

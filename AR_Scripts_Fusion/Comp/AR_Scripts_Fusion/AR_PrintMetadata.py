@@ -4,7 +4,7 @@ AR_PrintMetadata
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Print Metadata
-Version: 1.0.3
+Version: 1.1.0
 Description-US: Prints metadata from active tool.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.1.0 (19.09.2025) - Support for macros and group nodes, where Output port is sometimes named as MainOutput1 or Output1.
 1.0.3 (30.03.2025) - Name fix.
 1.0.2 (06.11.2024) - Changed print to use f-string.
 1.0.1 (25.09.2024) - Modified code to follow more PEP 8 recommendations.
@@ -32,7 +33,8 @@ comp = comp  # comp = fusion.GetCurrentComp()
 def print_metadata() -> None:
     """Prints meta data of the active tool to the console."""
 
-    metadata = comp.ActiveTool.Output[comp.CurrentTime].Metadata
+    metadata = comp.ActiveTool.GetOutputList()[1][comp.CurrentTime].Metadata
+
     for key, value in metadata.items():
         print(f"{key} = {value}")
 

@@ -4,7 +4,7 @@ AR_SwtichFromSelected
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Switch From Selected
-Version: 1.0.0
+Version: 1.1.0
 Description-US: Creates a switch tool from selected tools.
 
 Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.1.0 (19.09.2025) - Support for macros and group nodes, where Output port is sometimes named as MainOutput1 or Output1.
 1.0.0 (07.05.2025) - Initial realease.
 """
 # Libraries
@@ -35,14 +36,16 @@ def swtich_from_selected() -> None:
 
     for i, tool in enumerate(tools):
     
+        output_port = comp.ActiveTool.GetOutputList()[1]
+
         if i == 0:
             pos_x, pos_y = flow.GetPosTable(tool).values()
             switch = comp.AddTool("Switch", pos_x + 2, pos_y)
             switch.NumberOfInputs = len(tools)
-            switch.ConnectInput("Input0", tool.Output)
+            switch.ConnectInput("Input0", output_port)
 
         if i != 0:
-            switch.ConnectInput(f"Input{i}", tool.Output)
+            switch.ConnectInput(f"Input{i}", output_port)
             flow.Select(switch, True)
     
 

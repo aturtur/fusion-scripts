@@ -4,7 +4,7 @@ AR_PrintUsedSavers
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Print Used Savers
-Version: 1.3.0
+Version: 1.3.1
 Description-US: Prints file paths that savers of the current composition uses.  
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,7 +13,8 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
-1.3.0 (16.09.2024) - Prints now using tabulate.
+1.3.1 (19.09.2025) - Small tweak.
+1.3.0 (16.09.2025) - Prints now using tabulate.
 1.2.1 (04.06.2025) - Small tweak.
 1.2.0 (11.04.2025) - Added more stylized printing, added selection support and fixed a small bug.
 1.1.1 (25.09.2024) - Modified code to follow more PEP 8 recommendations.
@@ -35,12 +36,12 @@ def check_status(tool) -> str:
     """Checks status of the saver."""
     
     if tool.Input.GetConnectedOutput() == None:
-        return "[ ]"  # Tool is not connected to anything.
+        return "Not connected"  # Tool is not connected to anything.
     
     if (tool.GetAttrs()["TOOLB_PassThrough"] == True):
-        return "[-]"  # Tool is connected but disabled.
+        return "Disabled"  # Tool is connected but disabled.
     else:
-        return "[x]"  # Tool is enabled and in use.
+        return "Enabled"  # Tool is enabled and in use.
     
     
 def sort_list(subList) -> list:
@@ -61,12 +62,6 @@ def print_used_savers(savers) -> None:
             "Status": check_status(saver)
         }
 
-    max_name_length = max(len(item["Name"]) for item in savers_data.values())
-
-    name   = "Saver Name:"
-    status = "Mode:"
-    path   = "Path:"
-
     print("")
     print("Used Savers:")
 
@@ -74,12 +69,13 @@ def print_used_savers(savers) -> None:
     for item in savers_data.values():
         table.append([item['Name'], item['Status'], item['Path']])
 
-    headers = ["Name", "Status", "Path"]
+    order = {"Enabled": 0, "Inactive": 1, "Not connected": 2}
+    table.sort(key=lambda x: order.get(x[1], 99))
+    
+    headers = ["Saver Name", "Status", "Path"]
 
     print(tabulate(table, headers=headers, tablefmt="github"))
 
-    print("")
-    print("Mode: [x] in use \t [ ] not connected \t [-] connected but disabled.")
     print("")
     print("")
 

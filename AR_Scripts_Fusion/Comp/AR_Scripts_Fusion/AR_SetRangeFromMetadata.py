@@ -4,7 +4,7 @@ AR_SetRangeFromMetadata
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Set Range From Metadata
-Version: 1.1.0
+Version: 1.2.0
 Description-US: Sets render range from selected tool's metadata.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,7 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
-
+1.2.0 (19.09.2025) - Support for macros and group nodes, where Output port is sometimes named as MainOutput1 or Output1.
 1.1.0 (16.09.2025) - Added SHIFT modifier to set also the global range.
 1.0.2 (05.09.2025) - Tweaking.
 1.0.1 (28.05.2025) - Small improvement.
@@ -84,8 +84,7 @@ def set_current_time(frame: int) -> None:
 
 
 def get_range_from_metadata(tool) -> tuple[int, int]:
-    current_time = comp.CurrentTime
-    metadata = tool.Output[current_time].Metadata
+    metadata = comp.ActiveTool.GetOutputList()[1][comp.CurrentTime].Metadata
 
     start_frame = None
     end_frame = None
