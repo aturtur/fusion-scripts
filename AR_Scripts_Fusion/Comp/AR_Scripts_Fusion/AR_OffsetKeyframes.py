@@ -4,8 +4,8 @@ AR_OffsetKeyframes
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Offset Keyframes
-Version: 1.0.1
-Description-US: Offsets all keyframes of selected tool(s) by given value.
+Version: 1.0.2
+Description-US: Offsets all keyframes of selected tool(s) by given value.\nSupports only BezierPaths!
 Note: Does not support all kind of keyframes (e.g. Tracker).
 
 Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
@@ -14,6 +14,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.2 (25.09.2025) - Tweaking.
 1.0.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.0.0 (28.11.2024) - Initial release.
 """
@@ -51,13 +52,23 @@ def offset_keyframes(tool, offset) -> None:
 
     for inp in tool.GetInputList().values():
         if inp.GetConnectedOutput():
-            if inp.GetAttrs()["INPS_DataType"]:
-                splineout = inp.GetConnectedOutput()
-                spline = splineout.GetTool()
-                splinedata = spline.GetKeyFrames()
-                first_key = min(splinedata.keys())
-                last_key = max(splinedata.keys())
-                spline.AdjustKeyFrames(first_key, last_key, offset, 0, "offset")
+            data_type = inp.GetAttrs()["INPS_DataType"]
+            if data_type:
+                if data_type != "Image": 
+                    splineout = inp.GetConnectedOutput()
+                    spline = splineout.GetTool()
+                    splinedata = spline.GetKeyFrames()
+
+                    if spline.ID == "BezierSpline":
+                        numeric_keys = [k for k in splinedata.keys() if isinstance(k, (int, float))]
+                        first_key = min(numeric_keys)
+                        last_key = max(numeric_keys)
+
+                    elif spline.ID == "PolyPath":
+                        print("PolyPath found. This script works only with BezierSplines!")
+                        return False
+    
+                    spline.AdjustKeyFrames(first_key, last_key, offset, 0, "offset")
 
 
 def gui_geometry(width: int, height: int, x: float, y: float) -> dict:

@@ -21,6 +21,7 @@ Highly recommended to add this script to hotkey:
             Scripts -> AR_ScriptLauncher
 
 Changelog:
+1.3.1 (25.09.2025) - Added unicode_escape decoding for tooltips, allows multi-line tooltips.
 1.3.0 (16.09.2025) - Support to send keyboard modifiers to scripts.
 1.2.1 (11.09.2025) - Doesn't add this script to the list.
 1.2.0 (10.04.2025) - Added support for icons. Put the icon (png-file) in Icons folder named same as the script file.
@@ -96,6 +97,7 @@ def get_script_info(script) -> tuple[str, str]:
             try:
                 if line.startswith("Description-US:"):
                     description = line.split("Description-US: ", 1)[1].strip()
+                    description = description.encode('utf-8').decode('unicode_escape')
             except:
                 pass
             
