@@ -131,7 +131,7 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![AR_MoveAnchorPoint](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_MoveAnchorPoint.png) AR_MoveAnchorPoint *(GUI)*
 > **Default:** Moves the anchor point (pivot) using the DoD values.  
 
-### ![AR_MoveNodes](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_MergeSelected.png) AR_MoveNodes *(GUI)*
+### ![AR_MoveNodes](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_MoveNodes.png) AR_MoveNodes *(GUI)*
 > **Default:** Moves selected node(s).  
 
 ### ![AR_MultiMergeSelected](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_MergeSelected.png) AR_MultiMergeSelected
@@ -181,8 +181,14 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![AR_ReloadLoader](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ReloadLoader.png) AR_ReloadLoader
 > **Default:** Reloads selected loaders and extends ranges if needed.  
 
-### ![AR_RemoveKeys](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_RemoveKeys.png) AR_RemoveKeys
-> **Default:** Removes all keyframes from selected tools.  
+### ![AR_RemoveKeyframes](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_RemoveKeyframes.png) AR_RemoveKeyframes
+> **Default:** Removes all keyframes from selected tool(s).  
+
+### ![AR_RemoveKeyframesAfterCurrentFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_RemoveKeyframesAfterCurrentFrame.png) AR_RemoveKeyframesAfterCurrentFrame
+> **Default:** Removes all keyframes from selected tool(s) after the current frame. Global End Time is the start frame!  
+
+### ![AR_RemoveKeyframesBeforeCurrentFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_RemoveKeyframesBeforeCurrentFrame.png) AR_RemoveKeyframesBeforeCurrentFrame
+> **Default:** Removes all keyframes from selected tool(s) before the current frame.\nGlobal Start Time is the start frame!  
 
 ### ![AR_ResizeCanvas](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_ResizeCanvas.png) AR_ResizeCanvas *(GUI)*
 > **Default:** Resize canvas of the selected tool.  
