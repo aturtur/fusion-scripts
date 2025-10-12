@@ -58,7 +58,7 @@ def reverse_path_mapping(file_path: str) -> str:
 
 
 def restore_path_mapping(tool) -> bool:
-    """Restores path mapping from given tool"""
+    """Restores path mapping from given tool."""
 
     reversed_path = reverse_path_mapping(str(tool.GetInput("Clip")))
     tool.SetInput("Clip", reversed_path + "")

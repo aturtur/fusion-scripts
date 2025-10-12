@@ -5,7 +5,7 @@ Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Remove Keyframes After Current Frame
 Version: 1.0.0
-Description-US: Removes all keyframes from selected tool(s) after the current frame.\nGlobal End Time is the start frame!
+Description-US: Removes all keyframes from selected tool(s) after the current frame.\nGlobal End Time is the end frame!
 
 Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
 Python version 3.10.8 (64-bit).

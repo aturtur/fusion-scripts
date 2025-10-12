@@ -1,9 +1,9 @@
 """
-AR_SetRangeThisFrame
+AR_SetRangeCurrentFrame
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
-Name-US: Set Range This Frame
+Name-US: Set Range Current Frame
 Version: 1.1.0
 Description-US: Sets render range to the current frame.
 

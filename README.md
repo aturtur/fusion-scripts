@@ -7,6 +7,8 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming in 1.6.0**
+- _11.10.2025_ **Renamed:** AR_SetRangeThisFrame → AR_SetRangeCurrentFrame.
+- _11.10.2025_ **Updated:** AR_SwitchFromSelected, AR_MergeSelected.py, AR_MultiMergeSelected.py, AR_LoaderFromSaver.
 - _25.09.2025_ **Updated:** AR_RemoveKeyframes, AR_OffsetKeyframes, AR_ScriptLauncher.
 - _25.09.2025_ **New:** AR_RemoveKeyframesAfterCurrentFrame, AR_RemoveKeyframesBeforeCurrentFrame.
 - _19.09.2025_ **Updated:** AR_PrintUsedLoaders, AR_PrintUsedSavers, AR_NoteFromMetadata, AR_SetRangeFromMetadata, AR_PrintMetadata, AR_SwitchFromSelected.
@@ -265,7 +267,7 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![AR_SetRangeRenderToGlobal](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SetRange.png) AR_SetRangeRenderToGlobal
 > **Default:** Sets render range to match global range.  
 
-### ![AR_SetRangeThisFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SetRange.png) AR_SetRangeThisFrame
+### ![AR_SetRangeCurrentFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SetRange.png) AR_SetRangeCurrentFrame
 > **Default:** Sets render range to the current frame.  
 
 ### ![AR_SplitToTiles](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/AR_SplitToTiles.png) AR_SplitToTiles *(GUI)*

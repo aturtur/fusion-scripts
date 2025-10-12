@@ -4,7 +4,7 @@ AR_MergeSelected
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Merge Selected
-Version: 1.0.0
+Version: 1.0.1
 Description-US: Merges selected tools.
 
 Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.1 (11.14.2025) - Added support for different types of outputports (e.g. Mask).
 1.0.0 (07.05.2025) - Initial realease.
 """
 # Libraries
@@ -38,7 +39,9 @@ def merge_selected_tools() -> None:
 
     for tool in tools:
         pos_x, pos_y = flow.GetPosTable(tool).values()
-        tool_positions.append((pos_y, pos_x, tool))
+        output = tool.GetOutputList()[1]
+        print(output)
+        tool_positions.append((pos_y, pos_x, output, tool))
 
     tool_positions.sort()
 
@@ -50,15 +53,15 @@ def merge_selected_tools() -> None:
             flow.Select(merge, True)
             merge_nodes.append(merge)
 
-    sorted_tools = [tool for _, _, tool in tool_positions]
+    sorted_outputs = [output for _, _, output, _ in tool_positions]
 
     for i, merge in enumerate(merge_nodes):
         if i == 0:
-            merge.Background = sorted_tools[0].Output
-            merge.Foreground = sorted_tools[1].Output
+            merge.Background = sorted_outputs[0]
+            merge.Foreground = sorted_outputs[1]
         else:
             merge.Background = merge_nodes[i-1].Output
-            merge.Foreground = sorted_tools[i+1].Output
+            merge.Foreground = sorted_outputs[i+1]
     
 
 def main() -> None:

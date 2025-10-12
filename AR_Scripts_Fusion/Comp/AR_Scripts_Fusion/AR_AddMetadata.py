@@ -345,7 +345,7 @@ dlg  = disp.AddWindow({"WindowTitle": "Add Metadata",
             ui.VGroup(
             [
                 ui.Label({"Text": "Options", "ID": "Label"}),
-                ui.CheckBox({"Text": "Group", "ID": "Checkbox_Group"}),
+                ui.CheckBox({"Text": "Group", "ID": "Checkbox_Group", "ToolTip": "Requires a pyautogui module!"}),
             ]),
             
             # Add and Cancel buttons.
