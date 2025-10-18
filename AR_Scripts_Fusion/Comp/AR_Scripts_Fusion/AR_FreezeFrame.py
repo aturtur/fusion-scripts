@@ -4,7 +4,7 @@ AR_FreezeFrame
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Freeze Frame
-Version: 1.0.1
+Version: 1.0.2
 Description-US: Creates a TimeSpeed node that freezes frame at current frame.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.2 (18.04.2025) - Added support for different types of outputports (e.g. Mask).
 1.0.1 (20.09.2024) - Modified code to follow more PEP 8 recommendations.
 1.0.0 (02.09.2024) - Initial realease.
 """
@@ -42,9 +43,10 @@ def freeze_frame(tool) -> any:
     time_speed.SetInput("Delay", freeze_time)
     time_speed.SetInput("InterpolateBetweenFrames", 0)
     time_speed.SetAttrs({"TOOLS_Name": f"FreezeFrame_{str(current_time)}"})
-
+    
     # Connect nodes.
-    time_speed.Input.ConnectTo(tool.Output)
+    output_port = tool.GetOutputList()[1]
+    time_speed.Input.ConnectTo(output_port)
 
     return time_speed
 

@@ -170,10 +170,11 @@ def crop_to_roi(view) -> None:
     x, y = flow.GetPosTable(tool).values()
     merge_node = comp.AddTool("Merge", x+2, y)
 
-    crop_node.Input = tool.Output
+    output_port = tool.GetOutputList()[1]
+    crop_node.Input = output_port
     transform_node.Input = crop_node.Output
-    crop_node.Input = tool.Output
-    merge_node.Background = tool.Output
+    crop_node.Input = output_port
+    merge_node.Background = output_port
     merge_node.Foreground = transform_node.Output
 
 

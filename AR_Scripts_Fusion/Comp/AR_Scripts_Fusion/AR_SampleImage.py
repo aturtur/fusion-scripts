@@ -4,7 +4,7 @@ AR_SampleImage
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Sample Image
-Version: 1.0.1
+Version: 1.0.2
 Description-US: Creates a sample image setup for the selected tool(s).
 
 Written for Blackmagic Design Fusion Studio 19.1 build 34.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.2 (18.04.2025) - Added support for different types of outputports.
 1.0.1 (13.08.2025) - Bug fix - probe is now connected also to red channel.
                    - Previously red channel was clamped to 1.0 value.
 1.0.0 (17.11.2024) - Initial release.
@@ -72,7 +73,8 @@ def create_sample_image_node(tool) -> None:
     custom_tool.ShowLUT3 = False
     custom_tool.ShowLUT4 = False
 
-    custom_tool.Image1 = tool.Output
+    output_port = tool.GetOutputList()[1]
+    custom_tool.Image1 = output_port
 
 
 def main() -> None:

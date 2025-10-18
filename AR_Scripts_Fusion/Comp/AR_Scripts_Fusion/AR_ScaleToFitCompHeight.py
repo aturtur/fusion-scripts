@@ -4,7 +4,7 @@ AR_ScaleToFitCompHeight
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Scale To Fit Comp Height
-Version: 1.0.0
+Version: 1.0.1
 Description-US: Scales proportionally foreground image to fit background image's height.
 
 Written for Blackmagic Design Fusion Studio 19.1.3 build 5.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
   
 Changelog:
+1.0.1 (18.10.2025) - Added error checking.
 1.0.0 (05.03.2025) - Initial release.
 """
 # Libraries
@@ -26,6 +27,19 @@ comp = comp  # comp = fusion.GetCurrentComp()
 
 
 # Functions
+def get_tool_resolution(tool) -> tuple:
+    """Gets the resolution of the given tool and returns it if possible."""
+
+    width = tool.GetAttrs("TOOLI_ImageWidth")
+    height = tool.GetAttrs("TOOLI_ImageHeight")
+
+    if (width == None) or (height == None):
+        print(f"Couldn't get the resolution data from tool: {tool.Name}")
+        return False, False
+    else:
+        return width, height
+
+
 def get_merge_data(merge_node) -> tuple | bool:
     """Gets all important data from the selected merge node."""
 
@@ -33,11 +47,13 @@ def get_merge_data(merge_node) -> tuple | bool:
         bg_node = merge_node.FindMainInput(1).GetConnectedOutput().GetTool()
         fg_node = merge_node.FindMainInput(2).GetConnectedOutput().GetTool()
 
-        bg_width = bg_node.GetAttrs("TOOLI_ImageWidth")
-        bg_height = bg_node.GetAttrs("TOOLI_ImageHeight")
+        bg_width, bg_height = get_tool_resolution(bg_node)
+        if bg_width == None:
+            return False
 
-        fg_width = fg_node.GetAttrs("TOOLI_ImageWidth")
-        fg_height = fg_node.GetAttrs("TOOLI_ImageHeight")
+        fg_width, fg_height = get_tool_resolution(fg_node)
+        if fg_width == None:
+            return False
 
         return bg_node, bg_width, bg_height, fg_node, fg_width, fg_height
     else:

@@ -1,12 +1,13 @@
 # Aturtur's Fusion Scripts
 My collection of Blackmagic Design Fusion Studio (standalone) scripts ([@aturtur.bsky.social](https://bsky.app/profile/aturtur.bsky.social)).  
 
-Latest version **1.5.1** *(Released 12.09.2025)*  
+Latest version **1.6.0** *(Released 18.10.2025)*  
 
 All of the scripts are developed and tested with Windows 11 machine. All of the scripts might not work in Linux or Mac.  
 
 ## Changelog
-**Changes coming in 1.6.0**
+**Changes in 1.6.0**
+- _18.10.2025_ **Updated:** AR_FreezeTime, AR_AddMetadata, AR_CreateSaver, AR_CropToDoD, AR_ScaleToFitCompHeight, AR_ScaleToFitCompWidth, AR_ScaleToFitComp, AR_SampleImage, AR_AlignImage, AR_ResizeCanvas, AR_MoveAnchorPoint.
 - _11.10.2025_ **Renamed:** AR_SetRangeThisFrame → AR_SetRangeCurrentFrame.
 - _11.10.2025_ **Updated:** AR_SwitchFromSelected, AR_MergeSelected.py, AR_MultiMergeSelected.py, AR_LoaderFromSaver.
 - _25.09.2025_ **Updated:** AR_RemoveKeyframes, AR_OffsetKeyframes, AR_ScriptLauncher.
@@ -15,9 +16,6 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 - _18.09.2025_ **New:** AR_Stack.
 - _16.09.2025_ **Updated:** AR_ScriptLauncher, AR_SetRangeFromMetadata, AR_SetRangeFromTool(s), AR_SetRangeThisFrame.
 - _14.09.2025_ **Updated:** AR_SplitEXRFile.
-
-**Changes in 1.5.1**
-- _12.09.2025_ **Hotfix:** Folder structure.
 
 Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/blob/master/CHANGELOG.md) file.  
 

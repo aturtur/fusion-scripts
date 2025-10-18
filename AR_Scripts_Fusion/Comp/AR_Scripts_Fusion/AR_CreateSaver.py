@@ -4,7 +4,7 @@ AR_CreateSaver
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Create Saver
-Version: 1.0.0
+Version: 1.0.1
 Description-US: Creates a saver for selected tools with custom export settings.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.1 (18.04.2025) - Added support for different types of outputports.
 1.0.0 (24.03.2025) - Initial release.
 """
 # Libraries
@@ -42,7 +43,8 @@ def create_saver(tool) -> bool:
     flow = comp.CurrentFrame.FlowView
     x, y = flow.GetPosTable(tool).values()
     saver_node = comp.AddTool("Saver", x+2, y)
-    saver_node.Input = tool.Output
+    output_port = tool.GetOutputList()[1]
+    saver_node.Input = output_port
     flow.Select(saver_node)
     saver_node.TileColor = {'R': 233.0/255.0,
                             'G': 140.0/255.0,
@@ -102,6 +104,13 @@ def create_saver(tool) -> bool:
     saver_node.SetInput("OpenEXRFormat.ZPosEnable", 0.0)
     saver_node.SetInput("OpenEXRFormat.XDispEnable", 0.0)
     saver_node.SetInput("OpenEXRFormat.YDispEnable", 0.0)
+
+    # Settings tab.
+    saver_node.SetInput("FrameSavedScript", "")
+    saver_node.SetInput("Comments", "")
+    saver_node.SetInput("FrameRenderScript", "")
+    saver_node.SetInput("StartRenderScript", "")
+    saver_node.SetInput("EndRenderScript", "")
 
     return True
 

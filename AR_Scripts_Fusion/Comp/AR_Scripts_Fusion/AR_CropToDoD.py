@@ -4,7 +4,7 @@ AR_CropToDoD
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Crop to DoD
-Version: 1.1.0
+Version: 1.1.1
 Description-US: Crops to selected tools' DoD (Domain of Definition).
 
 Written for Blackmagic Design Fusion Studio 19.1.3 build 5.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
   
 Changelog:
+1.1.1 (18.04.2025) - Added support for different types of outputports.
 1.1.0 (30.03.2025) - Added support for multiple tools.
 1.0.0 (25.02.2025) - Initial release.
 """
@@ -35,7 +36,8 @@ def crop_to_dod(tool) -> None:
     x, y = flow.GetPosTable(tool).values()
     crop_node = comp.AddTool("Crop", x+2, y)
     crop_node.SetAttrs({"TOOLS_Name": "CropToDoD"})
-    crop_node.Input = tool.Output
+    output_port = tool.GetOutputList()[1]
+    crop_node.Input = output_port
     crop_node.AutoCrop = 1
     flow.Select(crop_node)
 

@@ -1,4 +1,15 @@
 ## Changelog
+**Changes in 1.6.0**
+- _18.10.2025_ **Updated:** AR_FreezeTime, AR_AddMetadata, AR_CreateSaver, AR_CropToDoD, AR_ScaleToFitCompHeight, AR_ScaleToFitCompWidth, AR_ScaleToFitComp, AR_SampleImage, AR_AlignImage, AR_ResizeCanvas, AR_MoveAnchorPoint.
+- _11.10.2025_ **Renamed:** AR_SetRangeThisFrame → AR_SetRangeCurrentFrame.
+- _11.10.2025_ **Updated:** AR_SwitchFromSelected, AR_MergeSelected.py, AR_MultiMergeSelected.py, AR_LoaderFromSaver.
+- _25.09.2025_ **Updated:** AR_RemoveKeyframes, AR_OffsetKeyframes, AR_ScriptLauncher.
+- _25.09.2025_ **New:** AR_RemoveKeyframesAfterCurrentFrame, AR_RemoveKeyframesBeforeCurrentFrame.
+- _19.09.2025_ **Updated:** AR_PrintUsedLoaders, AR_PrintUsedSavers, AR_NoteFromMetadata, AR_SetRangeFromMetadata, AR_PrintMetadata, AR_SwitchFromSelected.
+- _18.09.2025_ **New:** AR_Stack.
+- _16.09.2025_ **Updated:** AR_ScriptLauncher, AR_SetRangeFromMetadata, AR_SetRangeFromTool(s), AR_SetRangeThisFrame.
+- _14.09.2025_ **Updated:** AR_SplitEXRFile.
+
 **Changes in 1.5.1**
 - _12.09.2025_ **Hotfix:** Folder structure.
 

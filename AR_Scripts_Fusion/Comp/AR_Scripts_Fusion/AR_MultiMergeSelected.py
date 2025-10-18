@@ -42,7 +42,6 @@ def merge_selected_tools() -> None:
         if i == 0:
             pos_x, pos_y = flow.GetPosTable(tool).values()
             multimerge = comp.AddTool("MultiMerge", pos_x + 2, pos_y)
-            #multimerge.ConnectInput("Background", tool.Output)
             multimerge.ConnectInput("Background", output_port)
 
         if i != 0:

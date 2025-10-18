@@ -4,7 +4,7 @@ AR_AlignImage
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Align Image
-Version: 1.1.0
+Version: 1.1.1
 Description-US: Aligns merge node's foreground image according to the background image.
 
 How to use: Select merge node that has foreground and background inputs connected,
@@ -16,6 +16,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
   
 Changelog:
+1.1.1 (18.10.2025) - Added error cheking and support for different output port names.
 1.1.0 (07.09.2025) - Added option to set strength.
 1.0.2 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.0.1 (25.02.2025) - Added support for Merge node's Size parameter.
@@ -56,19 +57,35 @@ def interpolate(value: float, x1: float, x2: float, y1: float, y2: float) -> flo
     return ((y2 - y1) * value + x2 * y1 - x1 * y2) / (x2 - x1)
 
 
+def get_tool_resolution(tool) -> tuple:
+    """Gets the resolution of the given tool and returns it if possible."""
+
+    width = tool.GetAttrs("TOOLI_ImageWidth")
+    height = tool.GetAttrs("TOOLI_ImageHeight")
+
+    if (width == None) or (height == None):
+        print(f"Couldn't get the resolution data from tool: {tool.Name}")
+        return False, False
+    else:
+        return width, height
+    
+
 def get_merge_data() -> tuple | bool:
     """Gets all important data from the selected merge node."""
 
     merge_node = comp.ActiveTool()
+
     if merge_node.ID == "Merge":
         bg_node = merge_node.FindMainInput(1).GetConnectedOutput().GetTool()
         fg_node = merge_node.FindMainInput(2).GetConnectedOutput().GetTool()
 
-        bg_width = bg_node.GetAttrs("TOOLI_ImageWidth")
-        bg_height = bg_node.GetAttrs("TOOLI_ImageHeight")
+        bg_width, bg_height = get_tool_resolution(bg_node)
+        if bg_width == None:
+            return False
 
-        fg_width = fg_node.GetAttrs("TOOLI_ImageWidth")
-        fg_height = fg_node.GetAttrs("TOOLI_ImageHeight")
+        fg_width, fg_height = get_tool_resolution(fg_node)
+        if fg_width == None:
+            return False
 
         return merge_node, bg_node, bg_width, bg_height, fg_node, fg_width, fg_height
     else:
@@ -80,6 +97,7 @@ def align_image(method: str, strength: float) -> None:
     """Clears preview windows, also both A and B buffers."""
 
     if get_merge_data() == False: return
+
     merge_node, _, bg_width, bg_height, _, fg_width, fg_height = get_merge_data()
     merge_scale = merge_node.GetInput("Size")
     merge_x = float(merge_node.GetInput("Center")[1])
@@ -136,7 +154,8 @@ def convert_merge_to_transform() -> None:
     x, y = flow.GetPosTable(merge_node).values()
     transform_node = comp.AddTool("Transform", x, y-1)
     merge_node.Foreground = transform_node.Output
-    transform_node.Input = fg_node.Output
+    output_port = fg_node.GetOutputList()[1]
+    transform_node.Input = output_port
 
     merge_node.SetInput("Center", {1: 0.5, 2: 0.5, 3: 0.0})
     merge_node.SetInput("Size", 1)

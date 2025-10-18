@@ -40,7 +40,6 @@ def merge_selected_tools() -> None:
     for tool in tools:
         pos_x, pos_y = flow.GetPosTable(tool).values()
         output = tool.GetOutputList()[1]
-        print(output)
         tool_positions.append((pos_y, pos_x, output, tool))
 
     tool_positions.sort()

@@ -4,7 +4,7 @@ AR_ResizeCanvas
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Resize Canvas
-Version: 1.0.0
+Version: 1.0.1
 Description-US: Resize canvas of the selected tool.
 
 Written for Blackmagic Design Fusion Studio 19.1.3 build 5
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit)
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
   
 Changelog:
+1.0.1 (18.10.2025) - Added error checking.
 1.0.0 (25.02.2025) - Initial release.
 """
 # Libraries
@@ -62,38 +63,37 @@ def interpolate(value: float, x1: float, x2: float, y1: float, y2: float):
     return ((y2 - y1) * value + x2 * y1 - x1 * y2) / (x2 - x1)
 
 
+def get_tool_resolution(tool) -> tuple:
+    """Gets the resolution of the given tool and returns it if possible."""
+
+    width = tool.GetAttrs("TOOLI_ImageWidth")
+    height = tool.GetAttrs("TOOLI_ImageHeight")
+
+    if (width == None) or (height == None):
+        print(f"Couldn't get the resolution data from tool: {tool.Name}")
+        return False, False
+    else:
+        return width, height
+
+
 def get_merge_data() -> tuple | bool:
     """Gets all important data from the selected merge node."""
 
     merge_node = comp.ActiveTool()
+
     if merge_node.ID == "Merge":
         bg_node = merge_node.FindMainInput(1).GetConnectedOutput().GetTool()
         fg_node = merge_node.FindMainInput(2).GetConnectedOutput().GetTool()
 
-        bg_width = bg_node.GetAttrs("TOOLI_ImageWidth")
-        bg_height = bg_node.GetAttrs("TOOLI_ImageHeight")
+        bg_width, bg_height = get_tool_resolution(bg_node)
+        if bg_width == None:
+            return False
 
-        fg_width = fg_node.GetAttrs("TOOLI_ImageWidth")
-        fg_height = fg_node.GetAttrs("TOOLI_ImageHeight")
+        fg_width, fg_height = get_tool_resolution(fg_node)
+        if fg_width == None:
+            return False
 
         return merge_node, bg_node, bg_width, bg_height, fg_node, fg_width, fg_height
-    else:
-        print("Select Merge node first!")
-        return False
-
-
-def get_image_data() -> tuple | bool:
-    """Gets all the active tool."""
-
-    tool_node = comp.ActiveTool()
-    if tool_node != None:
-        width = tool_node.GetAttrs("TOOLI_ImageWidth")
-        height = tool_node.GetAttrs("TOOLI_ImageHeight")
-
-        if (width == None) or (height == None):
-            print("Couldn't get width ir height information!")
-        else:
-            return tool_node, width, height
     else:
         print("Select Merge node first!")
         return False
@@ -102,7 +102,9 @@ def get_image_data() -> tuple | bool:
 def resize_canvas(method: str, new_width: int, new_height: int) -> None:
     """Clears preview windows, also both A and B buffers."""
     
-    active_tool, old_width, old_height = get_image_data()
+    active_tool = comp.ActiveTool()
+
+    old_width, old_height = get_tool_resolution(active_tool)
     flow = comp.CurrentFrame.FlowView
     x, y = flow.GetPosTable(active_tool).values()
     crop_node = comp.AddTool("Crop", x+1, y)
@@ -163,7 +165,8 @@ def convert_merge_to_transform() -> None:
     x, y = flow.GetPosTable(merge_node).values()
     transform_node = comp.AddTool("Transform", x, y-1)
     merge_node.Foreground = transform_node.Output
-    transform_node.Input = fg_node.Output
+    output_port = fg_node.GetOutputList()[1]
+    transform_node.Input = output_port
 
     merge_node.SetInput("Center", {1: 0.5, 2: 0.5, 3: 0.0})
     merge_node.SetInput("Size", 1)
@@ -200,7 +203,7 @@ gui_geo = gui_geometry(325, 230, 0.5, 0.5)
 
 # GUI
 try:
-    _, width, height = get_image_data()
+     width, height = get_tool_resolution(comp.ActiveTool())
 except:
     comp_preferences = comp.GetPrefs()
     width = comp_preferences['Comp']['FrameFormat']['Width']
@@ -357,13 +360,23 @@ dlg.On.Button_ResizeCanvas.Clicked = _func
 
 
 def _func(ev):
-    _, width, _ = get_image_data()
+    try:
+        active_tool = comp.ActiveTool()
+    except Exception:
+        print("Select tool first!")
+        return None
+    width, _ = get_tool_resolution(active_tool)
     itm["Lineedit_Width"].Text = str(width)
 dlg.On.Button_Get_Width.Clicked = _func
 
 
 def _func(ev):
-    _, _, height = get_image_data()
+    try:
+        active_tool = comp.ActiveTool()
+    except Exception:
+        print("Select tool first!")
+        return None
+    _, height = get_tool_resolution(active_tool)
     itm["Lineedit_Height"].Text = str(height)
 dlg.On.Button_Get_Height.Clicked = _func
 

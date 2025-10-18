@@ -4,7 +4,7 @@ AR_MoveAnchorPoint
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Move Anchor Point
-Version: 1.0.1
+Version: 1.0.2
 Description-US: Moves the anchor point (pivot) using the DoD values.
 
 Written for Blackmagic Design Fusion Studio 19.1.3 build 5.
@@ -16,6 +16,7 @@ To do:
 - Support for elements that are outside the canvas?
   
 Changelog:
+1.0.2 (18.10.2025) - Added error checking.
 1.0.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.0.0 (05.03.2025) - Initial release.
 """
@@ -84,13 +85,27 @@ def auto_crop(tool) -> tuple:
     return (x1, y1), (x2, y2)
 
 
+def get_tool_resolution(tool) -> tuple:
+    """Gets the resolution of the given tool and returns it if possible."""
+
+    width = tool.GetAttrs("TOOLI_ImageWidth")
+    height = tool.GetAttrs("TOOLI_ImageHeight")
+
+    if (width == None) or (height == None):
+        print(f"Couldn't get the resolution data from tool: {tool.Name}")
+        return False, False
+    else:
+        return width, height
+
+
 def move_anchor_point(method: str) -> None:
     """Clears preview windows, also both A and B buffers."""
 
     active_tool = comp.ActiveTool()
 
-    width = active_tool.GetAttrs("TOOLI_ImageWidth")
-    height = active_tool.GetAttrs("TOOLI_ImageHeight")
+    width, height = get_tool_resolution(active_tool)
+    if width == None:
+        return None
 
     crop_data = auto_crop(active_tool)
     dod_x1 = crop_data[0][0]

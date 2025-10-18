@@ -4,7 +4,7 @@ AR_AddMetadata
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Add Metadata
-Version: 1.3.0
+Version: 1.3.1
 Description-US: Adds metadata nodes.
 
 Note: Grouping requires pyautogui module.
@@ -15,6 +15,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.3.1 (18.04.2025) - Added support for different types of outputports.
 1.3.0 (29.05.2025) - Added more custom fields.
 1.2.0 (14.04.2025) - Fixed bug if tool is not active.
                    - Group is now named.
@@ -82,7 +83,8 @@ def connect_metadata(metadata_nodes: list) -> None:
         flow.SetPos(metadata_node, pos_x + 1 + i, pos_y)
         if i == 0:
             if tool != None:
-                metadata_node.Input = tool.Output
+                output_port = tool.GetOutputList()[1]
+                metadata_node.Input = output_port
                 flow.Select()
         if i != 0:
             metadata_node.Input = metadata_nodes[i-1].Output
