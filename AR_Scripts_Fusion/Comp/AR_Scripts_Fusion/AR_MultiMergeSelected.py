@@ -1,5 +1,5 @@
 """
-AR_MultiMergeSelected
+ar_MultiMergeSelected
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

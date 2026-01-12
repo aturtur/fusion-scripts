@@ -1,5 +1,5 @@
 """
-AR_ImportFolder(WIP)
+ar_ImportFolder(WIP)
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

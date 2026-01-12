@@ -1,5 +1,5 @@
 """
-AR_JoinTiles
+ar_JoinTiles
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

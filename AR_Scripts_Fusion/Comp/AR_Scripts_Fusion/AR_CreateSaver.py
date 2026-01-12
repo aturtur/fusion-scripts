@@ -1,5 +1,5 @@
 """
-AR_CreateSaver
+ar_CreateSaver
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
@@ -80,6 +80,8 @@ def create_saver(tool) -> bool:
     saver_node.SetInput("OpenEXRFormat.Compression", 9.0)
 
     # Enable and disable channels.
+    # 1.0 Enabled.
+    # 0.0 Disabled.
     saver_node.SetInput("OpenEXRFormat.RedEnable", 1.0)
     saver_node.SetInput("OpenEXRFormat.GreenEnable", 1.0)
     saver_node.SetInput("OpenEXRFormat.BlueEnable", 1.0)

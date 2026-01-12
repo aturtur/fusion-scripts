@@ -1,5 +1,5 @@
 """
-AR_SetRangeFromMetadata
+ar_SetRangeFromMetadata
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

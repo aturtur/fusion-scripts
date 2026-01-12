@@ -1,5 +1,5 @@
 """
-AR_RevealInExplorer
+ar_RevealInExplorer
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
@@ -59,7 +59,7 @@ def reveal_in_explorer() -> None:
         
         if file_path is not None:
 
-            file_path = apply_path_mapping(file_path)            
+            file_path = apply_path_mapping(file_path)
 
             if os.path.exists(file_path):
                 subprocess.Popen(["explorer", "/select,", file_path])

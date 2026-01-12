@@ -1,5 +1,5 @@
 """
-AR_ColoriseNodes
+ar_ColoriseNodes
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

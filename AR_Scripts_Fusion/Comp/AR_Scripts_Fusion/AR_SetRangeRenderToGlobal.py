@@ -1,5 +1,5 @@
 """
-AR_SetRangeRenderToGlobal
+ar_SetRangeRenderToGlobal
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

@@ -1,5 +1,5 @@
 """
-AR_AlignImage
+ar_AlignImage
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

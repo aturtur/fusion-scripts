@@ -1,5 +1,5 @@
 """
-AR_MoveNodes
+ar_MoveNodes
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

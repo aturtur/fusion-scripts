@@ -1,5 +1,5 @@
 """
-AR_ScriptLauncher
+ar_ScriptLauncher
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
@@ -15,10 +15,10 @@ Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 Pyautogui module is recommended but not required.
 
 Highly recommended to add this script to hotkey:
-    View -> Customize Hotkeys...
-        Views -> New...
+    View → Customize Hotkeys...
+        Views → New...
             <Enter Key Sequence> E.g. Shift+Tab
-            Scripts -> AR_ScriptLauncher
+            Scripts → ar_ScriptLauncher
 
 Changelog:
 1.3.1 (25.09.2025) - Added unicode_escape decoding for tooltips, allows multi-line tooltips.

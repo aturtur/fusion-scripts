@@ -1,5 +1,5 @@
 """
-AR_NoteFromMetadata
+ar_NoteFromMetadata
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

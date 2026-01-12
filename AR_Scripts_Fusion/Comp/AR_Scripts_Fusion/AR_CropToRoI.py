@@ -1,5 +1,5 @@
 """
-AR_CropToRoI
+ar_CropToRoI
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

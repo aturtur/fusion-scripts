@@ -1,5 +1,5 @@
 """
-AR_CreateLocator3D
+ar_CreateLocator3D
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

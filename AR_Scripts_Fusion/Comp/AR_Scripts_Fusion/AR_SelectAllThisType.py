@@ -1,5 +1,5 @@
 """
-AR_SelectAllThisType
+ar_SelectAllThisType
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

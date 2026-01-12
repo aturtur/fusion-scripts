@@ -1,5 +1,5 @@
 """
-AR_NoteFromLoader
+ar_NoteFromLoader
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

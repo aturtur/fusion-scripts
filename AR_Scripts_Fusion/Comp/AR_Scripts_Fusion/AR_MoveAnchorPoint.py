@@ -1,5 +1,5 @@
 """
-AR_MoveAnchorPoint
+ar_MoveAnchorPoint
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

@@ -1,5 +1,5 @@
 """
-AR_RemoveKeyframesBeforeCurrentFrame
+ar_RemoveKeyframesBeforeCurrentFrame
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

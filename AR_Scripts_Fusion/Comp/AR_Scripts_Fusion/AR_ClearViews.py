@@ -1,5 +1,5 @@
 """
-AR_ClearViews
+ar_ClearViews
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

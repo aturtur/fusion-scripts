@@ -1,5 +1,5 @@
 """
-AR_TrimLoaderWithTimecode(SMPTE)
+ar_TrimLoaderWithTimecode(SMPTE)
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

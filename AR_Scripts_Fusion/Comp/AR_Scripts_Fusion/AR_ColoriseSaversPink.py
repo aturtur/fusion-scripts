@@ -1,5 +1,5 @@
 """
-AR_ColoriseSaversPink
+ar_ColoriseSaversPink
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

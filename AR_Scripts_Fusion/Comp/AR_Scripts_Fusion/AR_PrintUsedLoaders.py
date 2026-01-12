@@ -1,5 +1,5 @@
 """
-AR_PrintUsedLoaders
+ar_PrintUsedLoaders
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

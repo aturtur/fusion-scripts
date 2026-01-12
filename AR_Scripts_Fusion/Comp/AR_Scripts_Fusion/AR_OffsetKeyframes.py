@@ -1,5 +1,5 @@
 """
-AR_OffsetKeyframes
+ar_OffsetKeyframes
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

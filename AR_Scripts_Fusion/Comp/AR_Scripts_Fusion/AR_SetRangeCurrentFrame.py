@@ -1,5 +1,5 @@
 """
-AR_SetRangeCurrentFrame
+ar_SetRangeCurrentFrame
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

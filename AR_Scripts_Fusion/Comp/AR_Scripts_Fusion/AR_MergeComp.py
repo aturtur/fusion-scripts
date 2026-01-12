@@ -1,5 +1,5 @@
 """
-AR_MergeComp
+ar_MergeComp
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

@@ -1,5 +1,5 @@
 """
-AR_SwitchFromSelected
+ar_SwitchFromSelected
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

@@ -1,5 +1,5 @@
 """
-AR_Stack
+ar_Stack
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

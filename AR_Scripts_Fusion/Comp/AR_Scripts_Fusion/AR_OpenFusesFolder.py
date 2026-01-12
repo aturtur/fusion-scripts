@@ -1,5 +1,5 @@
 """
-AR_OpenFuseFolder
+ar_OpenFuseFolder
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

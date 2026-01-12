@@ -1,5 +1,5 @@
 """
-AR_AddMetadata
+ar_AddMetadata
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

@@ -1,13 +1,13 @@
 """
-AR_JumpToFrame
+ar_JumpToFrame
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Jump To Frame
-Version: 1.4.0
+Version: 1.5.0
 Description-US: Jumps to given frame in the timeline.
 
-Tip: Use Ctrl + 1-8 to jump to the frame.
+Tip: Use Ctrl + [1,2,3,4,5,6,7,8,9,0] to jump to the frame.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
 Python version 3.10.8 (64-bit).
@@ -15,6 +15,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.5.0 (21.11.2025) - Added two more slots.
 1.4.0 (03.06.2025) - Combined Get and Go buttons together. Go by default, Get with shift modifier.
 1.3.2 (14.05.2025) - If sticky note is created it's selected.
 1.3.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
@@ -34,7 +35,7 @@ fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
 note_name = "JumpToFrame"
-alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 
 ALT: str = "ALT"
 CTRL: str = "CTRL"
@@ -96,7 +97,9 @@ def save_values(itm) -> None:
         [f"{itm['COM_E'].Text},{itm['FRM_E'].Value}\n"],
         [f"{itm['COM_F'].Text},{itm['FRM_F'].Value}\n"],
         [f"{itm['COM_G'].Text},{itm['FRM_G'].Value}\n"],
-        [f"{itm['COM_H'].Text},{itm['FRM_H'].Value}\n"]
+        [f"{itm['COM_H'].Text},{itm['FRM_H'].Value}\n"],
+        [f"{itm['COM_I'].Text},{itm['FRM_I'].Value}\n"],
+        [f"{itm['COM_J'].Text},{itm['FRM_J'].Value}\n"]
     ]
 
     comments = ''.join([item[0] for item in content])
@@ -143,7 +146,7 @@ def gui_geometry(width: int, height: int, x: float, y: float) -> dict:
     return {"width": gui_width, "height": gui_height, "x": gui_x, "y": gui_y}
 
 
-gui_geo = gui_geometry(380, 285, 0.5, 0.5)
+gui_geo = gui_geometry(380, 365, 0.5, 0.5)
 
 # GUI
 ui   = fusion.UIManager
@@ -211,6 +214,18 @@ dlg  = disp.AddWindow({"WindowTitle": "Jump To Frame",
             ]),
 
             ui.HGroup([
+                ui.LineEdit({"ID": "COM_I", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.SpinBox({"ID": "FRM_I", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
+                ui.Button({"Text": "Go", "ID": "SET_I", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
+            ]),
+
+            ui.HGroup([
+                ui.LineEdit({"ID": "COM_J", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.SpinBox({"ID": "FRM_J", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
+                ui.Button({"Text": "Go", "ID": "SET_J", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
+            ]),
+
+            ui.HGroup([
                 ui.Button({"Text": "Load Data", "ID": "Button_Load_Data", "Weight": 0.5}),
                 ui.Button({"Text": "Store Data", "ID": "Button_Save_Data", "Weight": 0.5}),
             ]),
@@ -235,23 +250,27 @@ def _func(ev):
         disp.ExitLoop()
         dlg.Hide()
 
-    # Shortcuts are optimized to work with Nordic ISO layout.
-    if ev['Key'] == 49:  # Ctrl + 1 (!).
+    # Shortcuts are optimized to work with Nordic ISO layout (Finnish keyboard).
+    if ev['Key'] == 49:  # Ctrl + 1 !.
         jump_to_frame(itm['FRM_A'].Value)
-    if ev['Key'] == 50:  # Ctrl + 2 (").
+    if ev['Key'] == 50:  # Ctrl + 2 ".
         jump_to_frame(itm['FRM_B'].Value)
-    if ev['Key'] == 51:  # Ctrl + 3 (#).
+    if ev['Key'] == 51:  # Ctrl + 3 #.
         jump_to_frame(itm['FRM_C'].Value)
-    if ev['Key'] == 52:  # Ctrl + 4 (¤).
+    if ev['Key'] == 52:  # Ctrl + 4 ¤.
         jump_to_frame(itm['FRM_D'].Value)
-    if ev['Key'] == 53:  # Ctrl + 5 (%).
+    if ev['Key'] == 53:  # Ctrl + 5 %.
         jump_to_frame(itm['FRM_E'].Value)
-    if ev['Key'] == 54:  # Ctrl + 6 (&).
+    if ev['Key'] == 54:  # Ctrl + 6 &.
         jump_to_frame(itm['FRM_F'].Value)
-    if ev['Key'] == 55:  # Ctrl + 7 (/).
+    if ev['Key'] == 55:  # Ctrl + 7 /.
         jump_to_frame(itm['FRM_G'].Value)
-    if ev['Key'] == 56:  # Ctrl + 8 (().
+    if ev['Key'] == 56:  # Ctrl + 8 (.
         jump_to_frame(itm['FRM_H'].Value)
+    if ev['Key'] == 57:  # Ctrl + 9 ).
+        jump_to_frame(itm['FRM_I'].Value)
+    if ev['Key'] == 48:  # Ctrl + 10 =.
+        jump_to_frame(itm['FRM_J'].Value)
 
     if set(key_modifiers) == {SHIFT}:
         itm['SET_A'].Text = "Get"
@@ -262,6 +281,8 @@ def _func(ev):
         itm['SET_F'].Text = "Get"
         itm['SET_G'].Text = "Get"
         itm['SET_H'].Text = "Get"
+        itm['SET_I'].Text = "Get"
+        itm['SET_J'].Text = "Get"
 dlg.On.MyWin.KeyPress = _func
 
 def _func(ev):
@@ -275,6 +296,8 @@ def _func(ev):
         itm['SET_F'].Text = "Go"
         itm['SET_G'].Text = "Go"
         itm['SET_H'].Text = "Go"
+        itm['SET_I'].Text = "Go"
+        itm['SET_J'].Text = "Go"
 dlg.On.MyWin.KeyRelease = _func
 
 
@@ -296,6 +319,8 @@ dlg.On.SET_E.Clicked = _func
 dlg.On.SET_F.Clicked = _func
 dlg.On.SET_G.Clicked = _func
 dlg.On.SET_H.Clicked = _func
+dlg.On.SET_I.Clicked = _func
+dlg.On.SET_J.Clicked = _func
 
 
 # Load data.

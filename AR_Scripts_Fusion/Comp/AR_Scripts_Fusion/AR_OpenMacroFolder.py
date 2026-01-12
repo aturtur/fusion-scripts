@@ -1,5 +1,5 @@
 """
-AR_OpenMacroFolder
+ar_OpenMacroFolder
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

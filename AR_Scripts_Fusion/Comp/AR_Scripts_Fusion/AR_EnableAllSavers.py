@@ -1,5 +1,5 @@
 """
-AR_EnableAllSavers
+ar_EnableAllSavers
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

@@ -1,5 +1,5 @@
 """
-AR_OpenScriptFolder
+ar_OpenScriptFolder
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

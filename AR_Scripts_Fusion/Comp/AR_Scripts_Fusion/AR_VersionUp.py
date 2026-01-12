@@ -1,5 +1,5 @@
 """
-AR_VersionUp
+ar_VersionUp
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

@@ -1,5 +1,5 @@
 """
-AR_ReverseSetup
+ar_ReverseSetup
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

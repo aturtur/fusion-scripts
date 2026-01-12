@@ -1,5 +1,5 @@
 """
-AR_CopyToolNameToClipboard
+ar_CopyToolNameToClipboard
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

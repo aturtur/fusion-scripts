@@ -1,5 +1,5 @@
 """
-AR_2DTrackerTo3DSpace
+ar_2DTrackerTo3DSpace
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

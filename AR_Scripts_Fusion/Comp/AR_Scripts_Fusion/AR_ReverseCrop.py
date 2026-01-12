@@ -1,5 +1,5 @@
 """
-AR_ReverseCrop
+ar_ReverseCrop
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

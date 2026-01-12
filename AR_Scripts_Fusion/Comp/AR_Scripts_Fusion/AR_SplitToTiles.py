@@ -1,5 +1,5 @@
 """
-AR_SplitToTiles
+ar_SplitToTiles
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

@@ -1,9 +1,9 @@
 """
-AR_RangeManager
+ar_RangeManager
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Range Manager
-Version: 1.4.0
+Version: 1.5.1
 Description-US: Set global and render range easily.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -17,6 +17,8 @@ Ctrl: Set Global range.
 Ctrl+Shift: Get global range.
 
 Changelog:
+1.5.1 (09.01.2026)  - Fixed a bug with two last slots.
+1.5.0 (21.11.2025)  - Added two more slots.
 1.4.0 (03.06.2025)  - Removed Get buttons. Keymodiers will change set buttons' state.
 1.3.0 (15.05.2025)  - GUI width reduced a bit.
                     - Expand the timeline if given range is shorter/longer than the current timeline.
@@ -40,7 +42,7 @@ fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
 note_name = "RangeManager"
-alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 
 ALT: str = "ALT"
 CTRL: str = "CTRL"
@@ -128,7 +130,9 @@ def save_values(itm) -> None:
         [f"{itm['CommentE'].Text},{itm['StartE'].Value},{itm['EndE'].Value}\n"],
         [f"{itm['CommentF'].Text},{itm['StartF'].Value},{itm['EndF'].Value}\n"],
         [f"{itm['CommentG'].Text},{itm['StartG'].Value},{itm['EndG'].Value}\n"],
-        [f"{itm['CommentH'].Text},{itm['StartH'].Value},{itm['EndH'].Value}\n"]
+        [f"{itm['CommentH'].Text},{itm['StartH'].Value},{itm['EndH'].Value}\n"],
+        [f"{itm['CommentI'].Text},{itm['StartI'].Value},{itm['EndI'].Value}\n"],
+        [f"{itm['CommentJ'].Text},{itm['StartJ'].Value},{itm['EndJ'].Value}\n"]
     ]
 
     comments = ''.join([item[0] for item in content])
@@ -169,7 +173,7 @@ def gui_geometry(width: int, height: int, x: float, y: float) -> dict:
     return {"width": gui_width, "height": gui_height, "x": gui_x, "y": gui_y}
 
 
-gui_geo = gui_geometry(500, 270, 0.5, 0.5)
+gui_geo = gui_geometry(500, 375, 0.5, 0.5)
 
 
 # GUI
@@ -235,6 +239,18 @@ dlg  = disp.AddWindow({"WindowTitle": "Range Manager",
                 ui.Button({"Text": "Set Render", "ID": "Button_Set_H", "Weight": 0.1, "ToolTip": "Set Range In/Out\nShift: Get Render Range\nCtrl: Set Global Range\nCtrl+Shift: Get Global Range"}),
             ]),
             ui.HGroup([
+                ui.LineEdit({"ID": "CommentI", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.SpinBox({"ID": "StartI", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalStart"), "Weight": 0.1}),
+                ui.SpinBox({"ID": "EndI", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalEnd"), "Weight": 0.1}),
+                ui.Button({"Text": "Set Render", "ID": "Button_Set_I", "Weight": 0.1, "ToolTip": "Set Range In/Out\nShift: Get Render Range\nCtrl: Set Global Range\nCtrl+Shift: Get Global Range"}),
+            ]),
+            ui.HGroup([
+                ui.LineEdit({"ID": "CommentJ", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
+                ui.SpinBox({"ID": "StartJ", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalStart"), "Weight": 0.1}),
+                ui.SpinBox({"ID": "EndJ", "Minimum": 0, "Maximum": 1000000, "Value": comp.GetAttrs("COMPN_GlobalEnd"), "Weight": 0.1}),
+                ui.Button({"Text": "Set Render", "ID": "Button_Set_J", "Weight": 0.1, "ToolTip": "Set Range In/Out\nShift: Get Render Range\nCtrl: Set Global Range\nCtrl+Shift: Get Global Range"}),
+            ]),
+            ui.HGroup([
                 ui.Button({"Text": "Load Data", "ID": "Button_Load_Data", "Weight": 0.5}),
                 ui.Button({"Text": "Store Data", "ID": "Button_Save_Data", "Weight": 0.5}),
             ]),
@@ -268,6 +284,8 @@ def _func(ev):
         itm['Button_Set_F'].Text = "Get Render"
         itm['Button_Set_G'].Text = "Get Render"
         itm['Button_Set_H'].Text = "Get Render"
+        itm['Button_Set_I'].Text = "Get Render"
+        itm['Button_Set_J'].Text = "Get Render"
 
     if CTRL in key_modifiers:
         itm['Button_Set_A'].Text = "Set Global"
@@ -278,6 +296,8 @@ def _func(ev):
         itm['Button_Set_F'].Text = "Set Global"
         itm['Button_Set_G'].Text = "Set Global"
         itm['Button_Set_H'].Text = "Set Global"
+        itm['Button_Set_I'].Text = "Set Global"
+        itm['Button_Set_J'].Text = "Set Global"
 
     required = {CTRL, SHIFT}
     if required.issubset(key_modifiers):
@@ -289,6 +309,8 @@ def _func(ev):
         itm['Button_Set_F'].Text = "Get Global"
         itm['Button_Set_G'].Text = "Get Global"
         itm['Button_Set_H'].Text = "Get Global"
+        itm['Button_Set_I'].Text = "Get Global"
+        itm['Button_Set_J'].Text = "Get Global"
 dlg.On.MyWin.KeyPress = _func
 
 # Keys are released
@@ -302,7 +324,9 @@ def _func(ev):
         itm['Button_Set_E'].Text = "Set Render"
         itm['Button_Set_F'].Text = "Set Render"
         itm['Button_Set_G'].Text = "Set Render"
-        itm['Button_Set_H'].Text = "Set Render"        
+        itm['Button_Set_H'].Text = "Set Render"
+        itm['Button_Set_I'].Text = "Set Render"
+        itm['Button_Set_J'].Text = "Set Render"
 dlg.On.MyWin.KeyRelease = _func
 
 
@@ -332,6 +356,8 @@ dlg.On.Button_Set_E.Clicked = _func
 dlg.On.Button_Set_F.Clicked = _func
 dlg.On.Button_Set_G.Clicked = _func
 dlg.On.Button_Set_H.Clicked = _func
+dlg.On.Button_Set_I.Clicked = _func
+dlg.On.Button_Set_J.Clicked = _func
 
 
 # Load data.

@@ -1,5 +1,5 @@
 """
-AR_CleanNodeNames
+ar_CleanNodeNames
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

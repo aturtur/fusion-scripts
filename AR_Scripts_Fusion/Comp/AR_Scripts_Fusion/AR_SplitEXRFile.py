@@ -1,5 +1,5 @@
 """
-AR_SplitEXRFile
+ar_SplitEXRFile
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

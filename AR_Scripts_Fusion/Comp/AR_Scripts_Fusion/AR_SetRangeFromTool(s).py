@@ -1,5 +1,5 @@
 """
-AR_SetRangeFromTool(s)
+ar_SetRangeFromTool(s)
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

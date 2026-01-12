@@ -1,5 +1,5 @@
 """
-AR_ScaleToFitComp
+ar_ScaleToFitComp
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

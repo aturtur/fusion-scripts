@@ -1,5 +1,5 @@
 """
-AR_OpenProjectFolder
+ar_OpenProjectFolder
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

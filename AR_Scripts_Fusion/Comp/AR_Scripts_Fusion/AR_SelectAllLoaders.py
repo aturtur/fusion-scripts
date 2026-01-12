@@ -1,5 +1,5 @@
 """
-AR_SelectAllLoaders
+ar_SelectAllLoaders
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

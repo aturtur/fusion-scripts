@@ -1,10 +1,10 @@
 """
-AR_LoaderFromSaver
+ar_LoaderFromSaver
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Loader From Saver
-Version: 1.2.0
+Version: 1.2.1
 Description-US: Creates loader(s) from selected saver(s).
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -14,6 +14,7 @@ Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
                    Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Tool
                    
 Changelog:
+1.2.1 (13.12.2025) - Bug fix.
 1.2.0 (11.10.2025) - Added support for path mapping (manual).
 1.1.0 (05.04.2025) - Changed the way how the frame range is calculated.
 1.0.2 (25.09.2024) - Modified code to follow more PEP 8 recommendations.
@@ -24,7 +25,6 @@ Changelog:
 # Libraries
 import os
 import re
-import ntpath
 from os import listdir
 
 
@@ -66,27 +66,41 @@ def restore_path_mapping(tool) -> bool:
     return True
 
 
-def find(file_name: str, folder_path: str) -> str | None:
-    """Tries to find the file from the given folder path"""
+def find_suitable_file(file_name: str, folder_path: str) -> str | None:
+    """Tries to find the suitable file from the given folder path"""
 
-    pattern = r'^' + file_name + r'\d'  # Accept digits after the file name.
+    extension = os.path.splitext(file_name)[1]
+    file_name = os.path.splitext(file_name)[0]
+    clean_file_name = re.sub(r'\d+$', '', file_name)
+
+    pattern = (
+        r'^'
+        + re.escape(clean_file_name)
+        + r'\d+'
+        + re.escape(extension)
+        + r'$'
+    )
+
     for file in listdir(folder_path):
         search = re.match(pattern, file)
         if search:
             return os.path.join(folder_path, file)
-        else:
-            return None
         
+    return None
+        
+
 def loader_from_saver(saver: any) -> any:
     """Creates a loader from the given saver."""
 
     flow = comp.CurrentFrame.FlowView
     x, y = flow.GetPosTable(saver).values()
     loader = comp.AddTool("Loader", x+1, y)
+
     file_path = saver.GetInput("Clip")
     file_path = apply_path_mapping(file_path)
-    folder = os.path.dirname(file_path)
-    file = ntpath.basename(file_path)
+
+    folder_name = os.path.dirname(file_path)
+    file_name = os.path.basename(file_path)
     extension = os.path.splitext(file_path)[1]
     region_start = saver.GetAttrs()['TOOLNT_Region_Start'][1]
 
@@ -105,14 +119,13 @@ def loader_from_saver(saver: any) -> any:
 
     # Image sequence.
     else:
-        name = file.replace(extension, "")
-        image_sequence_path = find(name, folder)
+        image_sequence_path = find_suitable_file(file_name, folder_name)
+
         loader.SetInput("Clip", image_sequence_path)
         file_start_frame, file_end_frame = get_frame_range(image_sequence_path)
         file_length = file_end_frame - file_start_frame
 
         # Set loader's ranges from found range data.
-        clip_length = loader.GetInput("ClipTimeEnd")
         loader.SetInput("GlobalOut", file_start_frame + file_length)
         loader.SetInput("GlobalIn", file_start_frame)
         loader.SetInput("ClipTimeStart", 0)
@@ -161,7 +174,10 @@ def main() -> None:
 
     savers = comp.GetToolList(True, "Saver").values()
     for saver in savers:
-        loader_from_saver(saver)
+        try:
+            loader_from_saver(saver)
+        except:
+            print("Couldn't create a loader!")
 
     comp.EndUndo(True)
     comp.Unlock()

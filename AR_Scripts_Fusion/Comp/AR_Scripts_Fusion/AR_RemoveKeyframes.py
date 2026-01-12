@@ -1,5 +1,5 @@
 """
-AR_RemoveKeyframes
+ar_RemoveKeyframes
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

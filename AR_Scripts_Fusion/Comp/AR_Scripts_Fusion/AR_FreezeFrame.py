@@ -1,5 +1,5 @@
 """
-AR_FreezeFrame
+ar_FreezeFrame
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

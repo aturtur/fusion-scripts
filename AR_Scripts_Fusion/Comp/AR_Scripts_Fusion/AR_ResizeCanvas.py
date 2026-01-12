@@ -1,5 +1,5 @@
 """
-AR_ResizeCanvas
+ar_ResizeCanvas
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/

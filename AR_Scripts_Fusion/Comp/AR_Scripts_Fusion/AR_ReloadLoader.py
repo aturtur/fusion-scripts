@@ -1,5 +1,5 @@
 """
-AR_ReloadLoader
+ar_ReloadLoader
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
