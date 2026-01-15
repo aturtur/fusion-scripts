@@ -6,6 +6,9 @@ Latest release version **1.7.0** *(Released 12.01.2026)*
 All of the scripts are developed and tested with Windows 11 machine. All of the scripts might not work in Linux or Mac.  
 
 ## Changelog
+**Changes coming in 1.8.0**
+- _12.01.2025_ **Updated:** ar_RangeManager.
+
 **Changes in 1.7.0**
 - _09.01.2026_ **Bug fix:** ar_RangeManager.
 - _13.12.2025_ **Updated:** ar_SetCompResolution.

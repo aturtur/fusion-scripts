@@ -3,7 +3,7 @@ ar_RangeManager
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Range Manager
-Version: 1.5.1
+Version: 1.6.0
 Description-US: Set global and render range easily.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -17,6 +17,8 @@ Ctrl: Set Global range.
 Ctrl+Shift: Get global range.
 
 Changelog:
+1.7.0 (14.01.2025)  - Load and Store buttons are now combined and Load button is available when pressingh Shift-key.
+1.6.0 (12.01.2025)  - Tries to load data on startup.
 1.5.1 (09.01.2026)  - Fixed a bug with two last slots.
 1.5.0 (21.11.2025)  - Added two more slots.
 1.4.0 (03.06.2025)  - Removed Get buttons. Keymodiers will change set buttons' state.
@@ -251,8 +253,7 @@ dlg  = disp.AddWindow({"WindowTitle": "Range Manager",
                 ui.Button({"Text": "Set Render", "ID": "Button_Set_J", "Weight": 0.1, "ToolTip": "Set Range In/Out\nShift: Get Render Range\nCtrl: Set Global Range\nCtrl+Shift: Get Global Range"}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "Load Data", "ID": "Button_Load_Data", "Weight": 0.5}),
-                ui.Button({"Text": "Store Data", "ID": "Button_Save_Data", "Weight": 0.5}),
+                ui.Button({"Text": "Store Data", "ID": "Button_Save_Data", "Weight": 1}),
             ]),
         ]),
     ])
@@ -261,6 +262,8 @@ dlg  = disp.AddWindow({"WindowTitle": "Range Manager",
 # Collect ui items.
 itm = dlg.GetItems()
 
+# Load data on startup.
+load_values(itm)
 
 # The window was closed.
 def _func(ev):
@@ -286,6 +289,7 @@ def _func(ev):
         itm['Button_Set_H'].Text = "Get Render"
         itm['Button_Set_I'].Text = "Get Render"
         itm['Button_Set_J'].Text = "Get Render"
+        itm['Button_Save_Data'].Text = "Load Data"
 
     if CTRL in key_modifiers:
         itm['Button_Set_A'].Text = "Set Global"
@@ -327,6 +331,8 @@ def _func(ev):
         itm['Button_Set_H'].Text = "Set Render"
         itm['Button_Set_I'].Text = "Set Render"
         itm['Button_Set_J'].Text = "Set Render"
+        itm['Button_Save_Data'].Text = "Store Data"
+
 dlg.On.MyWin.KeyRelease = _func
 
 
@@ -360,18 +366,14 @@ dlg.On.Button_Set_I.Clicked = _func
 dlg.On.Button_Set_J.Clicked = _func
 
 
-# Load data.
+# Load or store data.
 def _func(ev):
-    comp.StartUndo("Load data")
-    load_values(itm)
-    comp.EndUndo(True)
-dlg.On.Button_Load_Data.Clicked = _func
-
-
-# Save data.
-def _func(ev):
-    comp.StartUndo("Save data")
-    save_values(itm)
+    comp.StartUndo("Data")
+    key_modifiers = get_key_modifiers(ev)
+    if not key_modifiers:
+        save_values(itm)
+    if [SHIFT] == key_modifiers:
+        load_values(itm)
     comp.EndUndo(True)
 dlg.On.Button_Save_Data.Clicked = _func
 
