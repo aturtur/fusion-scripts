@@ -249,7 +249,6 @@ dlg  = disp.AddWindow({"WindowTitle": "Crop to RoI",
     ])
 
 
-
 # Collect ui items.
 itm = dlg.GetItems()
 

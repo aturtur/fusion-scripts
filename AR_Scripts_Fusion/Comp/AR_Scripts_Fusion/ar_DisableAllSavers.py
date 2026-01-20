@@ -31,7 +31,7 @@ comp = comp  # comp = fusion.GetCurrentComp()
 def disable_saver(saver) -> None:
     """Disables given saver."""
 
-    saver.SetAttrs({'TOOLB_PassThrough' : True})
+    saver.SetAttrs({'TOOLB_PassThrough':True})
 
 
 def main() -> None:

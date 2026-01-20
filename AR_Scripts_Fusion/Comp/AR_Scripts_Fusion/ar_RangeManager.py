@@ -3,7 +3,7 @@ ar_RangeManager
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Range Manager
-Version: 1.6.0
+Version: 1.7.0
 Description-US: Set global and render range easily.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -17,8 +17,8 @@ Ctrl: Set Global range.
 Ctrl+Shift: Get global range.
 
 Changelog:
-1.7.0 (14.01.2025)  - Load and Store buttons are now combined and Load button is available when pressingh Shift-key.
-1.6.0 (12.01.2025)  - Tries to load data on startup.
+1.7.0 (14.01.2026)  - Load and Store buttons are now combined and Load button is available when pressingh Shift-key.
+1.6.0 (12.01.2026)  - Tries to load data on startup.
 1.5.1 (09.01.2026)  - Fixed a bug with two last slots.
 1.5.0 (21.11.2025)  - Added two more slots.
 1.4.0 (03.06.2025)  - Removed Get buttons. Keymodiers will change set buttons' state.

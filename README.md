@@ -7,7 +7,8 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming in 1.8.0**
-- _12.01.2025_ **Updated:** ar_RangeManager.
+- _20.01.2026_ **New:** ar_Snapshot.
+- _12.01.2026_ **Updated:** ar_RangeManager.
 
 **Changes in 1.7.0**
 - _09.01.2026_ **Bug fix:** ar_RangeManager.
@@ -283,8 +284,14 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![ar_SetRangeCurrentFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_SetRange.png) ar_SetRangeCurrentFrame
 > **Default:** Sets render range to the current frame.  
 
+### ![ar_Snapshot](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_Snapshot.png) ar_Snapshot
+> **Default:** Takes a snapshot from a given viewer. Snapshots are saved to snapshot folder placed in project file folder.  
+
+### ![ar_SplitEXRFile](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_SplitEXRFile.png) ar_SplitEXRFile
+> **Default:** Splits EXR loader to multiple loaders.  
+
 ### ![ar_SplitToTiles](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_SplitToTiles.png) ar_SplitToTiles *(GUI)*
-> **Default:** Splits the active tool in to tiles by given rows and clomuns.  
+> **Default:** Splits the active tool in to tiles by given rows and columns.  
 
 ### ![ar_Stack](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_Stack.png) ar_Stack *(GUI)*
 > **Default:** Stack selected tools.  
