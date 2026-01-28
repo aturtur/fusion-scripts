@@ -5,7 +5,7 @@ Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Set Range Current Frame
 Version: 1.1.0
-Description-US: Sets render range to the current frame.
+Description-US: Sets render range to the current frame.\nShift: Sets also global range.
 
 Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
 Python version 3.10.8 (64-bit).
@@ -36,7 +36,7 @@ SHIFT: str = "SHIFT"
 
 
 # Functions
-def set_range(start, end) -> None:
+def set_range(start: float, end:float, key_modifiers: list) -> None:
     """Sets the range."""
 
     if (start != None) and (end != None):
@@ -61,7 +61,7 @@ def main() -> None:
     """The main function."""
 
     current_time = comp.CurrentTime
-    set_range(current_time, current_time)
+    set_range(current_time, current_time, key_modifiers)
     set_current_time(current_time)
     
 

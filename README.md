@@ -7,8 +7,13 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming in 1.8.0**
+- _28.01.2026_ **New:** ar_OpenProjectVersion.
+- _28.01.2026_ **Updated:** ar_RangeManager, ar_JumpToFrame, ar_AlignNodes.
+- _27.01.2026_ **New:** ar_EnableSelected, ar_DisableSelected.
+- _23.01.2026_ **Updated:** ar_ClearViews.
+- _22.01.2026_ **Change:** Replaced pyautogui with keyboard library.
+- _22.01.2026_ **Updated:** ar_AddMetadata, ar_ScriptLauncher.
 - _20.01.2026_ **New:** ar_Snapshot.
-- _12.01.2026_ **Updated:** ar_RangeManager.
 
 **Changes in 1.7.0**
 - _09.01.2026_ **Bug fix:** ar_RangeManager.
@@ -16,17 +21,6 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 - _13.12.2025_ **Bug fix:** ar_LoaderFromSaver.
 - _04.12.2025_ **Change:** Scripts' prefix changed AR_ → ar_ for better readability.
 - _21.11.2025_ **Updated:** ar_JumpToFrame, ar_RangeManager.
-
-**Changes in 1.6.0**
-- _18.10.2025_ **Updated:** ar_FreezeTime, ar_AddMetadata, ar_CreateSaver, ar_CropToDoD, ar_ScaleToFitCompHeight, ar_ScaleToFitCompWidth, ar_ScaleToFitComp, ar_SampleImage, ar_AlignImage, ar_ResizeCanvas, ar_MoveAnchorPoint.
-- _11.10.2025_ **Renamed:** ar_SetRangeThisFrame → ar_SetRangeCurrentFrame.
-- _11.10.2025_ **Updated:** ar_SwitchFromSelected, ar_MergeSelected.py, ar_MultiMergeSelected.py, ar_LoaderFromSaver.
-- _25.09.2025_ **Updated:** ar_RemoveKeyframes, ar_OffsetKeyframes, ar_ScriptLauncher.
-- _25.09.2025_ **New:** ar_RemoveKeyframesAfterCurrentFrame, ar_RemoveKeyframesBeforeCurrentFrame.
-- _19.09.2025_ **Updated:** ar_PrintUsedLoaders, ar_PrintUsedSavers, ar_NoteFromMetadata, ar_SetRangeFromMetadata, ar_PrintMetadata, ar_SwitchFromSelected.
-- _18.09.2025_ **New:** ar_Stack.
-- _16.09.2025_ **Updated:** ar_ScriptLauncher, ar_SetRangeFromMetadata, ar_SetRangeFromTool(s), ar_SetRangeThisFrame.
-- _14.09.2025_ **Updated:** ar_SplitEXRFile.
 
 Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/blob/master/CHANGELOG.md) file.  
 
@@ -44,7 +38,7 @@ Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/bl
 4. Some of the scripts requires third-party libraries.
     - You can install all dependencies using `pip install -r requirements.txt`.
     - Or install manually with `pip install [module name]`:
-        - pyautogui
+        - keyboard
         - pyperclip
         - tabulate
 
@@ -66,7 +60,7 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 
 ### ![ar_AddMetadata](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_AddMetadata.png) ar_AddMetadata *(GUI)*
 > **Default:** Adds metadata nodes.  
-> **Dependencies:** Pyautogui.  
+> **Dependencies:** keyboard.  
 
 ### ![ar_AlignImage](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_AlignImage.png) ar_AlignImage *(GUI)*
 > **Default:** Aligns merge node's foreground image according to the background image.  
@@ -88,15 +82,16 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 
 ### ![ar_ClearViews](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_ClearViews.png) ar_ClearViews
 > **Default:** Clears all views (preview windows).  
+> **Shift:** Clears B buffers views (preview windows).  
 
 ### ![ar_Colorise](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_Colorise.png) ar_ColoriseNodes *(GUI)*
 > **Default:** Colorises selected nodes.  
 
-### ![ar_CopyToClipboard](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_CopyToClipboard.png) ar_CopyPathToClipboard
+### ![ar_CopyPathToClipboard](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_CopyToClipboard.png) ar_CopyPathToClipboard
 > **Default:** Copies selected tool(s) path(s) to the clipboard.  
 > **Dependencies:** Pyperclip.  
 
-### ![ar_CopyToClipboard](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_CopyToClipboard.png) ar_CopyToolNameToClipboard
+### ![ar_CopyToolNameToClipboard](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_CopyToClipboard.png) ar_CopyToolNameToClipboard
 > **Default:** Copies selected tool(s) name(s) to the clipboard.  
 > **Dependencies:** Pyperclip.  
 
@@ -113,8 +108,14 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![ar_DisableAllSavers](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_DisableAllSavers.png) ar_DisableAllSavers
 > **Default:** Disables all savers in the active composition.  
 
+### ![ar_DisableSelected](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_DisableSelected.png) ar_DisableSelected
+> **Default:** Disables selected tool(s) in the active composition.  
+
 ### ![ar_EnableAllSavers](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_EnableAllSavers.png) ar_EnableAllSavers
 > **Default:** Enables all savers in the active composition.  
+
+### ![ar_EnableSelected](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_EnableSelected.png) ar_EnableSelected
+> **Default:** Enables selected tool(s) in the active composition.  
 
 ### ![ar_FreezeFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_FreezeFrame.png) ar_FreezeFrame
 > **Default:** Creates a time_speed node that freezes frame at current frame.  
@@ -246,7 +247,7 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 
 ### ![ar_ScriptLauncher](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_ScriptLauncher.png) ar_ScriptLauncher *(GUI)*
 > **Default:** Search and run sripts easily.  
-> **Dependencies:** Pyautogui *(recommended but not required.)*  
+> **Dependencies:** keyboard *(recommended but not required.)*  
 > Scans script from folder where ar_ScriptLauncher is located, subfolders included.  
 
 > Gets the name of the script with `Name-US:` and the tooltip with `Description-US`.  
@@ -284,8 +285,9 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![ar_SetRangeCurrentFrame](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_SetRange.png) ar_SetRangeCurrentFrame
 > **Default:** Sets render range to the current frame.  
 
-### ![ar_Snapshot](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_Snapshot.png) ar_Snapshot
+### ![ar_Snapshot](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_Snapshot.png) ar_Snapshot *(GUI)*
 > **Default:** Takes a snapshot from a given viewer. Snapshots are saved to snapshot folder placed in project file folder.  
+> *The project has to be saved first!*  
 
 ### ![ar_SplitEXRFile](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_SplitEXRFile.png) ar_SplitEXRFile
 > **Default:** Splits EXR loader to multiple loaders.  
@@ -317,7 +319,7 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![ar_Tracker(UnsteadyPosition)ToGridWarp](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_TrackerToGridWarp.png) ar_Tracker(UnsteadyPosition)ToGridWarp
 > **Default:** Connects Tracker's unsteady position to GridWarp's published points.  
 > **How to use:** Select the Tracker and the GridWarp tools and run the script.  
-> **Note:** Use clean Tracker and clean GridWarp!  
+> *Use clean Tracker and clean GridWarp!*  
 
 ### ![ar_VersionUp](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_VersionUp.png) ar_VersionUp *(GUI)*
 > **Default:** Easily change between different versions.  

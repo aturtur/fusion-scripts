@@ -4,7 +4,7 @@ ar_JumpToFrame
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Jump To Frame
-Version: 1.5.0
+Version: 1.6.0
 Description-US: Jumps to given frame in the timeline.
 
 Tip: Use Ctrl + [1,2,3,4,5,6,7,8,9,0] to jump to the frame.
@@ -15,6 +15,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.6.0 (28.01.2026) - Load and Store buttons are now combined and Load button is available when pressing Shift-key.
 1.5.0 (21.11.2025) - Added two more slots.
 1.4.0 (03.06.2025) - Combined Get and Go buttons together. Go by default, Get with shift modifier.
 1.3.2 (14.05.2025) - If sticky note is created it's selected.
@@ -226,7 +227,6 @@ dlg  = disp.AddWindow({"WindowTitle": "Jump To Frame",
             ]),
 
             ui.HGroup([
-                ui.Button({"Text": "Load Data", "ID": "Button_Load_Data", "Weight": 0.5}),
                 ui.Button({"Text": "Store Data", "ID": "Button_Save_Data", "Weight": 0.5}),
             ]),
         ]),
@@ -236,6 +236,8 @@ dlg  = disp.AddWindow({"WindowTitle": "Jump To Frame",
 # Collect ui items.
 itm = dlg.GetItems()
 
+# Load data on startup.
+load_values(itm)
 
 # The window was closed.
 def _func(ev):
@@ -283,6 +285,7 @@ def _func(ev):
         itm['SET_H'].Text = "Get"
         itm['SET_I'].Text = "Get"
         itm['SET_J'].Text = "Get"
+        itm['Button_Save_Data'].Text = "Load Data"
 dlg.On.MyWin.KeyPress = _func
 
 def _func(ev):
@@ -298,6 +301,7 @@ def _func(ev):
         itm['SET_H'].Text = "Go"
         itm['SET_I'].Text = "Go"
         itm['SET_J'].Text = "Go"
+        itm['Button_Save_Data'].Text = "Store Data"
 dlg.On.MyWin.KeyRelease = _func
 
 
@@ -323,18 +327,14 @@ dlg.On.SET_I.Clicked = _func
 dlg.On.SET_J.Clicked = _func
 
 
-# Load data.
+# Load or store data.
 def _func(ev):
-    comp.StartUndo("Load data")
-    load_values(itm)
-    comp.EndUndo(True)
-dlg.On.Button_Load_Data.Clicked = _func
-
-
-# Save data.
-def _func(ev):
-    comp.StartUndo("Save data")
-    save_values(itm)
+    comp.StartUndo("Data")
+    key_modifiers = get_key_modifiers(ev)
+    if not key_modifiers:
+        save_values(itm)
+    if [SHIFT] == key_modifiers:
+        load_values(itm)
     comp.EndUndo(True)
 dlg.On.Button_Save_Data.Clicked = _func
 

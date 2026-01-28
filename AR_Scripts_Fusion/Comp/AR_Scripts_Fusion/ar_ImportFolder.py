@@ -1,11 +1,11 @@
 """
-ar_ImportFolder(WIP)
+ar_ImportFolder
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Import Folder
 Version: 1.4.0
-Description-US: Import all image sequences from selected folder.
+Description-US: Imports all of the image sequences from the selected folder.
 
 Written for Blackmagic Design Fusion Studio 19.1.3 build 5.
 Python version 3.10.8 (64-bit).
@@ -319,11 +319,11 @@ dlg  = disp.AddWindow({"WindowTitle": "Import Folder",
             ui.HGroup(
             [
                 ui.Label({"Text": "Folder Path", "ID": "Label_FolderPath", "Weight": 0.1}),
-                ui.LineEdit({"Text": "", "PlaceholderText": "Please Enter the Folder Path", "ID": "Lineedit_FolderPath", "Weight": 0.9}),
+                ui.LineEdit({"Text": "", "PlaceholderText": "Please Enter the Folder Path...", "ID": "Lineedit_FolderPath", "Weight": 0.9}),
                 ui.Button({"Text": "...", "ID": "Button_Browse", "Weight": 0.1}),
             ]),
 
-            # Method
+            # Method.
             ui.HGroup(
             [
                 ui.Label({"Text": "Method:", "ID": "Label_Method", "Weight": 0.1}),

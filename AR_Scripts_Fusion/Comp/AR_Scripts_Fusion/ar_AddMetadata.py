@@ -15,6 +15,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.3.2 (22.01.2026) - Switched pyautogui to keyboard library, to speed up the start up time.
 1.3.1 (18.04.2025) - Added support for different types of outputports.
 1.3.0 (29.05.2025) - Added more custom fields.
 1.2.0 (14.04.2025) - Fixed bug if tool is not active.
@@ -27,7 +28,7 @@ Changelog:
 import os
 
 try:
-    import pyautogui
+    import keyboard
 except:
     pass
 
@@ -420,7 +421,7 @@ dlg.Hide()
 # Grouping.
 if group == True:
     try:
-        pyautogui.hotkey('ctrl', 'g')
+        keyboard.press_and_release('ctrl+g')
         group_node = comp.ActiveTool()
         group_node.SetAttrs({'TOOLS_Name': 'Metadata'})
 

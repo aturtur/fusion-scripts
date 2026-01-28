@@ -3,7 +3,7 @@ ar_RangeManager
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Range Manager
-Version: 1.7.0
+Version: 1.8.0
 Description-US: Set global and render range easily.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -17,7 +17,8 @@ Ctrl: Set Global range.
 Ctrl+Shift: Get global range.
 
 Changelog:
-1.7.0 (14.01.2026)  - Load and Store buttons are now combined and Load button is available when pressingh Shift-key.
+1.8.0 (28.01.2026)  - Shift+Ctrl+Alt to get range from selected tool(s).
+1.7.0 (14.01.2026)  - Load and Store buttons are now combined and Load button is available when pressing Shift-key.
 1.6.0 (12.01.2026)  - Tries to load data on startup.
 1.5.1 (09.01.2026)  - Fixed a bug with two last slots.
 1.5.0 (21.11.2025)  - Added two more slots.
@@ -52,6 +53,31 @@ SHIFT: str = "SHIFT"
 
 
 # Functions
+def range_from_tool() -> tuple[float, float]:
+    """Returns start and end range from selected tool(s).
+    If multiple tools selected, returns min and max values.
+    """
+
+    tools = comp.GetToolList(True).values()
+
+    if tools:
+        first_tool = next(iter(tools))
+        start = first_tool.GetAttrs("TOOLNT_Region_Start")[1]
+        end = first_tool.GetAttrs("TOOLNT_Region_End")[1]
+
+        for tool in tools:
+            current_start = tool.GetAttrs("TOOLNT_Region_Start")[1]
+            current_end = tool.GetAttrs("TOOLNT_Region_End")[1]
+
+            if start > current_start:
+                start = current_start
+
+            if end < current_end:
+                end = current_end
+    
+    return start, end
+
+
 def set_range(start, end, method):
     """Sets timeline range with given values."""
 
@@ -315,7 +341,22 @@ def _func(ev):
         itm['Button_Set_H'].Text = "Get Global"
         itm['Button_Set_I'].Text = "Get Global"
         itm['Button_Set_J'].Text = "Get Global"
+
+    required = {CTRL, SHIFT, ALT}
+    if required.issubset(key_modifiers):
+        itm['Button_Set_A'].Text = "From Tool"
+        itm['Button_Set_B'].Text = "From Tool"
+        itm['Button_Set_C'].Text = "From Tool"
+        itm['Button_Set_D'].Text = "From Tool"
+        itm['Button_Set_E'].Text = "From Tool"
+        itm['Button_Set_F'].Text = "From Tool"
+        itm['Button_Set_G'].Text = "From Tool"
+        itm['Button_Set_H'].Text = "From Tool"
+        itm['Button_Set_I'].Text = "From Tool"
+        itm['Button_Set_J'].Text = "From Tool"
+
 dlg.On.MyWin.KeyPress = _func
+
 
 # Keys are released
 def _func(ev):
@@ -353,6 +394,11 @@ def _func(ev):
     if required.issubset(key_modifiers):
         itm['Start'+idx].Value = comp.GetAttrs("COMPN_GlobalStart")
         itm['End'+idx].Value = comp.GetAttrs("COMPN_GlobalEnd")
+    required = {CTRL, SHIFT, ALT}
+    if required.issubset(key_modifiers):
+        start, end = range_from_tool()
+        itm['Start'+idx].Value = start
+        itm['End'+idx].Value = end
     comp.EndUndo(True)
 dlg.On.Button_Set_A.Clicked = _func
 dlg.On.Button_Set_B.Clicked = _func

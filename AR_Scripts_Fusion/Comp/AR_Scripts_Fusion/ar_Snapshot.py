@@ -4,7 +4,7 @@ ar_Snapshot
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Snapshot
-Version: 1.0.0
+Version: 1.1.0
 Description-US: Takes a snapshot from a given viewer.
 
 Written for Blackmagic Design Fusion Studio 20.3.1 build 5.
@@ -12,7 +12,20 @@ Python version 3.10.8 (64-bit).
 
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
+To do / ideas:
+Method Combobox:
+    Save only
+    View on B Buffer
+    View on other view
+Presets Combobox:
+    JPEG
+    PNG
+    TIFF
+    EXR
+Checkbox: Open snapshot folder
+
 Changelog:
+1.1.0 (21.01.2026) - Combobox is now populated based on views on use.
 1.0.0 (20.01.2026) - Initial realease.
 """
 # Libraries
@@ -243,10 +256,20 @@ itm = dlg.GetItems()
 checkbox_import_snapshot = itm['Checkbox_Import_Snapshot']
 checkbox_bbuffer = itm['Checkbox_BBuffer']
 
+
 # Add combobox items.
 combo_view = itm['ComboBox_View']
-combo_view.AddItem("Left")
-combo_view.AddItem("Right")
+
+previews = comp.GetPreviewList()
+left_a_view = previews['LeftView'].GetConnectedOutput()
+#left_b_view = previews['LeftView.B'].GetConnectedOutput()
+right_a_view = previews['RightView'].GetConnectedOutput()
+#right_b_view = previews['RightView.B'].GetConnectedOutput()
+
+if left_a_view:
+    combo_view.AddItem("Left")
+if right_a_view:
+    combo_view.AddItem("Right")
 
 
 def checkbox_import_snapshot_changed(ev):
@@ -261,6 +284,7 @@ checkbox_bbuffer.Checked = True
 
 checkbox_import_snapshot = itm['Checkbox_Import_Snapshot']
 checkbox_bbuffer = itm['Checkbox_BBuffer']
+
 
 # The window was closed.
 def _func(ev):

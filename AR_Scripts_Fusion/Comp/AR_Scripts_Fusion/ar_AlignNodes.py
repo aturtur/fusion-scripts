@@ -4,7 +4,7 @@ ar_AlignNodes
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Align Nodes
-Version: 1.2.1
+Version: 1.2.2
 Description-US: Align selected nodes.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.2.2 (28.01.2026) - Replaced texts with icons.
 1.2.1 (07.05.2025) - Added hotkey Ctrl+Q to close the dialog.
 1.2.0 (28.02.2025) - Added rotate buttons. Also added pivot point handling when activetool is selected.
 1.1.0 (13.02.2025) - Added flip buttons.
@@ -269,12 +270,12 @@ dlg  = disp.AddWindow({"WindowTitle": "Align Nodes",
                 ui.SpinBox({"ID": "Spinbox_Gap", "Minimum": 1, "Maximum": 1000000, "Value": 1}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "Flip H", "ID": "Button_Flip_H"}),
-                ui.Button({"Text": "Flip V", "ID": "Button_Flip_V"}),
+                ui.Button({"Text": "↔", "ID": "Button_Flip_H", "ToolTip": "Flip Horizontally"}),
+                ui.Button({"Text": "↕", "ID": "Button_Flip_V", "ToolTip": "Flip Vertically"}),
             ]),
             ui.HGroup([
-                ui.Button({"Text": "Rotate CCW", "ID": "Button_Rotate_CCW"}),
-                ui.Button({"Text": "Rotate CW", "ID": "Button_Rotate_CW"}),
+                ui.Button({"Text": "↺", "ID": "Button_Rotate_CCW", "ToolTip": "Rotate Counter Clockwise"}),
+                ui.Button({"Text": "↻", "ID": "Button_Rotate_CW", "ToolTip": "Rotate Clockwise"}),
             ]),
         ]),
     ])

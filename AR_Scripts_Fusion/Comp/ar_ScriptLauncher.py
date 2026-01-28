@@ -12,8 +12,6 @@ Python version 3.10.8 (64-bit).
 
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
-Pyautogui module is recommended but not required.
-
 Highly recommended to add this script to hotkey:
     View → Customize Hotkeys...
         Views → New...
@@ -21,6 +19,7 @@ Highly recommended to add this script to hotkey:
             Scripts → ar_ScriptLauncher
 
 Changelog:
+1.4.0 (22.01.2026) - Switched pyautogui to keyboard library, to speed up the start up time.
 1.3.1 (25.09.2025) - Added unicode_escape decoding for tooltips, allows multi-line tooltips.
 1.3.0 (16.09.2025) - Support to send keyboard modifiers to scripts.
 1.2.1 (11.09.2025) - Doesn't add this script to the list.
@@ -42,7 +41,8 @@ import importlib.util
 from collections import Counter
 
 try:
-    from pyautogui import press
+    #import pyautogui
+    import keyboard
 except:
     pass
 
@@ -317,14 +317,14 @@ def _func(ev):
     if itm['Search'].HasFocus():
         if ev['Key'] == 16777235: # Up.
             try:
-                press('tab')
-                press('up')
+                keyboard.press_and_release("tab")
+                keyboard.press_and_release("up")
             except:
                 pass
         if ev['Key'] == 16777237: # Down.
             try:
-                press('tab')
-                press('down')
+                keyboard.press_and_release("tab")
+                keyboard.press_and_release("down")
             except:
                 pass
 

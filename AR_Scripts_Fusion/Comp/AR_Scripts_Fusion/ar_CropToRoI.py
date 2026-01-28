@@ -4,7 +4,7 @@ ar_CropToRoI
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Crop to RoI
-Version: 1.1.0
+Version: 1.2.0
 Description-US: Crops the canvas based on the RoI (region of interest).
 
 Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.2.0 (21.01.2026) - Combobox is now populated based on views on use.
 1.1.0 (29.08.2025) - Added GUI to select which view to crop, instead of using active viewport.
 1.0.0 (12.03.2025) - Initial realease.
 """
@@ -90,14 +91,15 @@ def get_region_data(view, tool) -> dict:
     height = tool.GetAttrs("TOOLI_ImageHeight")
 
     try:
+        prefs = comp.GetPrefs()
         if view == "Left A":
-            region = comp.GetPrefs()['Comp']['Views']['LeftView']['Viewer']['Region']
+            region = prefs['Comp']['Views']['LeftView']['Viewer']['Region']
         elif view == "Left B":
-            region = comp.GetPrefs()['Comp']['Views']['LeftView']['SideB']['Viewer']['Region']
+            region = prefs['Comp']['Views']['LeftView']['SideB']['Viewer']['Region']
         elif view == "Right A":
-            region = comp.GetPrefs()['Comp']['Views']['RightView']['Viewer']['Region']
+            region = prefs['Comp']['Views']['RightView']['Viewer']['Region']
         elif view == "Right B":
-            region = comp.GetPrefs()['Comp']['Views']['RightView']['SideB']['Viewer']['Region']
+            region = prefs['Comp']['Views']['RightView']['SideB']['Viewer']['Region']
 
         roi_left = region['Left']
         roi_bot = region['Bottom']
@@ -202,7 +204,7 @@ def gui_geometry(width: int, height: int, x: float, y: float) -> dict:
     return {"width": gui_width, "height": gui_height, "x": gui_x, "y": gui_y}
 
 
-gui_geo = gui_geometry(325, 100, 0.5, 0.5)
+gui_geo = gui_geometry(250, 75, 0.5, 0.5)
 
 
 # GUI
@@ -253,10 +255,21 @@ dlg  = disp.AddWindow({"WindowTitle": "Crop to RoI",
 itm = dlg.GetItems()
 
 combo_view = itm['ComboBox_View']
-combo_view.AddItem("Left A")
-combo_view.AddItem("Left B")
-combo_view.AddItem("Right A")
-combo_view.AddItem("Right B")
+
+previews = comp.GetPreviewList()
+left_a_view = previews['LeftView'].GetConnectedOutput()
+left_b_view = previews['LeftView.B'].GetConnectedOutput()
+right_a_view = previews['RightView'].GetConnectedOutput()
+right_b_view = previews['RightView.B'].GetConnectedOutput()
+
+if left_a_view:
+    combo_view.AddItem("Left A")
+if left_b_view:
+    combo_view.AddItem("Left B")
+if right_a_view:
+    combo_view.AddItem("Right A")
+if right_b_view:
+    combo_view.AddItem("Right B")
 
 # Keys are pressed.
 def _func(ev):
