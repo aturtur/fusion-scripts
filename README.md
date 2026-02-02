@@ -7,6 +7,7 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming in 1.8.0**
+- _30.01.2026_ **Updated:** ar_OpenProjectVersion.
 - _28.01.2026_ **New:** ar_OpenProjectVersion.
 - _28.01.2026_ **Updated:** ar_RangeManager, ar_JumpToFrame, ar_AlignNodes.
 - _27.01.2026_ **New:** ar_EnableSelected, ar_DisableSelected.

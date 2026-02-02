@@ -4,7 +4,7 @@ ar_OpenProjectVersion
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Open Project Version
-Version: 1.0.0
+Version: 1.0.1
 Description-US: Lists all versions of the project. Uses '_v' delimiter.
 
 Written for Blackmagic Design Fusion Studio 20.3.1 build 5.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.0.1 (30.01.2026) - Added error checking.
 1.0.0 (28.01.2026) - Initial release.
 """
 # Libraries
@@ -112,37 +113,42 @@ def get_key_modifiers(ev: dict) -> list:
     return key_modifiers
 
 
-def collect_projects(dir_path: str) -> list:
+def collect_projects(dir_path: str) -> list | bool:
     """Collects all projects from the given folder path."""
 
     project_dir = Path(dir_path)
     pattern = re.compile(r"(.+)_v(\d+)\.comp$", re.IGNORECASE)
     projects = {}
 
-    for comp_file in project_dir.rglob("*.comp"):
-        match = pattern.match(comp_file.name)
-        if not match:
-            continue
+    if dir_path != "":
 
-        project_name = match.group(1)
-        version_number = match.group(2)
+        for comp_file in project_dir.rglob("*.comp"):
+            match = pattern.match(comp_file.name)
+            if not match:
+                continue
 
-        version = f"v{version_number}"
+            project_name = match.group(1)
+            version_number = match.group(2)
 
-        projects.setdefault(project_name, {})[version] = str(comp_file.resolve())
+            version = f"v{version_number}"
+
+            projects.setdefault(project_name, {})[version] = str(comp_file.resolve())
 
 
-    projects_sorted = {
-        project: dict(
-            sorted(
-                versions.items(),
-                key=lambda item: int(item[0][1:])
+        projects_sorted = {
+            project: dict(
+                sorted(
+                    versions.items(),
+                    key=lambda item: int(item[0][1:])
+                )
             )
-        )
-        for project, versions in projects.items()
-    }
-    
-    return projects
+            for project, versions in projects.items()
+        }
+        
+        return projects
+
+    else:
+        return False
 
 
 def gui_geometry(width: int, height: int, x: float, y: float) -> dict:
@@ -218,19 +224,22 @@ dlg  = disp.AddWindow({"WindowTitle": "Open Project Version",
 # Collect ui items.
 itm = dlg.GetItems()
 
-project_path = Path(comp.GetAttrs()['COMPS_FileName'])
-project_folder = project_path.parent
-itm['Lineedit_FolderPath'].Text = str(project_folder)
-pattern = re.compile(r"(.+)_v(\d+)", re.IGNORECASE)
-match = pattern.match(project_path.stem)
-current_project_name = match.group(1)
-current_project_version = "v"+match.group(2)
-projects = collect_projects(project_folder)
+project_path = comp.GetAttrs()['COMPS_FileName']
+if project_path != "":
+    project_path = Path(project_path)
+    project_folder = project_path.parent
+    itm['Lineedit_FolderPath'].Text = str(project_folder)
+    pattern = re.compile(r"(.+)_v(\d+)", re.IGNORECASE)
+    match = pattern.match(project_path.stem)
+    current_project_name = match.group(1)
+    current_project_version = "v"+match.group(2)
+    projects = collect_projects(project_folder)
 
-# Add combobox items.
-populate_combobox_project(projects)
-itm['Combobox_Project'].CurrentText = current_project_name
-populate_combobox_version(projects, current_project_name)
+if projects:
+    # Add combobox items.
+    populate_combobox_project(projects)
+    itm['Combobox_Project'].CurrentText = current_project_name
+    populate_combobox_version(projects, current_project_name)
 
 # Comboboxes.
 def combo_project_changed(ev):
