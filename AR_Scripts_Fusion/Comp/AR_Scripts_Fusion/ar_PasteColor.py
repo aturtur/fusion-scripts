@@ -11,15 +11,12 @@ Written for Blackmagic Design Fusion Studio 20.3.1 build 5.
 Python version 3.10.8 (64-bit).
 
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
-
-to do: muokkaa käyttämään pyperclip moduulia:
-    data = pyperclip.paste()
-  
+ 
 Changelog:
 1.0.0 (18.03.2026) - Initial release.
 """
 # Libraries
-import win32clipboard
+import pyperclip
 import re
 
 
@@ -40,28 +37,13 @@ def process_string(string):
 
 
 def get_clipboard() -> str:
-    """Checks what kind of data is copied to the clipboard (files, image, text)
-    and if it is in text format, return the data.
-    """
+    """Gets and returns the clipboard data."""
 
-    win32clipboard.OpenClipboard()
+    try:
+        data = pyperclip.paste()
+    except:
+        data = None
 
-    if win32clipboard.IsClipboardFormatAvailable(win32clipboard.CF_HDROP):
-        result = "files"
-    elif win32clipboard.IsClipboardFormatAvailable(win32clipboard.CF_BITMAP):
-        result = "image"
-    elif win32clipboard.IsClipboardFormatAvailable(win32clipboard.CF_UNICODETEXT):
-        result = "text"
-    else:
-        result = "unknown"
-
-    if result == "text":
-        try:
-            data = win32clipboard.GetClipboardData()
-        except:
-            data = None
-
-    win32clipboard.CloseClipboard()
     return data
 
 
