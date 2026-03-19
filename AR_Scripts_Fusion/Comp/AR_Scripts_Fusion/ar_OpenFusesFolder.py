@@ -1,10 +1,10 @@
 """
-ar_OpenFuseFolder
+ar_OpenFusesFolder
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
-Name-US: Open Fuse Folder
-Version: 1.0.0
+Name-US: Open Fuses Folder
+Version: 1.1.0
 Description-US: Opens the folder where Fuses are located.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -13,6 +13,7 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.1.0 (06.03.2026) - Added Resolve support.
 1.0.0 (12.03.2025) - Initial release.
 """
 # Libraries
@@ -30,8 +31,13 @@ comp = comp  # comp = fusion.GetCurrentComp()
 def open_fuse_folder() -> None:
     """Opens the folder where Fuses are located."""
 
-    script_dir = pathlib.Path.home() / "AppData" / "Roaming" / "Blackmagic Design" / "Fusion" / "Fuses"
-    subprocess.Popen(["explorer", script_dir])
+    resolve = fusion.GetAttrs("FUSIONB_IsResolve")
+
+    if resolve:
+        fuses_dir = pathlib.Path.home() / "AppData" / "Roaming" / "Blackmagic Design" / "DaVinci Resolve" / "Support" / "Fusion" / "Fuses"
+    else:
+        fuses_dir = pathlib.Path.home() / "AppData" / "Roaming" / "Blackmagic Design" / "Fusion" / "Fuses"
+    subprocess.Popen(["explorer", fuses_dir])
 
 
 def main() -> None:

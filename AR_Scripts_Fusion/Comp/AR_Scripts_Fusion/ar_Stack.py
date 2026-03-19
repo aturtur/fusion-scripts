@@ -5,7 +5,7 @@ Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Stack
 Version: 1.1.0
-Description-US: Stack selected tools.
+Description-US: Stacks selected tools' image output horizontally or vertically.
 
 Written for Blackmagic Design Fusion Studio 19.0.3 build 3.
 Python version 3.10.8 (64-bit).

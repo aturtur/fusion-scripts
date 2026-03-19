@@ -7,9 +7,15 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming in 1.8.0**
+- _18.06.2026_ **Updated:** ar_RevealInExplorer, ar_Snapshot
+- _18.06.2026_ **New:** a_PasteColor, ar_PasteImage.
+- _06.03.2026_ **Updated:** ar_OpenMacroFolder, ar_OpenScriptsFolder, ar_OpenFusesFolder.
+- _26.02.2026_ **Updated:** ar_VersionUp.
+- _20.02.2026_ **Updated:** ar_RangeManager, ar_JumpToFrame.
+- _07.02.2026_ **New:** ar_SwapViews.
 - _30.01.2026_ **Updated:** ar_OpenProjectVersion.
 - _28.01.2026_ **New:** ar_OpenProjectVersion.
-- _28.01.2026_ **Updated:** ar_RangeManager, ar_JumpToFrame, ar_AlignNodes.
+- _28.01.2026_ **Updated:** ar_AlignNodes.
 - _27.01.2026_ **New:** ar_EnableSelected, ar_DisableSelected.
 - _23.01.2026_ **Updated:** ar_ClearViews.
 - _22.01.2026_ **Change:** Replaced pyautogui with keyboard library.
@@ -175,9 +181,21 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![ar_OpenProjectFolder](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_OpenFolder.png) ar_OpenProjectFolder
 > **Default:** Opens the folder where the project file is located.  
 
+### ![ar_OpenProjectVersion](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_OpenProjectVersion.png) ar_OpenProjectVersion *(GUI)*
+> **Default:** Lists all versions of the project. Uses '_v' delimiter.  
+
 ### ![ar_OpenScriptFolder](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_OpenFolder.png) ar_OpenScriptFolder
 > **Default:** Opens the script folder in explorer.  
 > *Default path: Appdata.*  
+
+### ![ar_PasteColor](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_PasteColor.png) ar_PasteColor
+> **Default:** Creates a background with the hex color from the clipboard.  
+> **Dependencies:** pypercut.  
+
+### ![ar_PasteImage](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_PasteImage.png) ar_PasteImage
+> **Default:** Creates a loader from the image from the clipboard.  
+> *Saves the image from the clipboard to the assets folder under the project folder. If the project is not saved, saves to the temp folder.*  
+> **Dependencies:** pillow.  
 
 ### ![ar_PrintMetadata](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_Print.png) ar_PrintMetadata
 > **Default:** Prints metadata from active tool.  
@@ -193,7 +211,7 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 > Option to save ranges with comments in a sticky note and load settings from it.
 > **Default:** Set render range.
 > **Shift:** Get render range.
-> **Ctrl:** Set Global range.
+> **Ctrl:** Set global range.
 > **Ctrl+Shift:** Get global range.
 
 ### ![ar_ReloadLoader](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_ReloadLoader.png) ar_ReloadLoader
@@ -297,7 +315,10 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 > **Default:** Splits the active tool in to tiles by given rows and columns.  
 
 ### ![ar_Stack](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_Stack.png) ar_Stack *(GUI)*
-> **Default:** Stack selected tools.  
+> **Default:** Stacks selected tools' image output horizontally or vertically.  
+
+### ![ar_SwapViews](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_SwapViews.png) ar_SwapViews
+> **Default:** Swaps the views (left and right views), including B buffers.  
 
 ### ![ar_SwitchFromSelected](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_SwitchFromSelected.png) ar_SwitchFromSelected
 > **Default:** Creates a switch tool from selected tools.

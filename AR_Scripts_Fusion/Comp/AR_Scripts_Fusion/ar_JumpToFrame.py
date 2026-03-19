@@ -4,7 +4,7 @@ ar_JumpToFrame
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Jump To Frame
-Version: 1.6.0
+Version: 1.8.0
 Description-US: Jumps to given frame in the timeline.
 
 Tip: Use Ctrl + [1,2,3,4,5,6,7,8,9,0] to jump to the frame.
@@ -15,6 +15,8 @@ Python version 3.10.8 (64-bit).
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
 
 Changelog:
+1.8.0 (20.02.2025) - Added a line numbers.
+1.7.0 (04.02.2026) - Added save on exit feature.
 1.6.0 (28.01.2026) - Load and Store buttons are now combined and Load button is available when pressing Shift-key.
 1.5.0 (21.11.2025) - Added two more slots.
 1.4.0 (03.06.2025) - Combined Get and Go buttons together. Go by default, Get with shift modifier.
@@ -35,6 +37,7 @@ bmd = bmd  # import BlackmagicFusion as bmd
 fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
+save_on_exit = True
 note_name = "JumpToFrame"
 alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 
@@ -87,7 +90,7 @@ def load_values(itm) -> None:
         clear_values(itm)
 
 
-def save_values(itm) -> None:
+def save_values(itm, select: bool) -> None:
     """Writes to note."""
 
     content = [
@@ -108,10 +111,11 @@ def save_values(itm) -> None:
     sticky_note = comp.FindTool(note_name)
     if not sticky_note:
         sticky_note = comp.AddTool("Note")
-
-        flow = comp.CurrentFrame.FlowView
-        flow.Select()
-        flow.Select(sticky_note)
+        
+        if select:
+            flow = comp.CurrentFrame.FlowView
+            flow.Select()
+            flow.Select(sticky_note)
 
     sticky_note.SetAttrs({'TOOLS_Name': note_name})
     sticky_note.Comments[comp.CurrentTime] = comments
@@ -167,60 +171,70 @@ dlg  = disp.AddWindow({"WindowTitle": "Jump To Frame",
         ui.VGroup({"Spacing": 5},
         [
             ui.HGroup([
+                ui.Label({"ID": "A", "Text": "01 ", "Weight": 0.01}),
                 ui.LineEdit({"ID": "COM_A", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
                 ui.SpinBox({"ID": "FRM_A", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
                 ui.Button({"Text": "Go", "ID": "SET_A", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
+                ui.Label({"ID": "B", "Text": "02 ", "Weight": 0.01}),
                 ui.LineEdit({"ID": "COM_B", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
                 ui.SpinBox({"ID": "FRM_B", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
                 ui.Button({"Text": "Go", "ID": "SET_B", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
+                ui.Label({"ID": "C", "Text": "03 ", "Weight": 0.01}),
                 ui.LineEdit({"ID": "COM_C", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
                 ui.SpinBox({"ID": "FRM_C", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
                 ui.Button({"Text": "Go", "ID": "SET_C", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
+                ui.Label({"ID": "D", "Text": "04 ", "Weight": 0.01}),
                 ui.LineEdit({"ID": "COM_D", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
                 ui.SpinBox({"ID": "FRM_D", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
                 ui.Button({"Text": "Go", "ID": "SET_D", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
+                ui.Label({"ID": "E", "Text": "05 ", "Weight": 0.01}),
                 ui.LineEdit({"ID": "COM_E", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
                 ui.SpinBox({"ID": "FRM_E", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
                 ui.Button({"Text": "Go", "ID": "SET_E", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
+                ui.Label({"ID": "F", "Text": "06 ", "Weight": 0.01}),
                 ui.LineEdit({"ID": "COM_F", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
                 ui.SpinBox({"ID": "FRM_F", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
                 ui.Button({"Text": "Go", "ID": "SET_F", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
+                ui.Label({"ID": "G", "Text": "07 ", "Weight": 0.01}),
                 ui.LineEdit({"ID": "COM_G", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
                 ui.SpinBox({"ID": "FRM_G", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
                 ui.Button({"Text": "Go", "ID": "SET_G", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
+                ui.Label({"ID": "H", "Text": "08 ", "Weight": 0.01}),
                 ui.LineEdit({"ID": "COM_H", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
                 ui.SpinBox({"ID": "FRM_H", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
                 ui.Button({"Text": "Go", "ID": "SET_H", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
+                ui.Label({"ID": "I", "Text": "09 ", "Weight": 0.01}),
                 ui.LineEdit({"ID": "COM_I", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
                 ui.SpinBox({"ID": "FRM_I", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
                 ui.Button({"Text": "Go", "ID": "SET_I", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
             ]),
 
             ui.HGroup([
+                ui.Label({"ID": "J", "Text": "10 ", "Weight": 0.01}),
                 ui.LineEdit({"ID": "COM_J", "Text": "", "PlaceholderText": "Comment", "Weight": 0.6}),
                 ui.SpinBox({"ID": "FRM_J", "Minimum": 0, "Maximum": 1000000, "Weight": 0.2}),
                 ui.Button({"Text": "Go", "ID": "SET_J", "Weight": 0.1, "ToolTip": "Jump to frame\nShift: Get Frame"}),
@@ -241,6 +255,8 @@ load_values(itm)
 
 # The window was closed.
 def _func(ev):
+    if save_on_exit:
+        save_values(itm, False)
     disp.ExitLoop()
 dlg.On.MyWin.Close = _func
 
@@ -249,6 +265,8 @@ dlg.On.MyWin.Close = _func
 def _func(ev):
     key_modifiers = get_key_modifiers(ev)
     if set(key_modifiers) == {CTRL} and ev['Key'] == 81:  # Ctrl + Q.
+        if save_on_exit:
+            save_values(itm, False)
         disp.ExitLoop()
         dlg.Hide()
 
@@ -332,7 +350,7 @@ def _func(ev):
     comp.StartUndo("Data")
     key_modifiers = get_key_modifiers(ev)
     if not key_modifiers:
-        save_values(itm)
+        save_values(itm, True)
     if [SHIFT] == key_modifiers:
         load_values(itm)
     comp.EndUndo(True)

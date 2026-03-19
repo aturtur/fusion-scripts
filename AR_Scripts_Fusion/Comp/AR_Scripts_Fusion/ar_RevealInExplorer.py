@@ -4,7 +4,7 @@ ar_RevealInExplorer
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Reveal In Explorer
-Version: 1.2.0
+Version: 1.3.0
 Description-US: Opens saver's or loader's media input in the explorer.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -14,6 +14,7 @@ Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
                    Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Tool
 
 Changelog:
+1.3.0 (18.03.2026) - Added support for "Comp:" paths.
 1.2.0 (11.09.2025) - Added support for path mapping (manual).
 1.1.0 (25.09.2024) - Modified code to follow more PEP 8 recommendations.
                    - Rewritten reaveal_in_explorer function with better logic.
@@ -21,6 +22,7 @@ Changelog:
 1.0.0 (04.10.2021) - Initial release.
 """
 # Libraries
+from pathlib import Path
 import os
 import subprocess
 import re
@@ -35,9 +37,20 @@ path_mappings = {"\\server": "\\\\server"}
 
 
 # Functions
+def join_paths(base_path, relative_path):
+    base = Path(base_path)
+    rel = Path(relative_path.lstrip("/\\"))
+    return base / rel
+
+
 def apply_path_mapping(file_path: str) -> str:
     """Does the path mapping."""
     
+    if file_path.startswith("Comp:"):
+        project_file_path = comp.GetAttrs()['COMPS_FileName']
+        project_folder = Path(project_file_path).parent
+        file_path = str(join_paths(project_folder, file_path.lstrip("Comp:")))
+
     for search, replace in path_mappings.items():
         pattern = r"^" + re.escape(search)
         if re.match(pattern, file_path):

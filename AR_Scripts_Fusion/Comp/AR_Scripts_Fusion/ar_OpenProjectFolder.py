@@ -29,7 +29,7 @@ comp = comp  # comp = fusion.GetCurrentComp()
 
 # Functions
 def open_project_folder() -> None:
-    """Opens the project folder in explorer, where the composition file is located."""
+    """Opens the project folder in the explorer, where the composition file is located."""
 
     path = comp.GetAttrs()['COMPS_FileName']  # Get composition's file path.
     subprocess.Popen(["explorer", "/select,", path])  # Open the folder and select the file.

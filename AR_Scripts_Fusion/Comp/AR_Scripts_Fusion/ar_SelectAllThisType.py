@@ -32,8 +32,8 @@ def select_all_this_type() -> None:
 
     active_tool_type = comp.ActiveTool().ID 
     tools = comp.GetToolList(False, active_tool_type).values()
-    flow = comp.CurrentFrame.FlowView # Get flow view
-    flow.Select() # Deselect all, if old selections
+    flow = comp.CurrentFrame.FlowView  # Get flow view.
+    flow.Select()  # Deselect all, if old selections.
 
     for tool in tools:
         flow.Select(tool, True)

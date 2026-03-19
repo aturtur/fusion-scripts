@@ -32,7 +32,7 @@ def select_all_loaders() -> None:
 
     loaders = comp.GetToolList(False, "Loader").values()
     flow = comp.CurrentFrame.FlowView
-    flow.Select() # Deselect all, if old selections
+    flow.Select()  # Deselect all, if old selections.
 
     for loader in loaders:
         flow.Select(loader, True)

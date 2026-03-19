@@ -4,7 +4,7 @@ ar_VersionUp
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Version Up
-Version: 1.4.0
+Version: 1.4.1
 Description-US: Easily change between different versions.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -15,6 +15,7 @@ Uses v character paired with digits to point out the version number (e.g. v1, v0
 File path syntax example: ../VERSIONS/ProjectName_v001/../../ProjectName_v001_0000.tif
 
 Changelog:
+1.4.1 (26.02.2026) - Fixed printed length value.
 1.4.0 (11.09.2025) - Added path mapping support (manual).
 1.3.6 (25.05.2025) - Fixed length value.
 1.3.5 (22.05.2025) - Tweaked how stuff is printed to the console.
@@ -292,7 +293,7 @@ def update_loader_settings(tool, settings: dict, path: str, lock_global_in: bool
     pd['new_global_in'] = new_global_in
     pd['old_global_out'] = old_global_out
     pd['new_global_out'] = new_global_out
-    pd['old_length'] = old_length
+    pd['old_length'] = old_length+1
     pd['new_length'] = file_length
 
     return settings, pd
@@ -528,7 +529,7 @@ def latest_run(lock_global_in: bool) -> None:
                 # Print data to console.
                 pd['old_global_in'] = old_settings['GlobalIn']
                 pd['old_global_out'] = old_settings['GlobalOut']
-                pd['old_length'] = old_settings['GlobalOut'] - old_settings['GlobalIn']
+                pd['old_length'] = (old_settings['GlobalOut'] - (old_settings['GlobalIn']))+1
 
                 print("")
                 print(f"{loader_name} - Updated!")

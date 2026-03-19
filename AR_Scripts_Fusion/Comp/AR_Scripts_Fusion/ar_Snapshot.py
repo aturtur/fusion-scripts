@@ -4,7 +4,7 @@ ar_Snapshot
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Snapshot
-Version: 1.1.0
+Version: 1.2.0
 Description-US: Takes a snapshot from a given viewer.
 
 Written for Blackmagic Design Fusion Studio 20.3.1 build 5.
@@ -25,12 +25,15 @@ Presets Combobox:
 Checkbox: Open snapshot folder
 
 Changelog:
+1.2.0 (18.03.2026) - If the project is not saved, saves snapshot to the temp folder.
+1.1.1 (04.02.2026) - Fixed a bug with savers.
 1.1.0 (21.01.2026) - Combobox is now populated based on views on use.
 1.0.0 (20.01.2026) - Initial realease.
 """
 # Libraries
 from datetime import datetime
 from pathlib import Path
+import tempfile
 import pprint
 
 
@@ -65,7 +68,7 @@ def collect_enabled_savers() -> list:
     enabled_savers = []
     savers = comp.GetToolList(False, "Saver").values()
     for saver in savers:
-        if saver.GetAttrs("TOOLB_PassThrough"):
+        if saver.GetAttrs("TOOLB_PassThrough") == False:
             enabled_savers.append(saver)
 
     return enabled_savers
@@ -76,9 +79,11 @@ def take_snapshot(view: str, import_snapshot: bool, bbuffer: bool) -> bool:
 
     project_file_path = comp.GetAttrs()['COMPS_FileName']
     if project_file_path == "":
-        print("Project has to be saved first!")
-        return False
-
+        print("Project not saved, saving to the temp folder!")
+        folder_path = Path(tempfile.gettempdir())
+    else:
+        folder_path = Path(project_file_path).parent
+ 
     windowlist = comp.GetFrameList()
     previews = comp.GetPreviewList()
 
@@ -120,11 +125,10 @@ def take_snapshot(view: str, import_snapshot: bool, bbuffer: bool) -> bool:
     disable_tools(enabled_savers)
 
     # Saver.
-    file_path = comp.GetAttrs()['COMPS_FileName']
     now = datetime.now()
     timestamp = now.strftime("%y%m%d%H%M%S")
     file_name = "snapshot_" + tool_name + "_" + timestamp + "_.jpg"
-    file_path = Path(file_path).parent / "snapshots" / file_name
+    file_path = folder_path / "snapshots" / file_name
 
     saver_node = comp.AddTool("Saver")
     output_port = tool
