@@ -112,7 +112,7 @@ def main() -> None:
     with output_file.open("w", encoding="utf-8") as f:
         json.dump(result, f, indent=4, ensure_ascii=False)
 
-    print(f"JSON luotu: {output_file}")
+    print(f"JSON-file updated: {output_file}")
 
 
 if __name__ == "__main__":

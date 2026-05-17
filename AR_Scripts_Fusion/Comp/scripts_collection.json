@@ -450,9 +450,9 @@
         "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_TrimLoaderWithTimecode(SMPTE).png"
     },
     {
-        "name": "Update Scripts JSON",
+        "name": "Update Scripts Collection",
         "desc": "Updates the JSON-file, that contains information about the scripts..",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_UpdateScriptsJSON.py",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_UpdateScriptsCollection.py",
         "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
     },
     {
@@ -460,83 +460,5 @@
         "desc": "Easily change between different versions.",
         "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_VersionUp.py",
         "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_VersionUp.png"
-    },
-    {
-        "name": "Bake Animation (WIP)",
-        "desc": "Bakes animation from selected tool.",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\AR_BakeAnimation.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "CCCC",
-        "desc": "Colorises selected nodes.",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\AR_CCC.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "Deselect Tools",
-        "desc": "Deselects all tools, including in macros, groups, etc.",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\AR_DeselectTools.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "Print Key Presses (DEV)",
-        "desc": "Prints pressed keys to the console.",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\AR_PrintKeyPresses(DEV).py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "Testing",
-        "desc": "",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\ar_Testing.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "View LUT",
-        "desc": "",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\AR_ViewLUT.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "clipboard",
-        "desc": "",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\clipboard.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "LayerTest",
-        "desc": "",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\LayerTest.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "Nappitesti",
-        "desc": "Testaillaan",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\Nappitesti.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "parseJSON",
-        "desc": "",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\parseJSON.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "Build Redshift Comp (WIP)",
-        "desc": "Builds Redshift composition setup from given image sequence paths.",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\wip\\ar_BuildRedshiftComp(WIP).py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "GetGridWarp",
-        "desc": "",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\wip\\AR_GridWarp.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
-    },
-    {
-        "name": "Connect Tracker to GridWarp",
-        "desc": "Connects the tracker point to the published grid warp points.",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\wip\\AR_Tracker.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
     }
 ]
