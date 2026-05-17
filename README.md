@@ -7,8 +7,10 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 ## Changelog
 **Changes coming in 1.8.0**
-- _18.06.2026_ **Updated:** ar_RevealInExplorer, ar_Snapshot
-- _18.06.2026_ **New:** a_PasteColor, ar_PasteImage.
+- _18.03.2026_ **New:** ar_UpdateScriptsCollection.
+- _18.06.2026_ **Updated:** ar_ScriptLauncher.
+- _18.03.2026_ **Updated:** ar_RevealInExplorer, ar_Snapshot.
+- _18.03.2026_ **New:** ar_PasteColor, ar_PasteImage.
 - _06.03.2026_ **Updated:** ar_OpenMacroFolder, ar_OpenScriptsFolder, ar_OpenFusesFolder.
 - _26.02.2026_ **Updated:** ar_VersionUp.
 - _20.02.2026_ **Updated:** ar_RangeManager, ar_JumpToFrame.
@@ -46,6 +48,7 @@ Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/bl
     - You can install all dependencies using `pip install -r requirements.txt`.
     - Or install manually with `pip install [module name]`:
         - keyboard
+        - pillow
         - pyperclip
         - tabulate
 

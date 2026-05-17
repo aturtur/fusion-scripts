@@ -1,0 +1,542 @@
+[
+    {
+        "name": "Script Launcher",
+        "desc": "Search and run sripts easily.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\ar_ScriptLauncher.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ScriptLauncher.png"
+    },
+    {
+        "name": "2D Tracker To 3D Space",
+        "desc": "Creates a setup that converts active 2D tracker's point to 3D space.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_2DTrackerTo3DSpace.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_2DTrackerTo3DSpace.png"
+    },
+    {
+        "name": "Add Metadata",
+        "desc": "Adds metadata nodes.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_AddMetadata.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_AddMetadata.png"
+    },
+    {
+        "name": "Align Image",
+        "desc": "Aligns merge node's foreground image according to the background image.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_AlignImage.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_AlignImage.png"
+    },
+    {
+        "name": "Align Nodes",
+        "desc": "Align selected nodes.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_AlignNodes.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_AlignNodes.png"
+    },
+    {
+        "name": "Auto White Balance From Sample Image",
+        "desc": "Creates an auto white balance setup from selected sample image tool.\\nCurrent frame is used as a reference frame.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_AutoWhiteBalanceFromSampleImage.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_AutoWhiteBalanceFromSampleImage.png"
+    },
+    {
+        "name": "Clean Node Names",
+        "desc": "Cleans node names (eg. ..._1_1_1_1_1).",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_CleanNodeNames.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_CleanNodeNames.png"
+    },
+    {
+        "name": "Clear Views",
+        "desc": "Clears all views (preview windows).\\nShift: Clear B buffers.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ClearViews.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ClearViews.png"
+    },
+    {
+        "name": "Colorise Nodes",
+        "desc": "Colorises selected nodes.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ColoriseNodes.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ColoriseNodes.png"
+    },
+    {
+        "name": "Colorise Savers Pink",
+        "desc": "Colorises all savers to pink.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ColoriseSaversPink.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ColoriseSaversPink.png"
+    },
+    {
+        "name": "Copy Path To Clipboard",
+        "desc": "Copies selected tool(s) path(s) to the clipboard.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_CopyPathToClipboard.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_CopyPathToClipboard.png"
+    },
+    {
+        "name": "Copy Tool Name To Clipboard",
+        "desc": "Copies selected tool(s) name(s) to the clipboard.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_CopyToolNameToClipboard.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_CopyToolNameToClipboard.png"
+    },
+    {
+        "name": "Create Locator3D",
+        "desc": "Creates a Locator3D node connected to selected 3D shape.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_CreateLocator3D.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_CreateLocator3D.png"
+    },
+    {
+        "name": "Create Saver",
+        "desc": "Creates a saver for selected tools with custom export settings.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_CreateSaver.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_CreateSaver.png"
+    },
+    {
+        "name": "Crop to DoD",
+        "desc": "Crops to selected tools' DoD (Domain of Definition).",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_CropToDoD.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_CropToDoD.png"
+    },
+    {
+        "name": "Crop to RoI",
+        "desc": "Crops the canvas based on the RoI (region of interest).",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_CropToRoI.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_CropToRoI.png"
+    },
+    {
+        "name": "Disable All Savers",
+        "desc": "Disables all savers in the active composition.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_DisableAllSavers.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_DisableAllSavers.png"
+    },
+    {
+        "name": "Disable Selected",
+        "desc": "Disables selected tool(s) in the active composition.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_DisableSelected.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_DisableSelected.png"
+    },
+    {
+        "name": "Enable All Savers",
+        "desc": "Enables all savers in the active composition.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_EnableAllSavers.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_EnableAllSavers.png"
+    },
+    {
+        "name": "Enable Selected",
+        "desc": "Enables selected tool(s) in the active composition.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_EnableSelected.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_EnableSelected.png"
+    },
+    {
+        "name": "Freeze Frame",
+        "desc": "Creates a TimeSpeed node that freezes frame at current frame.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_FreezeFrame.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_FreezeFrame.png"
+    },
+    {
+        "name": "Import Folder",
+        "desc": "Imports all of the image sequences from the selected folder.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ImportFolder.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ImportFolder.png"
+    },
+    {
+        "name": "Join Tiles",
+        "desc": "Merges selected tools into one big image, based on node positions in Flow.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_JoinTiles.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_JoinTiles.png"
+    },
+    {
+        "name": "Jump To Frame",
+        "desc": "Jumps to given frame in the timeline.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_JumpToFrame.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_JumpToFrame.png"
+    },
+    {
+        "name": "Loader From Saver",
+        "desc": "Creates loader(s) from selected saver(s).",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_LoaderFromSaver.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_LoaderFromSaver.png"
+    },
+    {
+        "name": "Merge Comp",
+        "desc": "Merges the given composition with the active one.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_MergeComp.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_MergeComp.png"
+    },
+    {
+        "name": "Merge Selected",
+        "desc": "Merges selected tools.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_MergeSelected.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_MergeSelected.png"
+    },
+    {
+        "name": "Move Anchor Point",
+        "desc": "Moves the anchor point (pivot) using the DoD values.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_MoveAnchorPoint.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_MoveAnchorPoint.png"
+    },
+    {
+        "name": "Move Nodes",
+        "desc": "Moves selected node(s).",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_MoveNodes.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_MoveNodes.png"
+    },
+    {
+        "name": "Multi Merge Selected",
+        "desc": "Merge selected tools using a multi merge tool.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_MultiMergeSelected.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_MultiMergeSelected.png"
+    },
+    {
+        "name": "Note From Loader",
+        "desc": "Creates a sticky note filled with info from the selected loader(s).",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_NoteFromLoader.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_NoteFromLoader.png"
+    },
+    {
+        "name": "Note From Metadata",
+        "desc": "Creates a sticky note filled with metadata from selected tool(s).",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_NoteFromMetadata.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_NoteFromMetadata.png"
+    },
+    {
+        "name": "Offset Keyframes",
+        "desc": "Offsets all keyframes of selected tool(s) by given value.\\nSupports only BezierPaths!",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_OffsetKeyframes.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_OffsetKeyframes.png"
+    },
+    {
+        "name": "Open Fuses Folder",
+        "desc": "Opens the folder where Fuses are located.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_OpenFusesFolder.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_OpenFusesFolder.png"
+    },
+    {
+        "name": "Open Macro Folder",
+        "desc": "Opens the folder where Macros are located.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_OpenMacroFolder.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_OpenMacroFolder.png"
+    },
+    {
+        "name": "Open Project Folder",
+        "desc": "Opens the folder where the project file is located.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_OpenProjectFolder.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_OpenProjectFolder.png"
+    },
+    {
+        "name": "Open Project Version",
+        "desc": "Lists all versions of the project. Uses '_v' delimiter.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_OpenProjectVersion.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_OpenProjectVersion.png"
+    },
+    {
+        "name": "Open Scripts Folder",
+        "desc": "Opens the folder where Scripts are located.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_OpenScriptFolder.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_OpenScriptFolder.png"
+    },
+    {
+        "name": "Paste Color",
+        "desc": "Creates a background with the hex color from the clipboard.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_PasteColor.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_PasteColor.png"
+    },
+    {
+        "name": "Paste Image",
+        "desc": "Creates a loader from the image from the clipboard.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_PasteImage.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_PasteImage.png"
+    },
+    {
+        "name": "Print Metadata",
+        "desc": "Prints metadata from active tool.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_PrintMetadata.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_PrintMetadata.png"
+    },
+    {
+        "name": "Print Used Loaders",
+        "desc": "Prints file paths that loaders of the current composition uses.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_PrintUsedLoaders.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_PrintUsedLoaders.png"
+    },
+    {
+        "name": "Print Used Savers",
+        "desc": "Prints file paths that savers of the current composition uses.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_PrintUsedSavers.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_PrintUsedSavers.png"
+    },
+    {
+        "name": "Range Manager",
+        "desc": "Set global and render range easily.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_RangeManager.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_RangeManager.png"
+    },
+    {
+        "name": "Reload Loader",
+        "desc": "Reloads selected loaders and extends ranges if needed.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ReloadLoader.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ReloadLoader.png"
+    },
+    {
+        "name": "Remove Keyframes",
+        "desc": "Removes all keyframes from selected tool(s).",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_RemoveKeyframes.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_RemoveKeyframes.png"
+    },
+    {
+        "name": "Remove Keyframes After Current Frame",
+        "desc": "Removes all keyframes from selected tool(s) after the current frame.\\nGlobal End Time is the end frame!",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_RemoveKeyframesAfterCurrentFrame.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_RemoveKeyframesAfterCurrentFrame.png"
+    },
+    {
+        "name": "Remove Keyframes Before Current Frame",
+        "desc": "Removes all keyframes from selected tool(s) before the current frame.\\nGlobal Start Time is the start frame!",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_RemoveKeyframesBeforeCurrentFrame.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_RemoveKeyframesBeforeCurrentFrame.png"
+    },
+    {
+        "name": "Resize Canvas",
+        "desc": "Resize canvas of the selected tool.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ResizeCanvas.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ResizeCanvas.png"
+    },
+    {
+        "name": "Reveal In Explorer",
+        "desc": "Opens saver's or loader's media input in the explorer.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_RevealInExplorer.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_RevealInExplorer.png"
+    },
+    {
+        "name": "Reverse Crop",
+        "desc": "Puts the cropped image back in place.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ReverseCrop.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ReverseCrop.png"
+    },
+    {
+        "name": "Reverse Setup",
+        "desc": "Reverses the node setup of the selected tools (basic workflow).",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ReverseSetup.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ReverseSetup.png"
+    },
+    {
+        "name": "Reverse Stabilization",
+        "desc": "Creates reverse stabilization setup for clean up painting from a active Tracker Node.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ReverseStabilization.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ReverseStabilization.png"
+    },
+    {
+        "name": "Sample Image",
+        "desc": "Creates a sample image setup for the selected tool(s).",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SampleImage.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SampleImage.png"
+    },
+    {
+        "name": "Scale To Fit Comp",
+        "desc": "Scales foreground image to fit background image's width and height.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ScaleToFitComp.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ScaleToFitComp.png"
+    },
+    {
+        "name": "Scale To Fit Comp Height",
+        "desc": "Scales proportionally foreground image to fit background image's height.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ScaleToFitCompHeight.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ScaleToFitCompHeight.png"
+    },
+    {
+        "name": "Scale To Fit Comp Width",
+        "desc": "Scales proportionally foreground image to fit background image's width.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_ScaleToFitCompWidth.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_ScaleToFitCompWidth.png"
+    },
+    {
+        "name": "Select All Loaders",
+        "desc": "Selects all loader tools of the active composition.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SelectAllLoaders.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SelectAllLoaders.png"
+    },
+    {
+        "name": "Select All This Type",
+        "desc": "Selects all tools that are same type as the currently active tool.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SelectAllThisType.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SelectAllThisType.png"
+    },
+    {
+        "name": "Select All This Type and Same Color",
+        "desc": "Selects all tools that are same type and same color as the currently active tool.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SelectAllThisTypeSameColor.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SelectAllThisTypeSameColor.png"
+    },
+    {
+        "name": "Set Comp Resolution",
+        "desc": "Sets composition's frame format resolution from the active tool.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SetCompResolution.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SetCompResolution.png"
+    },
+    {
+        "name": "Set Range Current Frame",
+        "desc": "Sets render range to the current frame.\\nShift: Sets also global range.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SetRangeCurrentFrame.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SetRangeCurrentFrame.png"
+    },
+    {
+        "name": "Set Range From Metadata",
+        "desc": "Sets render range from selected tool's metadata.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SetRangeFromMetadata.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SetRangeFromMetadata.png"
+    },
+    {
+        "name": "Set Range From Tool(s)",
+        "desc": "Sets global and render range from selected tool(s).",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SetRangeFromTool(s).py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SetRangeFromTool(s).png"
+    },
+    {
+        "name": "Set Range Global To Render",
+        "desc": "Sets global range to match render range.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SetRangeGlobalToRender.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SetRangeGlobalToRender.png"
+    },
+    {
+        "name": "Set Range Render To Global",
+        "desc": "Sets render range to match global range.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SetRangeRenderToGlobal.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SetRangeRenderToGlobal.png"
+    },
+    {
+        "name": "Snapshot",
+        "desc": "Takes a snapshot from a given viewer.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_Snapshot.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_Snapshot.png"
+    },
+    {
+        "name": "Split EXR File",
+        "desc": "Splits EXR loader to multiple loaders.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SplitEXRFile.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SplitEXRFile.png"
+    },
+    {
+        "name": "Split To Tiles",
+        "desc": "Splits the active tool in to tiles by given rows and clomuns.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SplitToTiles.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SplitToTiles.png"
+    },
+    {
+        "name": "Stack",
+        "desc": "Stacks selected tools' image output horizontally or vertically.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_Stack.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_Stack.png"
+    },
+    {
+        "name": "Swap Views",
+        "desc": "Swaps the views (left and right views), including B buffers.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SwapViews.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SwapViews.png"
+    },
+    {
+        "name": "Switch From Selected",
+        "desc": "Creates a switch tool from selected tools.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_SwitchFromSelected.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_SwitchFromSelected.png"
+    },
+    {
+        "name": "Tracker's Points To GridWarp",
+        "desc": "Connects Tracker's points to GridWarp's published points.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_Tracker(Points)ToGridWarp.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_Tracker(Points)ToGridWarp.png"
+    },
+    {
+        "name": "Tracker's Unsteady Position To GridWarp",
+        "desc": "Connects Tracker's unsteady position to GridWarp's published points.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_Tracker(UnsteadyPosition)ToGridWarp.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_Tracker(UnsteadyPosition)ToGridWarp.png"
+    },
+    {
+        "name": "Trim Loader With Timecode (SMPTE)",
+        "desc": "Trims the loader with SMPTE timecode.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_TrimLoaderWithTimecode(SMPTE).py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_TrimLoaderWithTimecode(SMPTE).png"
+    },
+    {
+        "name": "Update Scripts JSON",
+        "desc": "Updates the JSON-file, that contains information about the scripts..",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_UpdateScriptsJSON.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "Version Up",
+        "desc": "Easily change between different versions.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_VersionUp.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_VersionUp.png"
+    },
+    {
+        "name": "Bake Animation (WIP)",
+        "desc": "Bakes animation from selected tool.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\AR_BakeAnimation.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "CCCC",
+        "desc": "Colorises selected nodes.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\AR_CCC.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "Deselect Tools",
+        "desc": "Deselects all tools, including in macros, groups, etc.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\AR_DeselectTools.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "Print Key Presses (DEV)",
+        "desc": "Prints pressed keys to the console.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\AR_PrintKeyPresses(DEV).py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "Testing",
+        "desc": "",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\ar_Testing.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "View LUT",
+        "desc": "",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\AR_ViewLUT.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "clipboard",
+        "desc": "",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\clipboard.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "LayerTest",
+        "desc": "",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\LayerTest.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "Nappitesti",
+        "desc": "Testaillaan",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\Nappitesti.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "parseJSON",
+        "desc": "",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\dev\\parseJSON.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "Build Redshift Comp (WIP)",
+        "desc": "Builds Redshift composition setup from given image sequence paths.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\wip\\ar_BuildRedshiftComp(WIP).py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "GetGridWarp",
+        "desc": "",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\wip\\AR_GridWarp.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    },
+    {
+        "name": "Connect Tracker to GridWarp",
+        "desc": "Connects the tracker point to the published grid warp points.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\wip\\AR_Tracker.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+    }
+]

@@ -3,8 +3,8 @@ ar_ScriptLauncher
 
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
-Name-US: Script Launcher
-Version: 1.5.0
+Name-US: Script Launcher BACK UP
+Version: 1.3.0
 Description-US: Search and run sripts easily.
 
 Written for Blackmagic Design Fusion Studio 19.0 build 59.
@@ -19,7 +19,6 @@ Highly recommended to add this script to hotkey:
             Scripts → ar_ScriptLauncher
 
 Changelog:
-1.5.0 (17.01.2026) - The script uses now scripts_collection.json file to populate the tree.
 1.4.0 (22.01.2026) - Switched pyautogui to keyboard library, to speed up the start up time.
 1.3.1 (25.09.2025) - Added unicode_escape decoding for tooltips, allows multi-line tooltips.
 1.3.0 (16.09.2025) - Support to send keyboard modifiers to scripts.
@@ -40,7 +39,6 @@ import inspect
 from pathlib import Path
 import importlib.util
 from collections import Counter
-import json
 
 try:
     #import pyautogui
@@ -57,6 +55,7 @@ fusion = fu  # fusion = bmd.scriptapp("Fusion")
 comp = comp  # comp = fusion.GetCurrentComp()
 
 script_dir  = Path(inspect.getfile(lambda: None)).resolve().parent
+icon_folder = script_dir / "Icons"
 
 use_icons = True  # Set this to False, if you want to disable icons.
 
@@ -107,32 +106,26 @@ def get_script_info(script) -> tuple[str, str]:
     return label, description
 
 
-def get_scripts(json_file: Path) -> None:
-    """Loads scripts from a JSON file and fills the scripts dictionary."""
+def get_scripts() -> None:
+    """Scans the folder and adds found scripts to the scripts list."""
 
-    if not json_file.exists():
-        raise FileNotFoundError(f"JSON file not found: {json_file}")
+    # Custom script directory path.
+    #script_dir = pathlib.Path.home() / "AppData" / "Roaming" / "Blackmagic Design" / "Fusion" / "Scripts" / "Comp"
 
-    with json_file.open("r", encoding="utf-8") as f:
-        data: list[dict] = json.load(f)
+    # Folder where this script is located.
+    script_dir = Path(inspect.getfile(lambda: None)).resolve().parent
 
-    scripts.clear()
+    # Scan python scripts.
+    found_scripts = [file for file in script_dir.rglob('*.py')]
+    for script in found_scripts:
+        
+        script_label, script_description = get_script_info(script)
 
-    for entry in data:
-        name = entry.get("name")
-        desc = entry.get("desc", "")
-        path = Path(entry.get("path", ""))
-        icon = entry.get("icon")
-
-        if not name or not path:
-            continue  # Skip invalid entries.
-
-        scripts[name] = {
-            "FileName": path.stem,
-            "Extension": path.suffix,
-            "Description": desc,
-            "Path": path,
-            "Icon": Path(icon) if icon else None,
+        scripts[script_label] = {
+            "FileName": Path(script).stem,
+            "Extension": Path(script).suffix,
+            "Description": script_description,
+            "Path": script.resolve()
         }
 
 
@@ -147,8 +140,12 @@ def populate_tree(tree, scripts: dict) -> None:
         if script_name == "Script Launcher":  # Skip this script.
             continue
         if use_icons:
-            icon_path = details['Icon']
-            itRow.Icon[0] = ui.Icon({"ID": script_name, "File": str(icon_path)})
+            icon_path = icon_folder / f"{details['FileName']}.png"
+            default_icon_path = icon_folder / "default_script.png"
+            if icon_path.exists():  # Use script's custom icon.
+                itRow.Icon[0] = ui.Icon({"ID": script_name, "File": str(icon_path)})
+            else:  # If custom icon not found, use default script icon.
+                itRow.Icon[0] = ui.Icon({"ID": script_name, "File": str(default_icon_path)})
         tree.AddTopLevelItem(itRow)
 
 
@@ -297,8 +294,7 @@ QLineEdit:focus {
 itm['Search'].SetStyleSheet(search_style)
 
 # Scan and collect scipts.
-json_file = script_dir / "scripts_collection.json"
-get_scripts(json_file)
+get_scripts()
 
 # Build the tree.
 script_tree = itm['Tree']
