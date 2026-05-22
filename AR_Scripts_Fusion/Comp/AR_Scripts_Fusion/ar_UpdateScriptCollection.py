@@ -4,10 +4,10 @@ ar_UpdateScriptsCollection
 Author: Arttu Rautio (aturtur)
 Website: http://aturtur.com/
 Name-US: Update Scripts Collection
-Version: 1.3.0
-Description-US: Updates the JSON-file, that contains information about the scripts..
+Version: 1.0.0
+Description-US: Updates the JSON-file, that contains information about the scripts, used by ar_ScriptLauncher.
 
-Written for Blackmagic Design Fusion Studio 21.0 beata build 31.
+Written for Blackmagic Design Fusion Studio 21.0 beta build 31.
 Python version 3.13.7 (64-bit).
 
 Installation path: Appdata/Roaming/Blackmagic Design/Fusion/Scripts/Comp
@@ -103,7 +103,7 @@ def scan_folder(root_folder: Path, icon_folder: Path) -> list[dict[str, str]]:
 def main() -> None:
     """The main function."""
 
-    output_file = Path(script_dir / "scripts_collection.json")
+    output_file = Path(script_dir / "script_collection.json")
     if not output_file.exists():
         output_file.touch()
 

@@ -444,6 +444,12 @@
         "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_Tracker(UnsteadyPosition)ToGridWarp.png"
     },
     {
+        "name": "Transform From Tracker",
+        "desc": "Creates a Transform tool from selected Tracker.",
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_TransformFromTracker.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_TransformFromTracker.png"
+    },
+    {
         "name": "Trim Loader With Timecode (SMPTE)",
         "desc": "Trims the loader with SMPTE timecode.",
         "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_TrimLoaderWithTimecode(SMPTE).py",
@@ -452,8 +458,8 @@
     {
         "name": "Update Scripts Collection",
         "desc": "Updates the JSON-file, that contains information about the scripts..",
-        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_UpdateScriptsCollection.py",
-        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\default_script.png"
+        "path": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\AR_Scripts_Fusion\\ar_UpdateScriptCollection.py",
+        "icon": "C:\\Git\\fusion-scripts\\AR_Scripts_Fusion\\Comp\\icons\\ar_UpdateScriptCollection.png"
     },
     {
         "name": "Version Up",

@@ -5,10 +5,12 @@ Latest release version **1.7.0** *(Released 12.01.2026)*
 
 All of the scripts are developed and tested with Windows 11 machine. All of the scripts might not work in Linux or Mac.  
 
+
 ## Changelog
 **Changes coming in 1.8.0**
-- _18.03.2026_ **New:** ar_UpdateScriptsCollection.
-- _18.06.2026_ **Updated:** ar_ScriptLauncher.
+- _20.05.2026_ **New:** ar_TransformFromTracker.
+- _17.05.2026_ **New:** ar_UpdateScriptCollection.
+- _17.05.2026_ **Updated:** ar_ScriptLauncher.
 - _18.03.2026_ **Updated:** ar_RevealInExplorer, ar_Snapshot.
 - _18.03.2026_ **New:** ar_PasteColor, ar_PasteImage.
 - _06.03.2026_ **Updated:** ar_OpenMacroFolder, ar_OpenScriptsFolder, ar_OpenFusesFolder.
@@ -33,6 +35,7 @@ All of the scripts are developed and tested with Windows 11 machine. All of the 
 
 Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/blob/master/CHANGELOG.md) file.  
 
+
 ## Installation
 > [!WARNING]  
 > Use these scripts with your own risk!  
@@ -53,6 +56,7 @@ Check all changes in [CHANGELOG.md](https://github.com/aturtur/fusion-scripts/bl
         - tabulate
 
 If you want the latest scripts (including an experimental ones too), download this [repository](https://github.com/aturtur/fusion-scripts/archive/refs/heads/master.zip) and use scripts from it.  
+
 
 ## How to use
 In Blackmagic Design Fusion software select the Script tab in the main toolbar and select the script you want to run.  
@@ -326,10 +330,6 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 ### ![ar_SwitchFromSelected](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_SwitchFromSelected.png) ar_SwitchFromSelected
 > **Default:** Creates a switch tool from selected tools.
 
-### ![ar_TrimLoaderWithTimecode(SMPTE)](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_TrimLoaderWithTimecode(SMPTE).png) ar_TrimLoaderWithTimecode(SMPTE) *(GUI)*
-> **Default:** Trims the loader with SMPTE timecode.  
-> *Loader's media has to have timecode in its metadata!*  
-
 ### ![ar_Tracker(Points)ToGridWarp](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_TrackerToGridWarp.png) ar_Tracker(Points)ToGridWarp
 > **Default:** Connects Tracker's points to GridWarp's published points.  
 
@@ -345,6 +345,16 @@ In Blackmagic Design Fusion software select the Script tab in the main toolbar a
 > **Default:** Connects Tracker's unsteady position to GridWarp's published points.  
 > **How to use:** Select the Tracker and the GridWarp tools and run the script.  
 > *Use clean Tracker and clean GridWarp!*  
+
+### ![ar_TransformFromTracker](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_TransformFromTracker.png) ar_TransformFromTracker
+> **Default:** Creates a Transform tool from selected Tracker.  
+
+### ![ar_TrimLoaderWithTimecode(SMPTE)](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_TrimLoaderWithTimecode(SMPTE).png) ar_TrimLoaderWithTimecode(SMPTE) *(GUI)*
+> **Default:** Trims the loader with SMPTE timecode.  
+> *Loader's media has to have timecode in its metadata!*  
+
+### ![ar_UpdateScriptCollection](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_UpdateScriptCollection.png) ar_UpdateScriptCollection
+> **Default:** Updates the JSON-file, that contains information about the scripts, used by ar_ScriptLauncher.  
 
 ### ![ar_VersionUp](https://raw.githubusercontent.com/aturtur/fusion-scripts/master/img/ar_VersionUp.png) ar_VersionUp *(GUI)*
 > **Default:** Easily change between different versions.  

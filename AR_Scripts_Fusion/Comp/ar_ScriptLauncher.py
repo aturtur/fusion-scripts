@@ -19,7 +19,7 @@ Highly recommended to add this script to hotkey:
             Scripts → ar_ScriptLauncher
 
 Changelog:
-1.5.0 (17.01.2026) - The script uses now scripts_collection.json file to populate the tree.
+1.5.0 (17.05.2026) - The script uses now script_collection.json file to populate the tree.
 1.4.0 (22.01.2026) - Switched pyautogui to keyboard library, to speed up the start up time.
 1.3.1 (25.09.2025) - Added unicode_escape decoding for tooltips, allows multi-line tooltips.
 1.3.0 (16.09.2025) - Support to send keyboard modifiers to scripts.
@@ -297,7 +297,7 @@ QLineEdit:focus {
 itm['Search'].SetStyleSheet(search_style)
 
 # Scan and collect scipts.
-json_file = script_dir / "scripts_collection.json"
+json_file = script_dir / "script_collection.json"
 get_scripts(json_file)
 
 # Build the tree.
